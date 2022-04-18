@@ -1,0 +1,282 @@
+---
+title: "Procesando datos con el paquete tidyverse - Joins"
+subtitle: "Ciencias Sociales Computacionales y Humanidades Digitales"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: [default, metropolis, metropolis-fonts]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+---
+
+
+```{r include=FALSE}
+options(tibble.width = NULL)
+```
+
+```{r include=FALSE}
+hook_source <- knitr::knit_hooks$get('source')
+knitr::knit_hooks$set(source = function(x, options) {
+  x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
+  hook_source(x, options)
+})
+```
+
+
+```{r xaringanExtra-clipboard, eval=FALSE, include=FALSE}
+htmltools::tagList(
+ xaringanExtra::use_clipboard(
+   button_text = "<i class=\"fa fa-clipboard\"></i>",
+   success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+ ),
+ rmarkdown::html_dependency_font_awesome()
+)
+```
+
+```{r xaringan-extra-styles, echo=FALSE}
+# These are the defaults
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  
+)
+```
+
+```{r xaringanExtra-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+
+xaringanExtra::style_panelset_tabs(
+  active_foreground = "#0051BA",
+  hover_foreground = "#d22",
+  font_family = "Roboto"
+)
+```
+
+<style type="text/css">
+
+.remark-slide-content {
+    font-size: 25px;
+    padding: 1em 1em 1em 1em;
+}
+
+```{css, eval = TRUE, echo = FALSE}
+
+.remark-code{
+  line-height: 1.5; font-size: 80%
+}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+
+```
+
+</style>
+
+
+
+```{r, include = F}
+library(flipbookr)
+library(tidyverse)
+library(xaringanthemer)
+library(xaringan)
+library(gt)
+library(icons)
+library(here)
+library(data.table)
+
+tabla_casos <- readRDS(here("Fuentes", "tabla_casos_provinciales.rds"))
+base_covid <- readRDS(here("Fuentes", "base_covid_sample.RDS"))
+
+pob_est_2021 <- fread(here("Fuentes", "estimacion_pob_2021_provincias.csv"), 
+                      header = T, 
+                      encoding = "UTF-8")
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      comment = "", 
+                      cache = F)
+
+options(scipen = 9999)
+```
+
+---
+
+class: inverse, middle, center
+
+
+# joins
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+
+---
+
+
+```{r echo=FALSE, out.width = '35%', fig.align = 'center'}
+knitr::include_graphics(here("Clase 3 - Tidyverse", "img", "joins.png"))
+```
+
+
+
+---
+class: inverse, middle, center
+
+# __left_join()__
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+---
+# left_join()
+
+```{r echo=FALSE, out.width = '50%', fig.align = 'center'}
+knitr::include_graphics(here("Clase 3 - Tidyverse", "img", "left-join.gif"))
+```
+
+---
+# Ejemplo de uso
+
+
+-   **Caso:** Quiero conocer el peso de los casos confirmados y fallecidos de cada provincia en relación a su respectiva población (proyección a 2021).
+
+```{r eval = FALSE}
+library(data.table)
+base_covid_total <- fread("Fuentes/Covid19Casos.csv", 
+                          header = T)
+```
+
+
+---
+# Armo tabla con cantidad de confirmados y fallecidos
+
+```{r eval = FALSE, echo = TRUE}
+tabla_casos <- base_covid_total %>% 
+  rename(provincia = residencia_provincia_nombre) %>% 
+  group_by(provincia) %>% 
+  summarise(confirmados = sum(clasificacion_resumen == "Confirmado"),
+            fallecidos = sum(fallecido == "SI")) 
+```
+
+```{r}
+head(tabla_casos)
+```
+
+---
+# Importo [tabla con proyecciones](https://www.indec.gob.ar/indec/web/Nivel4-Tema-2-24-85)
+
+```{r eval = F}
+pob_est_2021 <- fread("Fuentes/estimacion_pob_2021_provincias.csv", 
+                      header = T, 
+                      encoding = "UTF-8")
+```
+
+```{r}
+head(pob_est_2021)
+```
+---
+
+```{r left_join, include=FALSE}
+tabla_casos %>% 
+  left_join(pob_est_2021, 
+            by = c("provincia" = "Provincia")) %>% #BREAK
+  mutate(tasa_conf = round(confirmados / pob_estimada_2021 * 100, 2),
+         tasa_fall = round(fallecidos / pob_estimada_2021 * 100, 2)) %>% #BREAK
+  select(1, starts_with("tasa"))
+
+```
+
+`r chunk_reveal("left_join", widths = c(1.4, 1.6), title = "# left_join()")`
+
+
+---
+class: inverse, middle, center
+
+# __righ_join()__
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+---
+# right_join()
+
+```{r echo=FALSE, out.width = '50%', fig.align = 'center'}
+knitr::include_graphics(here("Clase 3 - Tidyverse", "img", "right-join.gif"))
+```
+
+---
+class: inverse, middle, center
+
+# __inner_join()__
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+---
+# inner_join()
+
+```{r echo=FALSE, out.width = '50%', fig.align = 'center'}
+knitr::include_graphics(here("Clase 3 - Tidyverse", "img", "inner-join.gif"))
+```
+
+---
+class: inverse, middle, center
+
+# __full_join()__
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+---
+# full_join()
+
+```{r echo=FALSE, out.width = '50%', fig.align = 'center'}
+knitr::include_graphics(here("Clase 3 - Tidyverse", "img", "full-join.gif"))
+```
+
+---
+class: inverse, middle, center
+
+# __anti_join()__
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+---
+# anti_join()
+
+```{r echo=FALSE, out.width = '50%', fig.align = 'center'}
+knitr::include_graphics(here("Clase 3 - Tidyverse", "img", "anti-join.gif"))
+```

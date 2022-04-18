@@ -1,0 +1,81 @@
+---
+title: "Procesando datos con Tidyverse"
+subtitle: "Práctica independiente"
+output:
+  html_document
+---
+
+<br><br>
+
+#### Consignas:
+
+<br><br> 
+
+#### **a.** Importar la base de datos de **casos COVID**
+```{r}
+
+```
+
+<br><br> 
+
+##### _[Ejecutar las siguientes consignas con el paquete `tidyverse`]_
+
+<br><br> 
+
+#### **b.** Crear un objeto y seleccionar entre 3 y 6 columnas de interés combinando la función `select()` con:
+
+- El nombre de las variables
+
+- La posición de las variables
+
+- Un patrón común en el nombre de las variables (`starts_with()` - `ends_with()` - `contains()`)
+
+```{r}
+
+```
+
+<br><br> 
+
+
+#### **c.** Crear un objeto nuevo que contenga unicamente a la población residente de **3 provincias** a elección y sólo una categoría de la variable **sexo** [a elección].
+```{r}
+
+```
+
+<br><br> 
+
+
+#### **d.** Crear una variable recodificando la variable **edad** en 5 rangos etáreos.
+```{r}
+
+```
+
+<br><br> 
+
+#### **e.** Crear una tabla en base a la población anterior que contenga, para cada provincia:
+
+- Edad media de la población
+
+- Edad mínima de la población
+
+- Edad máxima de la población
+
+```{r}
+
+```
+
+<br><br> 
+
+
+#### **f.** Dado el siguiente código, agregar a la base una columna que contenga el peso relativo de la población de cada provincia respecto al total:
+
+```r
+library(tidyverse)
+
+base_3_provincias <- base_covid %>% 
+  filter(residencia_provincia_nombre %in% c("CABA", "Buenos Aires", "Neuquén")) %>% 
+  group_by(residencia_provincia_nombre) %>% 
+  summarise(cantidad_personas = n())
+```
+
+<br><br> 
