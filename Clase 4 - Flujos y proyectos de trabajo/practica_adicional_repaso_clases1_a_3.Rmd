@@ -1,0 +1,132 @@
+---
+title:  Practica adicional - Repaso Clases 1 a 3  - Diplomatura UNSAM
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+```{r setup, message = FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE,include = TRUE, message = FALSE)
+
+```
+
+```{r message=FALSE, warning=FALSE,include=FALSE}
+library(tidyverse)
+library(openxlsx)
+```
+
+## Ejercicios práctica    
+ 
+ - Abran un proyecto (o comiencen uno nuevo) e importen la base de datos sobre los casos de covid detallando la ruta desde el punto de partida del proyecto. Recuerden que dicha base es una muestra del 2% de los casos diarios.  
+  
+```{r eval=FALSE,message=FALSE, warning=FALSE,include=FALSE}
+base.covid <- readRDS("Fuentes/base_covid_sample.RDS")
+```
+ - Aplique una función que permita obtener información sobre la distribución de la variable edad en nuestra base de datos
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+summary(base.covid$edad)
+```
+ - Eliminar de la base de datos los valores de edad menores a 0 
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+base.covid <- base.covid %>% 
+  filter(edad>0)
+```
+
+ - ¿Cual es el promedio de edad? (tras eliminar dichos valores)
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+mean(base.covid$edad,na.rm = TRUE)
+```
+- Calcular el promedio de edad de las personas fallecidas (pueden aplicar un filtro previo)
+
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+base.fallecidos <- base.covid %>% 
+  filter(fallecido == "SI")
+  
+mean(base.fallecidos$edad,na.rm = TRUE)
+```
+
+- Crear un nuevo objeto que conserve solo los casos de la base con residencia en C.A.B.A  
+- ¿Cuantos casos en la base presenta cada comuna de la CABA?
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+base.caba <- base.covid %>% 
+  filter(residencia_provincia_nombre == "CABA")
+
+table(base.caba$residencia_departamento_nombre)
+```
+- Trabajemos nuevamente con  la base original. Ejecutar una función que me permita observar los distintos países de residencia de las personas que figuran en dicha base de datos.
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+unique(base.covid$residencia_pais_nombre)
+```
+- Crear un nuevo objeto denominado **base.no.residentes** que conserve solo los casos de la base con residencia fuera de la argentina (excluir también los casos "SIN ESPECIFICAR").
+
+```{r eval=TRUE, warning=FALSE, include=FALSE}
+base.no.residentes <- base.covid %>%
+ filter(! residencia_pais_nombre %in%  c("Argentina","SIN ESPECIFICAR"))
+
+# OPCION B Para hacer lo mismo
+# base.no.residentes <- base.covid %>% 
+#  filter(residencia_pais_nombre != "Argentina",
+#         residencia_pais_nombre != "SIN ESPECIFICAR")
+```
+
+- Más allá de observar los únicos valores de una variable, la función  ``unique()`` aplicada a un *dataframe* completo me permite eliminar filas duplicadas. Vean (y repliquen si quieren) el siguiente ejemplo:  
+```{r}
+ejemplo <- data.frame(nombre   = c("Pedro","Juan"  ,"Pepe" ,"Juan"   ,"Juan"),
+                      apellido = c("Perez","Varela","Ríos" ,"Varela" ,"Varela"),
+                      dni      = c(3734564,45456525,09784545,45456525,27000654))
+           
+
+ej.sin.duplicado<- ejemplo %>% 
+  unique()
+
+ej.sin.duplicado
+```
+```{r eval=TRUE, warning=FALSE, include=FALSE}
+base.no.residentes <- base.no.residentes %>% 
+  arrange(desc(carga_provincia_nombre))
+```
+
+
+ - Un uso que se le puede dar a la función  ``unique()`` es obtener un listado de todas las combinaciones existentes entre los valores de ciertas variables de mi base de datos. Ejecuten el siguiente ejemplo, a partir del dataframe **base.no.residentes** creado anteriormente. ¿Que es lo que me dice esta tabla? (Aclaración: Puede figurarles en otro orden cuando lo ejecuten)
+```{r}
+combinaciones.residencia <- 
+  base.no.residentes %>% 
+  select(residencia_pais_nombre,carga_provincia_nombre) %>% 
+  unique()
+
+combinaciones.residencia
+```
+
+ - Con una lógica similar construyan a partir de la base orignial un objeto **diccionario.provincias** que contenga un único registro por cada nombre de provincia existente y su respectivos códigos (tomar las variables de **residencia_provincia_nombre** y  **residencia_provincia_id**)
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+diccionario.provincias <- 
+  base.covid %>% 
+  select(residencia_provincia_nombre,residencia_provincia_id) %>% 
+  unique()
+```
+
+
+- La función ``length()`` permite observar el largo de un vector. Ejecutar esta sentencia para probar su resultado.
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+length(11:24)
+```
+
+- Utilizar ahora la función ``length()`` (en combinación con otra función) para observar cuantos valores únicos toma la variable **residencia_departamentos_id** en nuestra base de datos. Es decir, no queremos ver qué *ids* de departamento existen, sino contar cuantos *id* distintos existen
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+length(unique(base.covid$residencia_departamento_id))
+```
+
+ - Crear una nueva variable en la base original, que clasifique a la población en rangos etarios. Luego elaborar un tabulado bivarado para observar el cruce de dicha variable con la variable "fallecido"
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.c.grupos <- base.covid %>% 
+  mutate(grupos_etarios = case_when(edad %in% 0:60 ~"No riesgo",
+                                    edad > 60 ~"Grupo Riesgo"))
+
+table(base.c.grupos$grupos_etarios,base.c.grupos$fallecido)
+``` 
+
+
+
+ 

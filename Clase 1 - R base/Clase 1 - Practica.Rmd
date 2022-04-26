@@ -1,0 +1,60 @@
+---
+title: "Clase 1 - Introducción a R y Rstudio - R Base" 
+subtitle: "Diplomatura en Ciencias Sociales Computacionales y Humanidades Digintales - UNSAM"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+---
+# Ejercicios para practicar
+
+> Primero: reiniciar R (`Session --> Restart R`)
+
+Al instalar **R** cuentan con un set de bases de datos de "juguete" para hacer ciertas pruebas, experimentos, etc. Por ejemplo, la base iris
+```{r}
+base_precargada_iris <-  datasets::iris       
+```
+
+¿Quieren saber de qué se trata la base? Bueno, aunque no quieran igual corran el siguiente código:
+```{r,eval = F}
+?iris
+```
+
+- ¿Qué valores podemos encontrar en la variable Species?
+
+```{r}
+unique(iris$Species)
+```
+
+- ¿Cual es el valor máximo de la variable `Petal.Length` que existe en la base?
+
+```{r}
+max(iris$Petal.Length)
+```
+- ¿Cual es el *rango* de la variable `Petal.Length`en la base? 
+ - Construir un vector con el valor máximo y mínimo
+ - Calcular la distancia entre ambos valores
+
+```{r}
+opcion_a <- range(iris$Petal.Length)#Opcion A
+opcion_b <-c(min(iris$Petal.Length),
+             max(iris$Petal.Length))
+
+resolucion_final <-  opcion_b[2]-opcion_b[1]
+```
+
+ - Filrar la base para conservar solo los casos de "Petal.Length" mayores o iguales a 4. Guardar el resultado en un nuevo objeto llamado *base_petalos_grandes" 
+```{r}
+base_petalos_grandes<- iris[iris$Petal.Length >= 4,]
+```
+
+
+¿Cómo identificarían (sin mirar) dentro de la base de datos, qué tipo de especie  presenta el valor máximo de `Petal.Length`?
+```{r}
+iris$Species[iris$Petal.Length == max(iris$Petal.Length)]
+```
+
+
+

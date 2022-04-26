@@ -1,0 +1,119 @@
+---
+title:  Practica - Fechas - Diplomatura UNSAM
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+```{r setup, message = FALSE,echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE,include = TRUE,message = FALSE)
+
+```
+## Cargamos librerias
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+library(TTR)
+```
+
+## Cargamos la base
+**Recordatorio**: Estamos trabajando con una muestra del 2% de los casos diarios, de allí que los totales diarios de casos sólo representan dicha proporción.  
+
+```{r message=FALSE, warning=FALSE}
+base.covid <- readRDS("../Fuentes/base_covid_sample.RDS")
+```
+
+## Práctica Guiada   
+
+Veamos una aplicación frecuente que se le ha dado a esta información. En tanto el registro de los casos baja los fines de semana, la información sobre la cantidad de casos ha tendido a presentarse en términos de **promedios móviles**.     
+
+ - En primera instancia debemos filtrar de la base de datos aquellos casos confirmados.  
+ - Para simplificar el ejercicio, tomemos en consideración sólo las fechas posteriores al 2020-05-01 (momento a partir del cual tenemos datos todos los días)
+ - Creamos la variable **dia.de.semana** para tener noción de lo que ocurre los sábados y domingos en relación al resto de la semana 
+ - Un paso central es generar la medida de resumen de la cantidad de casos diario. Para ello agrupamos por **fecha_diagnostico** (también agrupo por **dia.de.semana** para conservar dicha variable)
+ - Aplicamos el `summarise()` utilizando la función **`n()`** que nos permite hacer el conteo de casos por cada variable agrupadora (en este caso, por cada día )
+ - Desagrupamos con `ungroup()` el objeto que obtenemos como resultado
+ - Filtramos también la fecha máxima (en la que se descargó la base de datos) en tanto no están completos todos los registros
+
+```{r}
+casos.por.dia <- base.covid %>% 
+  filter(clasificacion_resumen == "Confirmado",
+         fecha_diagnostico >= "2020-05-01") %>% 
+  mutate(dia.de.semana = wday(fecha_diagnostico,label = TRUE)) %>% 
+  group_by(fecha_diagnostico,dia.de.semana) %>% 
+  summarise(casos = n()) %>% 
+  ungroup() %>% 
+  filter(fecha_diagnostico != max(fecha_diagnostico))
+
+casos.por.dia
+```
+<br> 
+**Antes de continuar con el cálculo de la media móvil. ¿Se les ocurre una forma de verificar rápidamente que ciertos días de la semana sean propensos a registrar menos casos?**
+<br> 
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+casos.por.dia %>% 
+  group_by(dia.de.semana) %>% 
+  summarise(casos.totales.muestra = sum(casos))
+```
+<br>  
+ 
+ - Una vez que contamos con los casos diarios, podemos proceder a aplicar la media móvil.
+ - Afortunadamente, hay muchos paquetes en R que cuentan con una función específica para realizar este procedimiento. Entre ellos el paquete **TTR**, tiene la función  ``SMA()`` ("simple moving average") que nos permite especificar una variable y la ventana de tiempo hacia atrás para calcular los promedios.
+
+```{r}
+casos.media.movil <- casos.por.dia %>% 
+  mutate(media.movil = SMA(x = casos,n = 7))
+casos.media.movil
+```
+
+```{r echo=FALSE}
+ggplot(casos.media.movil,aes(x = fecha_diagnostico))+
+  labs(title = "Media móvil de 7 días  - Casos confirmados de Covid",
+       subtitle = "Muestra del 2% de casos diarios por departamento. Total País",
+       x = "Fecha",
+       y = "Cantidad de casos confirmados")+
+#geom_col(aes(y = casos))+
+geom_line(aes(y = media.movil,colour =""))+
+  theme(legend.position = "none")
+
+```
+## Otros ejericios de prácitca   
+ - Estimar a lo largo de toda la base la cantidad de **casos mensuales** según la variable de **clasificación_resumen** ("Confirmados", "Sospechosos" y "Descartados") . Tomar como fecha relevante la fecha del diagnóstico
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+base.covid %>% 
+  filter(!is.na(fecha_diagnostico)) %>% 
+  mutate(anio = year(fecha_diagnostico),
+         mes = month(fecha_diagnostico)) %>% 
+  group_by(anio,mes,clasificacion_resumen) %>% 
+  summarise(casos = n())
+
+```
+
+ - ¿Cual ha sido el tiempo promedio de tardanza del diagnóstico en cada una de las provincias? Considerar la distancia entre las variables fecha_diagnostico y fecha_inicio_sintomas
+
+```{r eval=FALSE, warning=FALSE, include=FALSE} 
+base.covid.fechas <- base.covid %>% 
+  mutate(tiempo.diagnostico = fecha_diagnostico - fecha_inicio_sintomas,
+         anio.inicio.sint = year(fecha_inicio_sintomas),
+         mes.inicio.sint = month(fecha_inicio_sintomas))
+
+base.covid.fechas %>% 
+  group_by(residencia_provincia_nombre) %>% 
+  summarise(tiempo.promedio = mean(tiempo.diagnostico,na.rm = T)) %>% 
+  arrange(tiempo.promedio)
+```
+ - ¿Cual fue el caso con mayor tiempo transcurrido entre la fecha de inicio de sintomas y su fecha de diagnóstico? ¿En qué departamento y provincia ocurrió? Detallar año y mes del caso en cuestión
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+ejercicio2 <- base.covid.fechas %>% 
+  mutate(tiempo.diagnostico = fecha_diagnostico - fecha_inicio_sintomas,
+         anio.inicio.sint = year(fecha_inicio_sintomas),
+         mes.inicio.sint = month(fecha_inicio_sintomas)
+         ) %>% 
+  filter(tiempo.diagnostico == max(tiempo.diagnostico,na.rm = T))
+
+ejercicio2 %>% 
+  select(residencia_departamento_nombre,residencia_provincia_nombre,
+         tiempo.diagnostico,fecha_inicio_sintomas,fecha_diagnostico,
+         anio.inicio.sint,mes.inicio.sint)
+```

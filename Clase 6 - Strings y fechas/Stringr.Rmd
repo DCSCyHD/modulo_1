@@ -1,0 +1,430 @@
+---
+title: Manejo de Strings
+subtitle: 
+output:
+  html_notebook: 
+    toc: true
+    toc_float: true 
+---
+```{r setup, message = FALSE,echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE,include = TRUE,message = FALSE)
+
+```
+# Introducción
+
+- Junto con las imágenes y los audios, los textos son una fuente de datos no estructurados que se multiplicó en los últimos años.  
+
+- Para poder hacer uso de la información que contienen es necesario procesar las fuentes originales para alcanzar un formato estandarizado que nos permita tomar métricas o diseñar modelos para analizar dicha información.       
+
+La presente clase está destinada a introducir las principales funciones del paquete `stringr` (dentro del paquete `tidyverse`), herramienta para el procesamiento de variables de texto. Se abordarán también algunos procedimientos típicos para la limpieza de textos a partir de expresiones regulares ^[Esta clase está inspirada tanto en el capítulo 14 del libro [R for Data Science](https://r4ds.had.co.nz/introduction.html) como en el capítulo 10 del [Curso de introducción a Data Science](https://diegokoz.github.io/intro_ds_bookdown/). Allí pueden profundizar algunos aspectos que exceden los alcances de la clase].
+
+```{r,message=FALSE,warning=FALSE}
+ #install.packages("rtweet")
+library(rtweet) # descargar info de twitter
+library(tidyverse)
+library(RVerbalExpressions)
+```
+
+# Fuente de Info
+En la carpeta de *Fuentes/Bases Adicionales* tienen un archivo denominado "vacuna.tweets.RDS", el mismo tiene 10.000 registros descargados de twitter con el texto "vacuna" como motor de búsqueda.    
+
+El mismo fue descargado con el paquete [__rtweet__](https://rtweet.info/). Tiene un montón de funcionalidades para acceder a información de twitter (aunque de forma limitada sin poner el billete).     
+
+Dejo comentado el código que utilicé para descargar los datos. La función **search_tweets** nos permite descargar data de los últimos 6 a 9 días específicando un texto clave de busqueda. El límite permitido por twitter es de 18 mil registros, pero la función tiene un parametro para realizar una iteraración y acceder a mayor cantidad de casos. Si quieren replicar algo del estilo, para poder acceder a la información primero deben crear un [_token__](https://rtweet.info/articles/auth.html) de usuario.   
+
+```{r}
+# chusmeen la cantidad de especificaciones que se le pueden dar a la funcion search_tweets
+
+#?search_tweets 
+
+ 
+# vacuna.tweets <- search_tweets(q = "vacuna",
+#                                 n = 10000,
+#                                 include_rts = FALSE,
+#                                 lang ="es")
+
+# saveRDS(vacuna.tweets,'../Fuentes/Bases adicionales/vacuna.tweets.RDS')
+
+vacuna.tweets<- readRDS('../Fuentes/Bases adicionales/vacuna.tweets.RDS')
+```
+
+
+
+El dataframe tiene 90 variables, veamos que pinta tienen los datos seleccionando algunas de las principales.
+```{r}
+vacuna.tweets.select <- vacuna.tweets %>% 
+  select(text,name,screen_name,created_at,location,
+         favorite_count,retweet_count)
+
+head(vacuna.tweets.select)
+```
+<br>
+Aparecen muchas cosas que vamos a querer descartar para analizar el texto:  
+
+- Links a paginas web
+- Caracteres especiales ("",?,#)
+- Códigos correspondientes a imágenes
+
+# Expresiones regulares
+
+Un elemento fundamental para la manipulación del texto son las [expresiones regulares](https://stringr.tidyverse.org/articles/regular-expressions.html). Éstas sirven para captar _patrones_ que aparecen en el texto y luego operar sobre ellos (extraerlos, reemplazarlos, realizar filtros en base a ellos, etc.)
+
+![](img/regex.png){width=1000}
+
+# stringr
+## Funciones básicas de operación con strings
+Veremos en primer instancia un conjunto de funciones sencillas del paquete `stringr`, que nos permiten  contar el largo de un string, extraer una determinada cantidad de catacteres, remover espacios en blanco y operar con mayúsuclas y minúsculas. Abordaremos estas funciones con ejemplitos sencillos, para luego usarlas sobre nuestra base de datos.          
+
+### str_length
+
+Con la función `str_length()` podemos ver el largo de un string.
+```{r}
+string1 <- c("SputnikV")
+str_length(string1)
+```
+
+Ojo que cuenta los espacios en blanco como un caracter.
+```{r}
+string2 <- "Sputnik V"
+str_length(string2)
+```
+>Ejercicio: Crear en la base de datos una nueva columna que identifique en cada caso el largo del tweet. Luego, mostrar el o los casos de máxima longitud de esta variable.
+
+```{r eval=FALSE, include=FALSE}
+vacuna.tweets %>% 
+  mutate(largo.tweet = str_length(text)) %>% 
+  top_n(n = 5,wt = largo.tweet)
+```
+
+
+
+### str_c
+Esta función tiene una operatoria similar a la función `paste`, pero aglutina todas sus variantes. 
+```{r}
+texto1 <- "qué"
+texto2 <- "variantes?"
+
+str_c(texto1,texto2)
+str_c(texto1,texto2,sep = " ")
+```
+En caso de querer unir dos vectores de texto con distinta cantidad de elementos, lo que hace la función es repetir el contenido del vector de menor dimensión las veces que sea necesario para alcanzar un vector de longitud equivalente al otro. A esto se lo denomina *reciclado* de vectores.     
+
+Si agregamos el argumento **collapse**, el resultado de la operación se comprimirá en un único valor
+```{r}
+
+texto3 <- c("hace","loco","bien") 
+
+str_c(texto1,texto3,sep = " ") # Vector de dimensión 3
+
+str_c(texto1,texto3,sep = " ",collapse = " - ") # Vector de dimensión 1
+
+```
+¿Para qué me puede servir lo anterior? Va un ejemplito
+```{r}
+telefonos <- c("4544-5645","4523-8972","4568-8945")
+str_c("011-",telefonos)
+```
+
+### str_sub
+
+La función `str_sub()` nos permite extraer los caracteres que se encuentran entre determinadas posiciones. Tiene tres argumentos: el string, el orden del caracter a partir del cual tiene que empezar a extraer y el orden del caracter hasta el cual tiene que extraer.
+
+```{r}
+#quiero el tercer caracter
+string1
+str_sub(string1,3,3)
+```
+
+```{r}
+#quiero del primero al cuarto
+str_sub(string1,1,4)
+```
+
+Puedo pasarle la posición de los caracteres con un menos para indicar que quiero que cuente de atrás para adelante. Por ejemplo, si quiero que traiga el anteúltimo caracter llamo a la posición como `-2`.
+
+```{r}
+#quiero la última y anteúltima posición
+str_sub(string1,-2,-1)
+```
+
+Otro uso que le podemos dar a este comando es el de reemplazar elementos. Supongamos que quiero reemplazar la última letra por un signo de pregunta.
+```{r}
+string2
+str_sub(string2,-1,-1) <- "?"
+string2
+```
+
+### str_trim
+Función para el manejo de espacios en blanco.
+
+Es frecuente que al trabajar con bases que contienen mucho texto aparezcan datos mal cargados o con errores de tipeo, que tienen espacios donde no debería haberlos. La función `str_trim()` permite que nos deshagamos de los espacios en blanco a izquierda, derecha o ambos lados de nuestro string.
+
+```{r}
+string3 <- c(" vacunacion   ", "en   ",  "   argentina")
+#Veamos el string
+string3
+```
+Quitamos los espacios en blanco a ambos lados con el argumento side='both'
+
+```{r}
+str_trim(string3, side = 'both')
+```
+
+Quitamos los espacios en blanco del lado izquierdo con el argumento side='left'
+```{r}
+str_trim(string3, "left")
+```
+
+### Mayúsculas y minúsculas
+
+Existen varias funciones para manipular las mayusculas/minúsculas de nuestros strings. A modo de sugerencia, siempre es convientiente manejarse con todos los caracteres en minúscula o en mayúscula. Esto ayuda a normalizar la información para armar mejor grupos, joinear tablas, etc.
+
+```{r}
+string1
+```
+
+```{r}
+#llevo todo a minúsculas
+str_to_lower(string1)
+```
+```{r}
+#llevo todo a mayúsculas
+str_to_upper(string1)
+```
+```{r}
+#llevo a mayúscula la primer letra de cada palabra
+str_to_title("vacunación en argentina")
+```
+
+> Ejercicio: Crear una nueva variable en la base de datos que contenga el texto de los tweets, transformando a todos los caracteres en minúsculas.
+
+```{r eval=FALSE, include=FALSE}
+resol <- vacuna.tweets %>% 
+  mutate(texto.min = str_to_lower(text))
+```
+
+
+## Funciones de detección de patrones 
+En esta instancia comlejizaremos un poco la operatoria con strings, ya que comenzaremos a ver funciones que operan *identificando un patrón* específico dentro del texto, para luego realizar diversas operaciones (separación del texto, reemplazo de caracteres, extracción de caracteres, filtrado de casos dento de una base, etc).      
+
+Volveremos aquí a nuestra base de datos de twitter. 
+```{r}
+tweets.ejemplo <- vacuna.tweets$text[1:3]
+tweets.ejemplo
+```
+### str_split
+
+La función `str_split()` nos permite partir un string de acuerdo a algún separador/patron (pattern) que definamos.      
+Por ejemplo, separemos las palabras de estos casos indicando como patrón a detectar la presencia de una `" "`
+
+```{r}
+tweets.ejemplo.split <- str_split(tweets.ejemplo,pattern = " ")
+
+tweets.ejemplo.split 
+```
+
+Notemos que esta funcion nos devuelve una lista, si les quedan dudas recuerden que pueden chequearlo así `class(tweets.ejemplo.split)`. ¿Qué nos dice esta salida respecto a cómo está compuesta esta lista? La lista tiene tres elementos numerados con `[[]]`. Cada uno de los elementos es un vector. En el primer caso podemos ver que el vector es de longitud 18 ,el segundo de 44, y el tercero de 52
+
+```{r}
+# Si queremos acceder al primer elemento de la lista
+tweets.ejemplo.split[[1]]
+```
+```{r}
+# Si queremos acceder al primer elemento del primer elemento (vector) de la lista 
+tweets.ejemplo.split[[1]][1]
+
+```
+
+¿Cómo operan estas funciones de detección de patrones? Empiezan a "recorrer" un string de texto de izquierda a derecha hasta encontrar el patrón especificado.          
+
+Muchas de las funciones del paquete *stringr* que operan detectando patrones, tienen una versión con el agregado del sufijo **_all**. Las que no presentan el sufijo identificarán sólo el primer caso de aparición, mientras que las que lo presentan identificarán todos los casos. Veamos un ejemplo.
+
+### str_replace
+Las funciones `str_replace()` y `str_replace_all()` de `stringr` nos permiten encontrar un patrón dentro de nuestro string y reemplazarlo por otro. 
+
+`str_replace` sólo reemplaza la primera ocurrencia del patron mientras que `str_replace_all()` reemplaza todas las ocurrencias.   
+
+Volviendo a nuestros primeros casos, si vemos el primer tweet aparece un caracter que representa un signo de corazón. Supongan que cada vez que aparezca queremos remplazarlo por un espacio en blanco
+```{r}
+primer.tweet<- tweets.ejemplo[1]
+primer.tweet
+```
+Veamos la diferencia de ambas funciones
+
+```{r}
+# Reemplaza solo la primer ocurrencia.
+str_replace(string = primer.tweet,
+            pattern = "♥",
+            replacement = "")
+```
+
+```{r}
+# Reemplazamos todas las ocurrencias de este patrón (en este caso sólo 1 caracter)
+str_replace_all(string = primer.tweet,
+                pattern = "♥️",
+                replacement = "")
+
+```
+
+> Ejercicio: Crear en la base de datos una nueva columna, que contenga el texto de los tweets, pero que reemplace todos los signos de puntuación por un espacio vacío.
+
+```{r eval=FALSE, include=FALSE}
+resol <- vacuna.tweets %>% 
+  mutate(texto.sin.puntos = str_replace_all(string = text,
+                                            pattern = ".",
+                                            replacement = " " 
+                                            ))
+```
+
+
+### str_detect
+
+La función `str_detect()` realiza una comprobación lógica respecto a la existencia de una cierta expresión dentro de nuestros strings. Nos reporta `VERDADERO` o `FALSO` de acuerdo encuentre o no la expresión que estamos buscando.    
+Por ejemplo, veamos en estos tweets si contienen el texto "Astra", en referencia a Astrazeneca 
+ 
+```{r}
+str_detect(tweets.ejemplo, "Astra")
+```
+
+¿Para qué nos sirve una comprobación lógica de este estilo? Principalmente nos servirá para filtrar casos dentro de un listado más grande.             
+Trabajemos con nuestro dataframe  completo. Por ejemplo, quedemosnos en nuestra base los casos que mencionan "Astrazeneca".
+
+```{r}
+base.filtrada <- vacuna.tweets %>% 
+  filter(str_detect(string = text,
+                    pattern =  "Astra"))
+
+nrow(base.filtrada)
+```
+¿Qué pasa si la expresión que estaba buscando está escrita de distintas maneras?                   
+
+Al igual que en los filtros, en el texto que utilizamos como expresión regular podemos usar el caracter `|` como la expresión lógica **O**. Los `()` también tienen aquí un uso similar al lenguaje lógico de R, al permitir segmentar una expresión regular en distintas partes
+
+```{r}
+base.filtrada <- vacuna.tweets %>% 
+  filter(str_detect(string = text,
+                    pattern =  "Astra|astra"))
+
+nrow(base.filtrada)
+
+####Opción análoga
+base.filtrada2 <- vacuna.tweets %>% 
+  filter(str_detect(string = text, pattern = "(A|a)stra"))
+
+nrow(base.filtrada2)
+```
+
+Una opción un poco más recomendable: Siempre transformar todo a mínuscula o mayuscula antes de buscar detectar un patrón.  
+
+```{r}
+base.filtrada <- vacuna.tweets %>% 
+  mutate(text = str_to_lower(text)) %>% 
+  filter(str_detect(string = text, pattern = "astra"))
+
+nrow(base.filtrada) # Ganamos más casos.
+```
+> Ganamos más casos. ¿Cuales pueden haber sido?
+
+###str_extract 
+La funciones `str_extract` y `str_extract_all` nos permiten extraer de nuestros strings, determinados patrones específicados.     
+
+Su utilización cobrará más sentido cuando veamos como diseñar patrones  más complejos. 
+
+```{r}
+str_extract(tweets.ejemplo, "@")
+```
+
+```{r}
+str_extract_all(tweets.ejemplo, "@")
+```
+
+
+¿Qué pasa cuando queremos identificar patrones un poco más complejos en nuestros datos? Para ello podemos generar una expresión regular a través de distintos caracteres especiales. Nos acotamos acá a los más frecuentes, y aplicamos algunos casos sencillos. Pueden ver todas las variantes en este [Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/regex.pdf)
+
+
+# Anchors (Anclas)
+Por default, una expresión regular lo que hace es "matchear" el patrón específicado, sin importar en qué lugar del string se encuentre. Las denominada "anclas", nos permiten indicar en qué lugar del texto queremos buscar el patrón en cuestión
+
+- El caracter `^` permite indicar el principio de un string.
+- El caracter `$` permite indicar el final de un string.
+
+
+Veamos algunos ejemplos sencillos. Mediante `str_detect`, y utilizando el caracter `^` podemos realizar un filtro que se sólo con aquellos tweets que *comienzan en* con una mención (@)
+```{r}
+comienzan_c_mencion <- vacuna.tweets %>% 
+  filter(str_detect(string = text, pattern = "^@"))
+
+head(comienzan_c_mencion$text)
+```
+<br>
+**Pregunta**: ¿Cómo podríamos hacer para ubicar todos los tweets que comienzan con una mención (@) o un hashtag (#) ?
+```{r include=FALSE}
+mencion_o_hashtag <- vacuna.tweets %>% 
+  filter(str_detect(string = text, pattern = "^(@|#)"))%>%
+  sample_n(6)
+
+mencion_o_hashtag
+```
+<br>
+
+<br>
+Los que terminan con el hashtag #COVID19
+```{r}
+vacuna.tweets %>% 
+  filter(str_detect(string = text, pattern = "#COVID19$")) %>% 
+  select(text)
+
+```
+
+# Caracteres especiales
+
+Son formas de referirnos de forma general a ciertos tipos de caracteres. 
+
+![](img/characters.png){width=300}
+    
+Por ejemplo, podría identificar los tweets que arranquen con algún digito 
+```{r}
+vacuna.tweets %>% 
+  filter(str_detect(string = text,
+                    pattern = "^[[:digit:]]")) %>%
+  select(text)
+```
+<br>
+
+# RVerbalExpressions
+¿Qué hacemos cuando se torna muy díficil el armado de expresiones regulares?
+
+La librería de **RVerbalExpressions** provee una serie de funciones con nombres intuitivos, para diseñar expresiones regulares en formato tidy, mediante la aplicación secuencial de ellas. Si queremos borrar las menciones, en este caso necesitamos construir una expresion que encuentre un texto iniciado en "@" e identifique todos los caracteres que le sigan hasta que aparezca un espacio.
+```{r}
+menciones <- rx() %>% 
+  rx_find('@')%>% 
+  rx_anything_but(value = ' ')
+
+menciones
+```
+Recordemos nuestros ejemplos
+```{r}
+tweets.ejemplo
+```
+
+```{r}
+ejemplos.limpieza<- str_remove_all(tweets.ejemplo, pattern = menciones)
+ejemplos.limpieza
+```
+
+Armo una expresión para eliminar hashtags
+```{r echo=TRUE}
+hasthags <- rx() %>% 
+  rx_find('#')%>% 
+  rx_anything_but(value = ' ')
+
+ejemplos.limpieza<- str_remove_all(ejemplos.limpieza, pattern = hasthags)
+ejemplos.limpieza
+```
+
+Eliminemos todo aquello que no comienza por un caracter alfanumérico o por un espacio en blanco (lo hacemos con un replace por un espacio vacío)
+```{r}
+str_replace_all(ejemplos.limpieza,
+                pattern = "[^[:alnum:][:blank:]]",
+                replacement = "")
+```

@@ -1,0 +1,251 @@
+---
+title: Clase 5 - Programacion Funcional - UNSAM
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+date: ""
+---
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción 
+En este material veremos algunas herramientas un poco más avanzadas que sirven para escalar procedimientos que vimos anteriormente y/o para automatizar (parte de) nuestro trabajo. La idea es un primer acercamiento a herramientas que  evitan tener que constantemente copiar nuestro código y modificar algunos paramentos o variables, cada vez que queramos realizar procedimientos parecidos. 
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+base.covid <- readRDS('../Fuentes/base_covid_sample.RDS')
+```
+
+
+# Estructuras Condicionales  
+
+## if
+La función *if* se utilizará para correr código condicionalmente.   
+
+Su funcionamiento es el siguiente:     
+```if(condicion){codigo a ejecutar si se cumple la condición}```
+
+```{r,warning=FALSE}
+if( 2+2 == 4){
+  print("Todo marcha bien")
+}
+
+```
+
+```{r,warning=FALSE}
+if( 2+2 == 148.24){
+  print("R, tenemos un problema")
+}
+
+```
+
+## if + else
+La función **if** también puede utilizarse para indicar la ejecución de uno u otro fragmentos de código según se cumpla o no una condición. Para ello, agregamos **`else{}`** y el código a ejecutar en caso de NO cumplimiento de la condición, de la siguiente manera:   
+
+```if(condicion){codigo a ejecutar si se cumple la condición} else {codigo a ejecutar si NO se cumple la condición}```      
+
+
+
+Veamos un ejemplo. Queremos que nuestro código nos indique si la fecha de ejecución del código coincide con la de la última actualización de la base de datos. Caso contrario, queremos que se nos indique la diferencia de tiempo entre ambas. 
+```{r}
+ultima.actualiz.base<- unique(base.covid$ultima_actualizacion)
+ultima.actualiz.base
+```
+¿Es dicha fecha igual a la fecha actual de ejecución del código? Para ello podemos usar la función **Sys.Date()** de RBase
+```{r}
+
+if (ultima.actualiz.base == Sys.Date()) {
+    "Datos al día de hoy"
+} else{
+  Sys.Date() - ultima.actualiz.base 
+}
+```
+
+# Funciones propias
+
+La creación de __funciones__ propias nos permite automatizar todas aquellas partes del código que se repiten mucho. Una vez diseñadas, funcionan igual que cualquier comando. 
+
+Arranquemos con un ejemplo básico. Podemos crear una función que al indicare dos valores, devuelva la suma de ellos
+```{r}
+suma <- function(valor1, valor2) {
+  valor1+valor2
+}
+
+
+suma
+```
+En el paso anterior simplemente creamos una función que se guardará en nuestro ambiente como cualquier otro objeto. Para utilizar la función, debemos hacerlo como con cualquier otra, específicandole los argumentos que queremos que tome.
+
+```{r}
+suma(valor1 = 5,valor2 = 6)
+```
+
+
+Obviamente las funciones no son sólo para variables numéricas. Por ejemplo, podemos pegar dos strings con una flecha en el medio
+
+```{r}
+funcion_prueba <- function(parametro1,parametro2) {
+  paste(parametro1, parametro2, sep = " <--> ")
+}
+
+funcion_prueba(parametro1 = "A ver", parametro2 = "que pasa")
+
+```
+
+También podemos asignar un valor por default para los parametros en caso de que el usuario no defina su valor al utilizar la función.
+
+```{r}
+Otra_funcion_prueba <- function(parametro1,
+                                parametro2 = "colgado") {
+ 
+   paste(parametro1, parametro2, sep = ", ")
+  
+}
+
+
+Otra_funcion_prueba(parametro1 = "Hola")
+
+```
+
+Las funciones que creamos nosotros permanecen en el ambiente de R temporariamente. Cuando removemos los objetos del ambiente, la función deja de existir. Por ende, debemos incorporarla en cada uno de los scripts en la cual la necesitemos. Una buena práctica, es incorporar nuestras funciones útiles al comienzo de cada script junto a la carga de las librerías.                         
+
+Vale mencionar que __lo que ocurre en una función, queda en la función__ excepto que explícitamente estemos devolviendo el resultado "en consola". Podemos imprimir pasos intermedios para que se visualicen al correr la función incluyendo el comando `print()`. 
+
+Las funciones siempre devuelven el último objeto que se crea en ellas, o si explicitamente se utiliza el comando `return()`.
+
+Para ver esto, voy a diseñar una función que calcule el ratio entre el valor máximo de un vector y el valor mínimo:
+```{r}
+calcula_ratio <- function(vector) {
+  
+vector.max  <-   max(vector)
+vector.min  <-   min(vector)
+
+return(vector.max/vector.min)
+}
+
+```
+
+Al correr una función definida de esta manera, en el ambiente solo se conserva en nuestro objeto **ratio** el valor devuelto con `return()`. *vector.max* y *vector.min* no quedan almacenados.
+```{r}
+ratio <- calcula_ratio(vector = c(1,2,3,4))
+
+ratio
+```
+Ahora bien, cuando pensamos en funciones más complejas cuya operatoria no es tan obvia, pueden agregarse chequeos, y operatorias condicionales con alguna advertencia para que el usuario pueda comprender un error, o tenga mayor noción de qué está haciendo la función.       
+
+Que pasa si el usuario de la función no pasa un vector numérico?
+```{r, error=TRUE}
+calcula_ratio(vector = c(1,2,3,4,"H"))
+```
+
+En este caso, podríamos haber seteado un mensaje más amigable que permita al usuario comprender su error.
+```{r, error=TRUE}
+calcula_ratio <- function(vector) {
+  
+assertthat::assert_that(is.numeric(vector),
+                        msg = "Ingresa un vector numérico")
+  
+
+vector.max  <-   max(vector)
+vector.min  <-   min(vector)
+
+
+return(vector.max/vector.min)
+}
+
+calcula_ratio(vector = c(1,2,3,4,"H"))
+
+```
+Una vuelta de tuerca más! Qué pasa si dentro del vector tenemos un 0? 
+```{r}
+calcula_ratio(vector = c(1,2,3,4,0))
+```
+Supongamos que queremos que en ese caso nuestra función descarte ese valor, calcule igualmente el ratio, pero dando aviso de ello
+```{r}
+calcula_ratio <- function(vector) {
+  
+assertthat::assert_that(is.numeric(vector),
+                        msg = "Ingresa un vector numérico")
+  
+if(any(vector==0)){
+
+  warning("Mensaje: Hay un cero en tu vector, no lo tomo en cuenta para el calculo")
+  vector <- vector[vector!=0]
+  
+}
+vector.max  <-   max(vector)
+vector.min  <-   min(vector)
+
+
+return(vector.max/vector.min)
+}
+
+```
+Veamos que pasa
+```{r}
+calcula_ratio(vector = c(456,78,1232,6565,12,0))
+```
+# Loops
+
+Un __loop__ es una estructura de código que nos permite aplicar iterativamente un mismo conjunto de comandos, variando el valor de una variable. Por ejemplo:
+
+```{r,warning=FALSE}
+for(i in 1:10){
+   print(i^2)
+}
+```
+
+Esto se lee como : "Recorre cada uno de los valores (i) del vector numérico 1 a 10, y para cada uno de ellos imprimí el cuadrado (i^2)".                  
+Uno puede especificar la palabra que desee que tomé cada uno de los valores que debe tomar. En el ejemplo anterior fue **i**, pero bien podría ser la "**Valores**"  
+
+```{r}
+for(Valores in 1:10){
+   print(Valores^2)
+  
+}
+```
+
+Un loop puede iterar sobre cualquier tipo de vector, independientemente de lo que contenga.
+   
+
+¿Cómo operar con un loop sobre la base de datos? Por lo general, lo más frecuente es que querramos realizar un mismo procedimiento sobre distintos valores de cierta variable de nuestra base. Para eso es util crear un vector con las categorías que esta puede tomar. Ese vector será el que utilizaremos para iterar.
+```{r}
+clasificacion.casos<- unique(base.covid$clasificacion_resumen)
+clasificacion.casos
+```
+**Una utilización típica de los loops**: Recorrer las categorías de una variable y hacer el mismo gráfico para cada una de ellas. 
+
+```{r,fig.height=8}
+for(categoria in clasificacion.casos){
+   
+base.filtrada  <- base.covid %>% 
+    filter(clasificacion_resumen  == categoria)  
+    
+if(categoria!= "Sin Clasificar"){ #No grafico los "Sin Clasificar"
+  
+hist(x = base.filtrada$edad,
+     main = categoria,
+     xlab = "Edad",
+     xlim = c(0,130))
+
+}
+
+}
+```
+Hagamos el mismo loop para la variable de fallecidos, para darle más sentido al ejercicio.
+```{r}
+for(categoria in c("SI","NO")){
+   
+base.filtrada  <- base.covid %>% 
+    filter(fallecido  == categoria)  
+    
+hist(x = base.filtrada$edad,
+     main = paste0("Fallecido: ",categoria),
+     xlab = "Edad",
+     xlim = c(0,130))
+}
+```
+
+

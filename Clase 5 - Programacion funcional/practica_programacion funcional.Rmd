@@ -1,0 +1,55 @@
+---
+title: práctica - programacion funcional
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+date: ""
+---
+## estructuras condicionales   
+
+- Levantar la base de datos de casos del covid19.  
+- Diseñar una estructura de código condicional que calcule la edad promedio de los individuos **únicamente si la base de datos cuenta con menos de 100.000 registros**
+```{r}
+```
+- Diseñar una estructura de código condicional que:
+   - calcule la cantidad de casos diarios confrimados **por departamento**, en caso de que la base de datos cuenta con menos de 100.000 registros**
+   - calcule la cantidad de casos diarios confrimados **por provincia**, si la base de datos cuenta con 100.000 registros o más**
+
+
+```{r}
+
+```
+
+
+## definición de funciones
+
+Crear una **función** llamada _HolaMundo_ que imprima el texto "Hola mundo"
+
+```{r}
+
+
+```
+
+Crear una **función** que devuelva la sumatoria de los números enteros comprendidos entre 1 y un parámetro _x_ a definir.
+```{r}
+
+
+
+```
+
+Crear una **función** que dado un parametro _vector_:
+
+- Imprima (**print()**) la media del vector
+- Devuelva (**return()**) el ratio entre el máximo y mínimo valor de un vector
+- Garantizar que la función sólo opere en caso de que todos los valores del vector índicado sean números positivos.
+
+```{r}
+
+```
+## loops
+A partir del gráfico sencillo utilizado en clase: diseñar un loop que imprima un gráfico por cada provincia con la cantidad de casos diarios
+```{r}
+
+```
+
