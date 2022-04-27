@@ -9,7 +9,7 @@ Los materiales para la cursada se encuentran estructurados por clases. En esta p
 
 __Clase 1 - Introduciendo a R y RBase:__
 
-[![](img/Download.png)](Clase%201%20-%20R%20Base.rar)
+[![](img/Download.png)](Clase_1_R_base.rar)
 
 
 + Temas de clase: 
