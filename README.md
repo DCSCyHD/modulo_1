@@ -1,8 +1,16 @@
+> Docentes: Pablo Tiscornia y Guido Weksler.
+
+# Materiales de cursada
+Los materiales para la cursada se encuentran estructurados por clases. En esta página encontrarán en cada módulo un botón de descarga de los contenidos. 
+
 # Programa
 
 ### Módulos y contenidos
 
 __Clase 1 - Introduciendo a R y RBase:__
+
+[![](img/Download.png)](Clase%201%20-%20R%20Base.rar)
+
 
 + Temas de clase: 
   +	Descripción del programa “R”. Lógica sintáctica del lenguaje y comandos básicos 
@@ -11,7 +19,7 @@ __Clase 1 - Introduciendo a R y RBase:__
   +	Operadores de asignación, lógicos y aritméticos
   +	Definición de Objetos: Valores, Vectores, DataFrames y Tibbles, Listas
   +	Tipos de variable (numérica, de caracteres, factores, lógicas)
-  +	Funciones en R
+  +	Funciones
 
 <br>
 
