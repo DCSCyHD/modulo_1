@@ -15,7 +15,7 @@ En este material veremos algunas herramientas un poco más avanzadas que sirven 
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
-base.covid <- readRDS('../Fuentes/base_covid_sample.RDS')
+base.covid <- readRDS('bases/base_covid_sample.RDS')
 ```
 
 

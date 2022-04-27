@@ -1,11 +1,10 @@
 ---
 title: Clase 1 - Introducción a R y Rstudio - R Base 
-subtitle: Diplomatura en Ciencias Sociales Computacionales y Humanidades Digintales - UNSAM
+subtitle: Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales - UNSAM
 output: 
   rmdformats::downcute
 ---
-  
-  
+
 # Descripción del programa        
 
 
@@ -14,15 +13,15 @@ output:
 
 <br>
 
-## ¿Que es R?
+## ¿Qué es R?
 
 - Lenguaje para el procesamiento y análisis estadístico de datos
 
-- Software Libre
+- Software libre y de código abierto
 
-- Sintaxis Básica: R base
+- Sintaxis básica: R base
 
-- Sintaxis incremental[^1]: El lenguaje se va ampliando por aportes de Universidades, investigadores/as, usuarios/as y empresas privadas, organizados en librerías (o paquetes)
+- Sintaxis incremental[^1]: El lenguaje se va ampliando por aportes de Universidades, investigadores/as, usuarios/as y empresas privadas, organizados en paquetes
 
 <br>
 
@@ -43,7 +42,7 @@ El _entorno_ más cómodo para utilizar el _lenguaje_ __R__ es el _programa_ __R
 
 ![Pantalla Rstudio](img/rstudio_pantalla.png)
 
-## ¿Por qué elegir R?
+## Diferencias con otros sofwtares
 
 ![fuente: http://ucanalytics.com/blogs/choose-your-data-mining-statistics-software/](img/Statistical Softwares.PNG)   
 
@@ -56,10 +55,9 @@ Algunas de las características principales de R:
 - Extensible a otros lenguajes y usos (presentación como esta, diseño de aplicaciones)
 - Facilidad para automatizar procesamientos periódicos
 
-![fuente: Salas, C. (2008). ¿ Por qué comprar un programa estadístico si existe R?. Ecología austral, 18(2), 223-231](img/Salas_porqueR.PNG)   
+<br>
 
-
-# Lógica sintáctica en R base
+# Lógica sintáctica en R base     
 
 Con _R base_ nos referimos a los comandos básicos que vienen incorporados en el R, sin necesidad de cargar paquetes complementarios. 
 
@@ -201,7 +199,20 @@ B <- 72
 (A < 60 | B < 65) 
 
 ```
+> Practica:     
+1) Crear un objeto llamado "mi_numero" que almecene un número que ustedes quieran. ¿Qué pasa si lo intentan nombrar como "mi numero"?         
+2) Realizar alguna operación matemática con el objeto y guardar el resultado como un nuevo objeto llamado "otro_numero".     
+3) Comprobar lógicamente si el segundo objeto es igual a 10.    
+4) Comprobar lógicamente si alguno de los dos objetos es mayor a 10     
 
+
+```{r,eval=FALSE,include=FALSE}
+mi_numero <- 9
+otro_numero <- mi_numero *2
+otro_numero == 10
+(otro_numero > 10 | mi_numero > 10) 
+
+```
 
 ## Caracteres especiales
 
@@ -265,54 +276,53 @@ Un vector es un conjunto de valores de la misma clase. Puede haber vectores núm
 Para crear un __vector__ utilizamos el comando ```c()```, de combinar.
 ```{r echo=TRUE}
 # Vector numérico
-A <- c(1, 2, 2,2,3,2,1, 2, 1, 1, 1)
-class(A)
+vec_num <- c(1, 2, 2,2,3,2,1, 2, 1, 1, 1)
+class(vec_num)
 
 # Vector de caracteres
-B <- c("Lunes","Viernes","Viernes","Jueves",
+dias_char <- c("Lunes","Viernes","Viernes","Jueves",
        "Martes", "Martes","Miercoles","Martes",
        "Miercoles")
-class(B)
+class(dias_char)
 
-# Vector de tipo factor
-C <- Sys.Date()+2
+# Vector de tipo fecha
+vec_fecha <- Sys.Date()+2
 
-print(C)
-class(C)
+class(vec_fecha)
 
 ```
-<br>
-####Vectores de tipo 'factor'    
+La función **table** nos permite hacer un tabulado univariado de la cantidad de casos para cada categoría de un vector (también sirve para tabulados bivariados). Contemos la cantidad de casos por dia de la semana
+```{r}
+table(dias_char)
+```
+
+#### Vectores de tipo 'factor'    
   
 En general se usa para datos ordinales. Es decir, para una variable cualitativa para la cual necesitamos establecer cierta ordinalidad en sus posibles valores.      
 
-**Crear o transforma una variable en *factor* nos será sumamente útil para realizar gráficos siguiendo un orden deseado para las categorías** 
+**Crear o transforma una variable en *factor* nos será sumamente útil para realizar tablas o gráficos siguiendo un orden deseado para las categorías** 
 
 ```{r echo=TRUE}
 # Una propiedad del factor: las etiquetas.
-dias_factor <- factor(B,
+dias_factor <- factor(dias_char,
                  levels = c("Lunes",
                             "Martes",
                             "Miercoles",
                             "Jueves",
                             "Viernes"))
 class(dias_factor)
-dias_factor
 ```
-
-La diferencia entre un _character_ y un _factor_ es que el último tiene solo algunos valores permitidos (levels), con un orden interno predefinido
-
-
-<br>
+Veamos ahora como se muestra un tabulado con la variable como factor
+```{r}
+table(dias_factor)
+```
+La diferencia entre un _character_ y un _factor_ es que el último tiene solo algunos valores permitidos (levels), con un orden interno predefinido.   
 
 Para almacenar como factor una variable, el software está internamente asignando un número a cada categoría. **Tener cuidado si piensan operarluego sobre dicha variable **
 ```{r}
 as.numeric(dias_factor)
 ```
-
-<br>
-
-####Operaciones con vectores      
+#### Operaciones con vectores           
 
 Con los vectores numéricos se pueden hacer operaciones como, por ejemplo:
 * sumarle 2 a cada elemento del __vector__ anterior.
@@ -329,9 +339,7 @@ E
 ```
 ```1:3``` significa que queremos todos los números enteros desde 1 hasta 3. 
 
-<br>
-
-#### Métodos de acceso    
+#### Métodos de acceso      
 
 Para trabajar con ciertos valores de un vector (u otro objeto de más de una dimensión) existen los denominados *métodos de acceso*. 
 Para acceder a un valor de cierto vector utilizamos los signos ```[ ]``` y podemos buscarlo/s a través del número de orden
@@ -362,6 +370,21 @@ E
 
 # Tener cuidado al modificar el tipo de uno de los valores y no el de todos los del objeto:
 class(E)
+```
+
+> Practica:     
+1) Crear un vector numerico de 7 valores, elegir numeros entre 1 y 50        
+2) Comprobar logicamente cuales de ellos son menores a 25    
+3) Extraer del vector el 3er y 5to valor      
+4) Extraer del vector todos los valores menores a 25      
+
+
+```{r,eval=F,include=F}
+vec_practica <- c(4,53,5,1,7,30,21)
+vec_practica < 25
+vec_practica[c(3,5)]
+vec_practica[vec_practica < 25]
+
 ```
 
 
@@ -425,8 +448,6 @@ Datos$EDAD[Datos$AGLOMERADO==32]
 ```{r error=TRUE}
 mean(Edad_Aglo32)
 ```
-
-
 <br>
 
 ### Listas
