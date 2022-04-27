@@ -11,7 +11,7 @@ __Clase 1 - Introduciendo a R y RBase:__
   +	Operadores de asignación, lógicos y aritméticos
   +	Definición de Objetos: Valores, Vectores, DataFrames y Tibbles, Listas
   +	Tipos de variable (numérica, de caracteres, factores, lógicas)
-  +	Funciones en R
+  +	Funciones
 
 <br>
 
