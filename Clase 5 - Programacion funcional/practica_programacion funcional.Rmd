@@ -1,39 +1,69 @@
 ---
-title: práctica - programacion funcional
+title: Practica - Programación Funcional 
+subtitle: Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales - UNSAM
 output:
   html_notebook:
     toc: yes
     toc_float: yes
 date: ""
 ---
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(include = F, eval = F)
+```
 ## estructuras condicionales   
 
 - Levantar la base de datos de casos del covid19.  
-- Diseñar una estructura de código condicional que calcule la edad promedio de los individuos **únicamente si la base de datos cuenta con menos de 100.000 registros**
+- Diseñar una estructura de código condicional que nos imprima un aviso (función `print()`) de que estamos trabajando con una muestra  **únicamente en caso de que la cantidad de casos de la base sea menor a 1 millón**
 ```{r}
+library(tidyverse)
+base.covid <- readRDS('bases/base_covid_sample.RDS')
+
 ```
+
+
+```{r}
+if (nrow(base.covid)<1000000) {
+  print("GUARDA! ESTO ES UNA MUESTRA!")
+}
+```
+
+
 - Diseñar una estructura de código condicional que:
    - calcule la cantidad de casos diarios confrimados **por departamento**, en caso de que la base de datos cuenta con menos de 100.000 registros**
    - calcule la cantidad de casos diarios confrimados **por provincia**, si la base de datos cuenta con 100.000 registros o más**
 
 
 ```{r}
-
+if (nrow(base.covid)<100000) {
+  base.covid %>%
+    group_by(residencia_departamento_nombre) %>% 
+    summarise(casos = n())
+} else{
+  base.covid %>%
+    group_by(residencia_provincia_nombre) %>% 
+    summarise(casos = n())
+}
 ```
 
 
 ## definición de funciones
 
-Crear una **función** llamada _HolaMundo_ que imprima el texto "Hola mundo"
-
+Crear una **función** llamada _Saludo_ que tenga un parámetro para pasarle un nombre, y que al ejecutarla imprima un texto con algún saludo hacia esa persona
 ```{r}
+Saludo <- function(tu_nombre){
+  print(paste0("Hola, ",tu_nombre,". Todo tranquilo, che?"))
+}
 
-
+Saludo(tu_nombre = "Guido")
 ```
 
 Crear una **función** que devuelva la sumatoria de los números enteros comprendidos entre 1 y un parámetro _x_ a definir.
 ```{r}
+sumatoria_enteros <- function(x){
+sum(1:x)
+  }
 
+sumatoria_enteros(x = 10)
 
 
 ```

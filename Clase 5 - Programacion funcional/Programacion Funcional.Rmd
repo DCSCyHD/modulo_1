@@ -1,23 +1,23 @@
 ---
-title: Clase 5 - Programacion Funcional - UNSAM
-output:
-  html_notebook:
-    toc: yes
-    toc_float: yes
-date: ""
+title: Clase 5 - Programacion Funcional
+subtitle: Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales - UNSAM
+output: 
+  rmdformats::downcute
 ---
 ```{r setup,include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introducción 
-En este material veremos algunas herramientas un poco más avanzadas que sirven para escalar procedimientos que vimos anteriormente y/o para automatizar (parte de) nuestro trabajo. La idea es un primer acercamiento a herramientas que  evitan tener que constantemente copiar nuestro código y modificar algunos paramentos o variables, cada vez que queramos realizar procedimientos parecidos. 
+En este material veremos algunas herramientas un poco más avanzadas que sirven para escalar procedimientos que vimos anteriormente y/o para automatizar (parte de) nuestro trabajo. La idea es un primer acercamiento a herramientas que  evitan tener que constantemente copiar nuestro código y modificar algunos paramentos o variables, cada vez que queramos realizar procedimientos parecidos.                 
+
+
+Trabajaremos con una muestra (de elaboración propia) de la base de casos de covid en Argentina. La misma contiene una selección aleatoria de 2% de los casos diarios registrados por localidad. No se recomienda utilizar esta muestra más que para ejercitación.   
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 base.covid <- readRDS('bases/base_covid_sample.RDS')
 ```
-
 
 # Estructuras Condicionales  
 
@@ -38,7 +38,6 @@ if( 2+2 == 4){
 if( 2+2 == 148.24){
   print("R, tenemos un problema")
 }
-
 ```
 
 ## if + else
@@ -59,7 +58,7 @@ ultima.actualiz.base
 if (ultima.actualiz.base == Sys.Date()) {
     "Datos al día de hoy"
 } else{
-  Sys.Date() - ultima.actualiz.base 
+  paste0("Datos actualizados al ", ultima.actualiz.base) 
 }
 ```
 
@@ -94,7 +93,7 @@ funcion_prueba(parametro1 = "A ver", parametro2 = "que pasa")
 
 ```
 
-También podemos asignar un valor por default para los parametros en caso de que el usuario no defina su valor al utilizar la función.
+También podemos asignar un **valor por default** para alguno de los parametros. Este es el valor que va a tomar el parametro en caso de que el usuario no lo defina al ejecutar la función
 
 ```{r}
 Otra_funcion_prueba <- function(parametro1,
@@ -104,9 +103,10 @@ Otra_funcion_prueba <- function(parametro1,
   
 }
 
-
+```
+Veamos que pasa al ejecutar la función completando solo el parametro 1:   
+```{r}
 Otra_funcion_prueba(parametro1 = "Hola")
-
 ```
 
 Las funciones que creamos nosotros permanecen en el ambiente de R temporariamente. Cuando removemos los objetos del ambiente, la función deja de existir. Por ende, debemos incorporarla en cada uno de los scripts en la cual la necesitemos. Una buena práctica, es incorporar nuestras funciones útiles al comienzo de cada script junto a la carga de las librerías.                         
@@ -140,12 +140,12 @@ Que pasa si el usuario de la función no pasa un vector numérico?
 calcula_ratio(vector = c(1,2,3,4,"H"))
 ```
 
-En este caso, podríamos haber seteado un mensaje más amigable que permita al usuario comprender su error.
+En este caso, podríamos haber seteado un mensaje más amigable que permita al usuario comprender su error. Lo podemos hacer con el paquete **assertthat**
 ```{r, error=TRUE}
 calcula_ratio <- function(vector) {
   
 assertthat::assert_that(is.numeric(vector),
-                        msg = "Ingresa un vector numérico")
+                        msg = "Ingresá un vector numérico!")
   
 
 vector.max  <-   max(vector)
@@ -207,15 +207,35 @@ for(Valores in 1:10){
 }
 ```
 
-Un loop puede iterar sobre cualquier tipo de vector, independientemente de lo que contenga.
-   
+Un loop puede iterar sobre cualquier tipo de vector, independientemente de lo que contenga.     
 
-¿Cómo operar con un loop sobre la base de datos? Por lo general, lo más frecuente es que querramos realizar un mismo procedimiento sobre distintos valores de cierta variable de nuestra base. Para eso es util crear un vector con las categorías que esta puede tomar. Ese vector será el que utilizaremos para iterar.
+**Una utilización típica de los loops**: Recorrer las categorías de una variable y hacer el mismo gráfico para cada una de ellas.         
+
+
+Vamos a pedirle perdón a lxs docentes del módulo de visualización, y ver un ejemplo con un gráfico super sencillo.  Queremos un histograma de la cantidad de registros por edad, según la clasificación del caso. Veamos que categorías toma la variable `clasificacion_resumen`
+
 ```{r}
 clasificacion.casos<- unique(base.covid$clasificacion_resumen)
 clasificacion.casos
 ```
-**Una utilización típica de los loops**: Recorrer las categorías de una variable y hacer el mismo gráfico para cada una de ellas. 
+**Recomendación: **Antes de hacer un loop (ya sea para gráficos u otros procesamientos), prueben primero obtener lo que quieren para una categoría, y luego lo extienden hacia el resto. En este sentido, armemos el gráfico para la categoría "Confirmado"     
+
+```{r}
+base.confirmados  <- base.covid %>% 
+    filter(clasificacion_resumen  == "Confirmado")  
+    
+  
+hist(x = base.confirmados$edad,
+     main = "Casos Confirmados",
+     xlab = "Edad",
+     xlim = c(0,130))
+
+```
+Una vez que tenemos el gráfico que nos gusta, ahora si armemos el *loop*.    
+
+¿Cómo operar con un loop sobre la base de datos? Lo más frecuente es que querramos realizar un mismo procedimiento sobre distintos valores de cierta variable de nuestra base. Para eso es util el vector `clasificacion.casos` que indicaba las cateogrías que tomaba nuestra variable de interés. Ese vector será el que utilizaremos para iterar.       
+  
+Miren las diferecias entre el código anterior y el siguiente:
 
 ```{r,fig.height=8}
 for(categoria in clasificacion.casos){
@@ -223,14 +243,12 @@ for(categoria in clasificacion.casos){
 base.filtrada  <- base.covid %>% 
     filter(clasificacion_resumen  == categoria)  
     
-if(categoria!= "Sin Clasificar"){ #No grafico los "Sin Clasificar"
   
 hist(x = base.filtrada$edad,
      main = categoria,
      xlab = "Edad",
      xlim = c(0,130))
 
-}
 
 }
 ```
