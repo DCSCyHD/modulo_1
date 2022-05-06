@@ -97,54 +97,6 @@ Algunas referencias que inspiran este material:
 https://es.r4ds.hadley.nz/flujo-de-trabajo-proyectos.html   
 https://slides.djnavarro.net/project-structure/   
 
----
-
-class: inverse, center, middle
-
-# Paquetes
-
-<html>
-  <div style='float:left'></div>
-  <hr color='#EB811B' size=1px width=1125px>
-</html>
-
----
-
-# Paquetes  
-.pull-left[
-¿Qué son?, ¿para qué nos sirven?   
-
-```{r echo=FALSE, eval=TRUE}
-knitr::include_graphics("img/travolta.gif")
-```
-]
-
-
---
-.pull-right[
-✔️ Nuevas funciones, bases de datos y objetos de R en general, complementarios a lo contenido en R Base.
-
-✔️ Aportes de Universidades, investigadores, usuaries y empresas, para expandir las capacidades del lenguaje R y facilitar su uso.  
-]   
-
----
-
-#Paquetes    
-¿Cómo se usan?   
-
-- Podemos descargarlos e instalarlos con el siguiente comando: 
-
-```r
-install.packages("nombre_del_paquete") 
-```
-
-- Sólo es necesario instalar el paquete una vez por computadora. Se descargarán de la pagina de [CRAN](https://cran.r-project.org) los archivos correspondientes, ubicándose en el directorio donde hayamos instalado el programa
-
-
-- Una vez instalado el paquete, cada vez que abramos una nueva sesión de R y querramos utilizar el mismo debemos **cargarlo al ambiente de trabajo** mediante la siguiente función:    
-```r
-library(nombre_del_paquete)
-```
 
 ---
 

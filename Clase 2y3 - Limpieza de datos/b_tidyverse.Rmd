@@ -1,0 +1,1172 @@
+---
+title: "Procesando datos con el paquete tidyverse"
+subtitle: "Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: [default, metropolis, metropolis-fonts]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+---
+
+
+<style type="text/css">
+
+.remark-slide-content {
+    font-size: 25px;
+    padding: 1em 1em 1em 1em;
+}
+
+```{css, eval = TRUE, echo = FALSE}
+
+.remark-code{
+  line-height: 1.5; font-size: 80%
+}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+```
+
+
+```{r xaringan-scribble, echo=FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                                  PIZARRA                                 ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+xaringanExtra::use_scribble()
+```
+
+
+```{r xaringanExtra-clipboard, echo=FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                                  cLIPBOARD                               ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-Copiar código\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+```
+
+
+```{r xaringan-fit-screen, echo=FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                          PRESENTACION VS RSTUDIO                         ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+xaringanExtra::use_fit_screen()
+```
+
+
+```{r xaringan-extra-styles, echo = FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                          ESTILOS EXTRA -RESALTADO-                       ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
+
+
+
+
+```{r include = FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                              Cargo librerías                             ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+library(flipbookr)
+library(tidyverse)
+library(xaringanthemer)
+library(xaringan)
+library(gt)
+library(icons)
+library(here)
+library(gt)
+
+options(scipen = 999)
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##  ~ Cargo la base de trabajo  ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+base_inmuebles <- read.csv("bases/inmuebles-estado-nacional.csv") %>% 
+  mutate(str_trim(calle))
+```
+
+---
+class: inverse, center, middle
+
+
+# Paquetes
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+ 
+
+---
+
+# Paquetes  
+
+## ¿Qué son?
+
+--
+
+✔️ Los paquetes son, principalmente, funciones que no están en r base, pero también bases de datos y objetos de R en general.
+
+--
+
+## ¿Para qué nos sirven?   
+
+✔️ Ayudan a resolver problemas que con r base no se podía, o que era muy difícil hacerlo.
+ 
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R1.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R2.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R3.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R4.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R5.PNG)
+background-size: contain
+  
+---
+
+#Paquetes    
+
+## INSTALACIÓN
+
+- Podemos descargarlos e instalarlos con el siguiente comando: 
+
+```r
+install.packages("nombre_del_paquete") 
+```
+
+- Sólo es necesario instalar el paquete una vez por computadora.
+
+---
+
+#Paquetes  
+
+## INVOCACIÓN
+
+.pull-left[
+
+- Una vez instalado, cada vez que abramos una nueva sesión de R y querramos utilizar el paquete debemos **cargarlo al ambiente de trabajo** mediante la función:    
+
+```r
+library(nombre_del_paquete)
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE, eval=TRUE, out.width= '500px'}
+
+knitr::include_graphics("img/invocacion.gif")
+
+```
+]
+
+
+---
+
+class: inverse, middle, center
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+# [Tidyverse](https://www.tidyverse.org/)
+
+
+---
+# Tidyverse
+
+.pull-left[
+#### `Tidyverse` es una colección de paquetes de R, pensados para trabajar en "ciencia de datos". 
+ 
+]
+
+.pull-right[
+
+
+```{r echo=FALSE, fig.align = 'center'}
+knitr::include_graphics(here("img", "tidyverse.png"))
+```
+]
+
+---
+class: inverse, middle, center
+
+
+# ¿Por qué tidyverse?
+
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+ 
+---
+# __¿Por qué tidyverse?__
+
+
+- ### Orientado a ser leído y escrito por y para seres humanos
+
+
+--
+
+
+- ### Funciones no pensadas para una tarea específica sino para un proceso de trabajo
+
+.pull-left[
+```{r echo=FALSE, fig.align = 'center', out.width='100%'}
+knitr::include_graphics(here("img", "circuito_del_dato.png"))
+```
+]
+
+--
+
+.pull-right[
+```{r echo=FALSE, fig.align = 'center', out.width='100%'}
+knitr::include_graphics(here("img", "circuito_del_dato_tidy.png"))
+```
+]
+
+--
+
+
+- ### Su comunidad, basada en los principios del código abierto y trabajo colaborativo 
+
+
+
+
+---
+# __Instalación y uso__
+
+* Sólo una vez (por computadora):
+```r
+install.packages("tidyverse")
+```
+
+--
+
+* En cada inicio de sesión de R o Rstudio:
+
+```r
+library(tidyverse)
+```
+ 
+--
+
+.pull-left[
+
+_No es necesario esto:_
+
+```r
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("ggplot2")
+```
+]
+
+.pull-right[
+
+_Ni esto:_
+
+```r
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+]
+
+
+---
+# Hoja de ruta
+
+### Presentación de los paquetes `dplyr` y `tidyr` 
+
+
+.pull-left[
+
+## ✔️ lectura / escritura
+
+_{readr}_:
+
+☑️ `read_csv()` ☑️ `read_table()`
+
+_{haven}_:
+
+☑️ `read_sav()` ☑️ `read_dat()`
+
+☑️ `read_sas()` 
+
+## ✔️ magrittr
+
+☑️ `%>%`
+
+
+## ✔️ tidyr
+    
+☑️ `pivot_longer()` ☑️ `pivot_wider()` 
+
+]
+
+
+.pull-right[
+
+## ✔️ dplyr
+
+☑️️ `select()`   ☑️️ `filter()`
+
+☑️️ `mutate()`   ☑️️ `rename()`
+
+☑️️ `arragne()`  ☑️️ `summarise()`
+
+☑️️ `group_by()`
+
+]
+
+
+
+---
+class: middle, center, inverse
+
+
+# Lectura / escritura de archivos
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+ 
+---
+# Lectura / escritura de archivos
+
+## Hay varios paquetes que ayudan a la lectura de archivos, los principales son:
+
+
+.pull-left[
+
+### Paquete `{readr}`
+
+- `read_csv()`   --> *.csv*
+
+- `read_table()` --> *.txt*
+
+- `read_rds()`   --> *.rds*
+]
+
+.pull-right[
+
+### Paquete `{haven}`
+
+- `read_sav()` --> SPSS
+
+- `read_dta()` --> STATA
+
+- `read_sas()` --> SAS
+
+]
+
+ 
+
+---
+# Base de trabajo
+
+En el material de la clase se puso a disposición una base de ejercicio. La informaciuón con la que se cuenta es aquella referida a los _Inmuebles Propios del Estado Nacional y Alquilados_, provista por la Dirección Nacional del Registro de Bienes Inmuebles - Agencia de Administración de Bienes del Estado - Jefatura de Gabinete de Ministros. 
+
+
+--
+
+Con la siguiente sentencia puedo importarla a R:
+
+```r
+base_inmuebles <- read_csv(file = "C:/Users/pablo/Documents/Pablo/Cursos R/R+UNSAM/cohorte2022/modulo_1/Clase 2y3 - Limpieza de datos/bases/inmuebles-estado-nacional.csv",
+                           col_names = TRUE)
+```
+
+---
+class: middle, center, inverse
+  
+  EL PIPE
+
+```{r echo=FALSE, out.width = '20%', fig.align = 'center'}
+knitr::include_graphics(here("img", "pipe.png"))
+```
+
+_<p style="color:grey;" align:"center">Una forma de escribir</p>_
+
+---
+# magrittr
+
+.pull-left[
+
+### **Sin EL PIPE:**
+
+```{r eval=F}
+### Calculo la media
+round(prop.table(table(`base_inmuebles$pais`)), digits = 2)
+```
+
+]
+
+--
+
+.pull-right[
+
+### **Con EL PIPE**
+
+
+```{r eval = F}
+
+### Cargo la librería
+library(tidyverse)
+
+### Calculo la media
+`base_inmuebles$pais` %>% 
+  table() %>% 
+  prop.table() %>% 
+  round(digits = 2)
+```
+
+]
+
+
+---
+class: middle, center, inverse
+  
+
+```{r echo=FALSE, out.width = '30%', fig.align = 'center'}
+knitr::include_graphics(here("img", "logo dplyr.png"))
+```
+
+---
+# dplyr
+
+## Funciones del paquete dplyr:
+
+<br>
+
+| __Función__   | __Acción__ |
+| :---          | ---:   |
+| `select()`    | *selecciona o descarta variables*|
+| `filter()`    | *selecciona filas*|
+| `mutate()`    | *crea / edita variables*|
+| `rename()`    | *renombra variables*|
+| `group_by()`  | *segmenta en funcion de una variable*|
+| `summarize()` | *genera una tabla de resúmen*|
+
+---
+
+
+class: inverse, middle, center
+
+# __select()__
+ 
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+_<p style="color:grey;" align:"center">Elije o descarta columnas de una base de datos</p>_
+ 
+
+---
+# select()
+
+
+### La función tiene el siguiente esquema:
+
+```r
+base_de_datos %>% 
+  select(variable_1, variable_2, variable_n)
+```
+
+
+
+---
+# select()
+
+### Supongamos que quiero trabajar con las variables que permiten ubicar a cada uno de los inmuebles del Estado alrededor del país y también del mundo.
+
+
+---
+# select() - por nombre de variable
+
+
+### selecciono las columnas que deseo de la base de datos:
+
+```r
+base_inm_seleccion <- `base_inmuebles` %>% 
+  select(codigo_del_inmueble, pais, provincia, departamento)
+```
+
+```{r echo = FALSE}
+base_inm_seleccion <- base_inmuebles %>% 
+  select(codigo_del_inmueble, pais, provincia, departamento)
+```
+
+--
+
+### Chequeo la operación:
+
+```{r}
+colnames(base_inm_seleccion)
+```
+ 
+
+---
+# select() - por posición de la columna
+
+
+### Supongamos que quiero las columnas __"codigo_del_inmueble"__, __"calle"__ y __"numero"__ 
+
+--
+
+1) Chequeo la posición de las columnas que deseo:
+
+```{r}
+colnames(base_inmuebles)
+```
+
+
+
+---
+# select() - por posición de la columna
+
+2) Aplico la función `select()` en base a la posición de las columnas:
+
+
+```r
+base_covid_seleccion2 <- base_covid %>% 
+  select(1, 7, 8)
+```
+
+```{r echo = FALSE}
+base_inm_seleccion2 <- base_inmuebles %>%
+  select(1, 7, 8)
+```
+
+--
+
+### chequeo seleccion:
+
+```{r}
+colnames(base_inm_seleccion2)
+```
+
+
+---
+
+```{r select_1, include=FALSE}
+base_inmuebles %>% #BREAK
+  select(8:10) #BREAK
+```
+
+`r chunk_reveal("select_1", widths = c(1.1, 1.9), title = "# Otra forma de selecionar")`
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+```{r select_2, eval = F, echo = F}
+base_inmuebles %>%
+  select(superficie_aproximada_m2:latitud)
+```
+
+`r chunk_reveal("select_2", widths = c(1.3, 1.7), title = "# Otra forma de selecionar")`
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+`r chunk_reveal("select_3", widths = c(1.3, 1.7), title = "# Otra forma de selecionar")`
+
+```{r select_3, eval = F, echo = F}
+base_inmuebles %>%
+  select(starts_with("s"))
+```
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+`r chunk_reveal("select_4", widths = c(1.3, 1.7), title = "# Otra forma de selecionar")`
+
+
+```{r select_4, eval = F, echo = F}
+base_inmuebles %>%
+  select(ends_with("o"))
+```
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+`r chunk_reveal("select_5", widths = c(1.3, 1.7), title = "# Otra forma de selecionar")`
+
+
+```{r select_5, eval = F, echo = F}
+base_inmuebles %>%
+  select(contains("it"))
+```
+
+
+---
+class: inverse, middle, center
+
+
+# _PRÁCTICA_
+
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+ 
+
+---
+class: inverse, middle
+
+## Práctica
+
+
+1) Crear un objeto en donde importamos la base de inmuebles del Estado (recordar tener en cuenta la extensión del archivo)
+
+2) Crear otro objeto en donde selecciono 3 columnas de interés según sus nombres
+
+3) Crear otro objeto en donde selecciono 3 columnas de interés según su posición
+
+
+---
+class: inverse, middle, center
+
+# filter()
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+_<p style="color:grey;" align:"center">Define los casos (filas) en base a una condición</p>_
+ 
+
+---
+# filter()
+
+
+### La función tiene el siguiente esquema:
+
+```r
+base_de_datos %>% 
+  filter(variable_x >= categoria)
+```
+
+--
+
+
+### **Caso:** Supongamos que deseo quedarme sólo con los inmuebles ubicados en Estados Unidos:
+
+
+---
+
+
+`r chunk_reveal("filter", widths = c(1.3, 1.7), title = "# filter()")`
+
+
+```{r filter, eval = F, echo = F}
+base_inmuebles %>% 
+  select(codigo_del_inmueble, pais) %>%  #BREAK
+  filter(pais == "Estados Unidos")
+```
+
+
+---
+# filter()
+
+
+#### Operadores para filtrar:
+
+<br>
+
+.pull-left[
+
+|Condición |Acción              |
+| :---     | :---               |
+|          |                    |
+| `==`     | *igual*            |
+| `%in%`   | *incluye*          |
+| `!=`     | *distinto*         |
+| `>`      | *mayor que*        |
+| `<`      | *menor que*        |
+| `>=`     | *mayor o igual que*|
+| `<=`     | *menor o igual que*|
+
+]
+
+.pull-right[
+
+| Operador | Descripción |
+| :---     | :---               |
+|          |                    |
+| `&`      | *y* - Cuando se cumplen ambas condiciones   |
+| &#124;   | *o* - Cuando se cumple una u otra condición   |
+
+
+]
+
+---
+# filter()
+
+### **Caso:** Quiero quedarme tanto con los inmuebles de la provincia de _Cordoba_ como los de **(o)** la provincia _Buenos aires_, **y** que sean _propios_ (no alquilados):
+
+
+<br>
+
+- Provincias: Córdoba o Buenos Aires (`provincia == "Cordoba" | provincia == "Buenos Aires")`);
+
+--> Alternativa:
+
+- Provincias: Córdoba o Buenos Aires (`provincia %in% c("Cordoba", "Buenos Aires")`);
+
+--
+
+- Inmuebles propios (`situacion_inmueble  == "Propiedad del ENA"`);
+
+
+---
+
+
+```{r filter_1, eval = F, echo = F}
+base_inmuebles %>% 
+  select(pais, 
+         provincia, 
+         situacion_inmueble) %>% #BREAK
+  filter(provincia %in% c("Cordoba","Buenos Aires")) %>% #BREAK
+  filter(situacion_inmueble == "Propiedad del ENA") 
+```
+
+
+`r chunk_reveal("filter_1", widths = c(1.3, 1.7), title="#filter")`
+
+---
+class: inverse, middle, center
+
+# _PRÁCTICA_
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+
+---
+class: inverse, middle
+
+# Práctica
+
+- Crear un objeto que contenga las variables __codigo_del_inmueble__, __pais__, __superficie__. Filtrar los los inmuebles que se encuentren argentina y cuya superficie sea menor a 100 mts2.
+
+
+---
+class: inverse, middle, center
+
+# _mutate()_
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+_<p style="color:grey;" align:"center">Creoa / edita variables (columnas)</p>_
+
+---
+# mutate()
+
+### La función tiene el siguiente esquema:
+
+```r
+base_de_datos %>% 
+   mutate(var_nueva = var_1 + var_2)
+```
+
+
+### **Caso:** Supongamos que quiero crear la variable `direccion`, uniendo la información de la `calle` y el  `numero`:
+
+<br><br>
+
+
+---
+
+`r chunk_reveal("mutate_1", widths = c(1.4, 1.6), title="# mutate()")`
+
+```{r mutate_1, eval = F, echo = F}
+base_inmuebles %>%
+  select(pais, calle, numero) %>% #BREAK
+  filter(pais == "Argentina") %>% #BREAK
+  mutate(direccion = paste0(calle, " ", numero))
+```
+
+
+---
+# mutate() - case_when()
+
+### Función complementaria: `case_when()`, utilizada para recodificación de variables:
+
+```{r echo=FALSE, fig.align = 'center', out.width='100%'}
+knitr::include_graphics(here("img", "mutate_case.png"))
+```
+
+
+---
+
+
+```{r mutate_2, eval = F, echo = F}
+base_inmuebles %>%
+  select(pais, situacion_inmueble) %>% #BREAK
+  mutate(sit_inmb_2 = case_when(situacion_inmueble == "Propiedad del ENA" ~ "Propio",
+                                situacion_inmueble == "Alquilado" ~ "Alquilado"))
+```
+
+`r chunk_reveal("mutate_2", widths = c(1.4, 1.6), title = "# Recodificando con mutate() y case_when()")`
+
+
+---
+# mutate()
+
+
+## Caso: _Quiero crear una variable superficie en rangos de mts2:_
+
+--
+
+Breve chequeo de la distribución de la variable numérica:
+
+```{r}
+summary(base_inmuebles$superficie_aproximada_m2)
+```
+
+---
+
+
+```{r mutate_3, eval = F, echo = F}
+base_inmuebles %>%
+  select(pais, superficie_aproximada_m2) %>% #BREAK
+  mutate(sup_rango = case_when(superficie_aproximada_m2 %in% c(0:200)   ~ "0 a 400",
+                               superficie_aproximada_m2 %in% c(201:400) ~ "401 a 800",
+                               superficie_aproximada_m2 %in% c(401:600) ~ "801 a 1200",
+                               superficie_aproximada_m2 %in% c(601:800) ~ "1201 a 1400",
+                               superficie_aproximada_m2 > 800           ~ "Mayor a 1400"))
+```
+
+`r chunk_reveal("mutate_3", widths = c(1.4, 1.6), title = "# Recodificando con mutate() y case_when()")`
+
+---
+
+```{r mutate_4, eval = F, echo = F}
+base_inmuebles %>%
+  select(pais, superficie_aproximada_m2) %>% #BREAK
+  mutate(superficie_aproximada_m2 = round(superficie_aproximada_m2, digits = 0)) %>% #BREAK
+  mutate(sup_rango = case_when(superficie_aproximada_m2 %in% c(0:200)   ~ "0 a 400",
+                               superficie_aproximada_m2 %in% c(201:400) ~ "401 a 800",
+                               superficie_aproximada_m2 %in% c(401:600) ~ "801 a 1200",
+                               superficie_aproximada_m2 %in% c(601:800) ~ "1201 a 1400",
+                               superficie_aproximada_m2 > 800           ~ "Mayor a 1400"))
+```
+
+`r chunk_reveal("mutate_4", widths = c(1.4, 1.6), title = "# Recodificando con mutate() y case_when()")`
+
+---
+class: inverse, middle, center
+
+# _PRÁCTICA_
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+---
+class: inverse
+
+
+# Práctica
+
+- Recodificar la variable __provincia__, para que los valores _Ciudad Autónoma de Buenos Aires_ pasen a ser _CABA_.
+
+- Crear una nueva variable con la __superficie en mts2__ redondeada a _1 dígito_
+
+
+
+---
+class: inverse, middle, center
+
+# _summarise()_
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+_<p style="color:grey;" align:"center">Resume la información en una nueva tabla</p>_
+
+---
+# summarise()
+
+<br><br>
+<br><br>
+
+```r
+base_de_datos %>% 
+        summarise(var1_resumen = sum(var1),
+                  var2_media   = mean(var2),
+                  var2_desvio  = sd(var2),
+                  var2_cv      = var2_desvio / var2_media * 100)
+```
+
+---
+
+
+```{r summarise_1, eval = F, echo = F}
+base_inmuebles %>%
+  select(codigo_del_inmueble, superficie_aproximada_m2) %>% #BREAK
+  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
+            max = max(superficie_aproximada_m2, na.rm = TRUE),
+            media = mean(superficie_aproximada_m2, na.rm = TRUE),
+            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
+            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
+            cv = desvio / media * 100)
+```
+
+`r chunk_reveal("summarise_1", widths = c(1.3, 1.7), title = "# _summarise()_")`
+
+---
+class: inverse, middle, center
+
+# _group_by()_
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+_<p style="color:grey;" align:"center">Aplica una operación sobre la población de forma segmentada</p>_
+
+---
+# group_by()
+
+<br><br>
+<br><br>
+
+```r
+base_de_datos %>% 
+        group_by(variable_de_corte) #<<
+```
+
+---
+
+
+```{r group_by_1, eval = F, echo = F}
+base_inmuebles %>%
+  select(codigo_del_inmueble, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
+  group_by(situacion_inmueble) %>% 
+  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
+            max = max(superficie_aproximada_m2, na.rm = TRUE),
+            media = mean(superficie_aproximada_m2, na.rm = TRUE),
+            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
+            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
+            cv = desvio / media * 100)
+```
+
+`r chunk_reveal("group_by_1", widths = c(1.3, 1.7), title = "# _group_by()_")`
+
+---
+# summarise()
+
+## **Caso:** Queremos conocer la cantidad de inmuebles por provincia y la superficie media, según si el inmueble es propio o alquilado. Al mismo tiempo, queremos eliminar casos outliers, que puedan estar distorcionando los resultados de los promedios.
+
+---
+
+
+```{r group_by_2, eval = F, echo = F}
+base_inmuebles %>% 
+  select(pais, provincia, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
+  filter(pais == "Argentina") %>% 
+  filter(superficie_aproximada_m2 < 10000) %>% #BREAK
+  mutate(provincia = case_when(provincia == "Ciudad Autonoma de Buenos Aires" ~ "CABA",
+                               TRUE ~ provincia),
+         situacion_inmueble = case_when(situacion_inmueble == "Propiedad del ENA" ~ "Propio",
+                                        situacion_inmueble == "Alquilado" ~ situacion_inmueble)) %>% #BREAK
+  group_by(provincia, situacion_inmueble) %>% 
+  summarise(cantidad = n(),
+            media_sup_mts2 = mean(superficie_aproximada_m2, na.rm = TRUE)) %>% #BREAK
+  arrange(-cantidad) #BREAK
+```
+
+`r chunk_reveal("group_by_2", widths = c(1.4, 1.6), title = "# _group_by()_")`
+
+---
+class: middle, center, inverse
+  
+```{r echo=FALSE, out.width = '30%', fig.align = 'center'}
+knitr::include_graphics(here("img", "logo tidyr.png"))
+```
+
+---
+# Funciones del paquete tidyr:
+
+<br><br>
+<br><br>
+
+| __Función__      | __Acción__ |
+| :---             | ---:       |
+| `pivot_longer()` | *Transforma en filas varias columnas*|
+| `pivot_wider()`  | *transforma en columnas varias filas*|
+
+
+---
+# estructura de datos
+
+<br>
+
+.pull-left[
+
+```{r echo=FALSE, out.width = '80%', fig.align = 'center'}
+knitr::include_graphics(here("img", "dato_ancho.png"))
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE, out.width = '80%', fig.align = 'center'}
+knitr::include_graphics(here("img", "dato_largo.png"))
+```
+
+]
+
+
+---
+class: inverse, middle, center
+
+# _pivot_longer()_
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+_<p style="color:grey;" align:"center">Reestructura la base, apilando varias columnas en una. De ancho a largo</p>_
+
+---
+
+
+```{r pivot_longer_1, eval = F, echo = F}
+base_inmuebles %>%
+  select(codigo_del_inmueble, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
+  group_by(situacion_inmueble) %>% 
+  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
+            max = max(superficie_aproximada_m2, na.rm = TRUE),
+            media = mean(superficie_aproximada_m2, na.rm = TRUE),
+            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
+            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
+            cv = desvio / media * 100) %>% 
+  select(situacion_inmueble, media, mediana, desvio) %>% #BREAK
+  pivot_longer(cols = c(media, mediana, desvio), #<<
+               names_to = "variable",
+               values_to = "valor")
+```
+
+`r chunk_reveal("pivot_longer_1", widths = c(1.3, 1.7), title = "# _pivot_longer()_")`
+
+---
+class: inverse, middle, center
+
+# _pivot_wider()_
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+ 
+_<p style="color:grey;" align:"center">Reestructura la base, encolumnando varias filas de una variable. De largo a ancho</p>_
+
+---
+
+```{r, echo = F}
+base_largo <- base_inmuebles %>%
+  select(codigo_del_inmueble, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
+  group_by(situacion_inmueble) %>% 
+  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
+            max = max(superficie_aproximada_m2, na.rm = TRUE),
+            media = mean(superficie_aproximada_m2, na.rm = TRUE),
+            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
+            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
+            cv = desvio / media * 100) %>% 
+  select(situacion_inmueble, media, mediana, desvio) %>% #BREAK
+  pivot_longer(cols = c(media, mediana, desvio), #<<
+               names_to = "variable",
+               values_to = "valor")
+```
+
+```{r pivot_wider_1, eval = F, echo = F}
+base_largo %>%
+  pivot_wider(names_from = "variable", #<<
+              values_from = "valor")
+```
+
+`r chunk_reveal("pivot_wider_1", widths = c(1.3, 1.7), title = "# _pivot_wider()_")`
