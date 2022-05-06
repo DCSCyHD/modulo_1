@@ -25,7 +25,7 @@ __Clase 1 - Introduciendo a R y RBase:__
 
 __Clases 2 y 3 – Data wrangling – Tidyverse:__
  
- [![](img/Download.png)](Clase_2y3---tidyverse.rar)
+ [![](img/Download.png)](Clase_2y3---tidyverse.zip)
  
  
 + Temas de clase:
