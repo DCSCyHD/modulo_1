@@ -25,6 +25,9 @@ __Clase 1 - Introduciendo a R y RBase:__
 
 __Clases 2 y 3 – Data wrangling – Tidyverse:__
  
+ [![](img/Download.png)](Clase_2y3---tidyverse.rar)
+ 
+ 
 + Temas de clase:
   +	Lectura de bases de datos de distintos formatos/extensiones.
   +	Recomendaciones para análisis exploratorio de la base de datos 
