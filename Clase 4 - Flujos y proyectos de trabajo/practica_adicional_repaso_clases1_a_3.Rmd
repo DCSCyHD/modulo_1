@@ -17,93 +17,48 @@ library(openxlsx)
 
 ## Ejercicios práctica    
  
- - Abran un proyecto (o comiencen uno nuevo) e importen la base de datos sobre los casos de covid detallando la ruta desde el punto de partida del proyecto. Recuerden que dicha base es una muestra del 2% de los casos diarios.  
+ - Abran un proyecto (o comiencen uno nuevo) e importen la base de datos de inmuebles desde el punto de partida del proyecto.   
   
 ```{r eval=FALSE,message=FALSE, warning=FALSE,include=FALSE}
-base.covid <- readRDS("Fuentes/base_covid_sample.RDS")
+base.inmuebles <- read_csv("bases/inmuebles-estado-nacional.csv")
 ```
- - Aplique una función que permita obtener información sobre la distribución de la variable edad en nuestra base de datos
+ - Aplique una función que permita obtener información sobre la distribución de la variable `superficie_aproximada_m2` en nuestra base de datos
 ```{r eval=FALSE, warning=FALSE, include=FALSE} 
-summary(base.covid$edad)
+summary(base.inmuebles$superficie_aproximada_m2)
 ```
- - Eliminar de la base de datos los valores de edad menores a 0 
+ - Eliminar de la base de datos los casos con superficie menor a 100m2
 ```{r eval=FALSE, warning=FALSE, include=FALSE} 
-base.covid <- base.covid %>% 
-  filter(edad>0)
+base.inmuebles.grandes <- base.inmuebles %>% 
+  filter(superficie_aproximada_m2>100)
 ```
 
- - ¿Cual es el promedio de edad? (tras eliminar dichos valores)
+ - ¿Cual es el promedio de superficie? (tras eliminar dichos valores)
 ```{r eval=FALSE, warning=FALSE, include=FALSE} 
-mean(base.covid$edad,na.rm = TRUE)
+mean(base.inmuebles.grandes$superficie_aproximada_m2,na.rm = TRUE)
 ```
-- Calcular el promedio de edad de las personas fallecidas (pueden aplicar un filtro previo)
+
+- Volver a la base original. Calcular el promedio de superficie de las propiedades fuera de argentina (Pueden hacer un filtro como paso previo)
 
 ```{r eval=FALSE, warning=FALSE, include=FALSE} 
-base.fallecidos <- base.covid %>% 
-  filter(fallecido == "SI")
+base.exterior <- base.inmuebles %>% 
+  filter(pais != "Argentina")
   
-mean(base.fallecidos$edad,na.rm = TRUE)
+mean(base.exterior$superficie_aproximada_m2,na.rm = TRUE)
 ```
 
-- Crear un nuevo objeto que conserve solo los casos de la base con residencia en C.A.B.A  
-- ¿Cuantos casos en la base presenta cada comuna de la CABA?
+- Crear un nuevo objeto que conserve solo los casos de propiedades ubicadas dentro de Argentina
+
+- Ejecutar una función que me permita observar las unicas provincias que figuran en dicha base de datos.
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.argentina <- base.inmuebles %>% 
+  filter(pais == "Argentina")
+
+unique(base.argentina$provincia)
+```
+- ¿Cuantos casos en la base presenta cada provincia?
 ```{r eval=FALSE, warning=FALSE, include=FALSE} 
-base.caba <- base.covid %>% 
-  filter(residencia_provincia_nombre == "CABA")
-
-table(base.caba$residencia_departamento_nombre)
-```
-- Trabajemos nuevamente con  la base original. Ejecutar una función que me permita observar los distintos países de residencia de las personas que figuran en dicha base de datos.
-
-```{r eval=FALSE, warning=FALSE, include=FALSE}
-unique(base.covid$residencia_pais_nombre)
-```
-- Crear un nuevo objeto denominado **base.no.residentes** que conserve solo los casos de la base con residencia fuera de la argentina (excluir también los casos "SIN ESPECIFICAR").
-
-```{r eval=TRUE, warning=FALSE, include=FALSE}
-base.no.residentes <- base.covid %>%
- filter(! residencia_pais_nombre %in%  c("Argentina","SIN ESPECIFICAR"))
-
-# OPCION B Para hacer lo mismo
-# base.no.residentes <- base.covid %>% 
-#  filter(residencia_pais_nombre != "Argentina",
-#         residencia_pais_nombre != "SIN ESPECIFICAR")
-```
-
-- Más allá de observar los únicos valores de una variable, la función  ``unique()`` aplicada a un *dataframe* completo me permite eliminar filas duplicadas. Vean (y repliquen si quieren) el siguiente ejemplo:  
-```{r}
-ejemplo <- data.frame(nombre   = c("Pedro","Juan"  ,"Pepe" ,"Juan"   ,"Juan"),
-                      apellido = c("Perez","Varela","Ríos" ,"Varela" ,"Varela"),
-                      dni      = c(3734564,45456525,09784545,45456525,27000654))
-           
-
-ej.sin.duplicado<- ejemplo %>% 
-  unique()
-
-ej.sin.duplicado
-```
-```{r eval=TRUE, warning=FALSE, include=FALSE}
-base.no.residentes <- base.no.residentes %>% 
-  arrange(desc(carga_provincia_nombre))
-```
-
-
- - Un uso que se le puede dar a la función  ``unique()`` es obtener un listado de todas las combinaciones existentes entre los valores de ciertas variables de mi base de datos. Ejecuten el siguiente ejemplo, a partir del dataframe **base.no.residentes** creado anteriormente. ¿Que es lo que me dice esta tabla? (Aclaración: Puede figurarles en otro orden cuando lo ejecuten)
-```{r}
-combinaciones.residencia <- 
-  base.no.residentes %>% 
-  select(residencia_pais_nombre,carga_provincia_nombre) %>% 
-  unique()
-
-combinaciones.residencia
-```
-
- - Con una lógica similar construyan a partir de la base orignial un objeto **diccionario.provincias** que contenga un único registro por cada nombre de provincia existente y su respectivos códigos (tomar las variables de **residencia_provincia_nombre** y  **residencia_provincia_id**)
-```{r eval=FALSE, warning=FALSE, include=FALSE}
-diccionario.provincias <- 
-  base.covid %>% 
-  select(residencia_provincia_nombre,residencia_provincia_id) %>% 
-  unique()
+table(base.argentina$provincia)
 ```
 
 
@@ -112,21 +67,39 @@ diccionario.provincias <-
 length(11:24)
 ```
 
-- Utilizar ahora la función ``length()`` (en combinación con otra función) para observar cuantos valores únicos toma la variable **residencia_departamentos_id** en nuestra base de datos. Es decir, no queremos ver qué *ids* de departamento existen, sino contar cuantos *id* distintos existen
+- Utilizar ahora la función ``length()`` (en combinación con otra función) para observar cuantos valores únicos toma la variable **departamento** en nuestra base de datos. Es decir, no queremos ver qué departamentos existen, sino contar cuantos distintos existen
 
 ```{r eval=FALSE, warning=FALSE, include=FALSE}
-length(unique(base.covid$residencia_departamento_id))
+length(unique(base.argentina$departamento))
 ```
 
- - Crear una nueva variable en la base original, que clasifique a la población en rangos etarios. Luego elaborar un tabulado bivarado para observar el cruce de dicha variable con la variable "fallecido"
+ - Dentro de la base de inmuebles solo ubicados en argentina, crear una nueva variable que clasifique a los inmuebles en tres rangos de superficie (menor a 1000m2, entre 1000 y 15.000m2 y mayor a 15.000m2) Luego elaborar un tabulado bivarado para observar el cruce de dicha variable con la variable "situacion_inmueble"
 ```{r eval=FALSE, warning=FALSE, include=FALSE}
-base.c.grupos <- base.covid %>% 
-  mutate(grupos_etarios = case_when(edad %in% 0:60 ~"No riesgo",
-                                    edad > 60 ~"Grupo Riesgo"))
+base.c.grupos <- base.argentina %>% 
+  mutate(grupos_superficie = 
+           case_when(
+             superficie_aproximada_m2 < 1000 ~"Pequeña",
+             superficie_aproximada_m2 >= 1000 & superficie_aproximada_m2 <= 15000~"Media",
+             superficie_aproximada_m2 > 15000 ~"Grande"))
 
-table(base.c.grupos$grupos_etarios,base.c.grupos$fallecido)
+table(base.c.grupos$grupos_superficie,base.c.grupos$situacion_inmueble)
 ``` 
 
+- ¿Cuantos inmuebles de cada grupo de tamaño hay por provincia?
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.c.grupos %>% 
+  group_by(provincia,grupos_superficie) %>% 
+  summarise(casos = n())
+```
 
+- Exploren la funcion **complete()** y luego adapten el siguiente codigo a sus resultados del punto anterior. Que les permite hacer?
+
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+base.c.grupos %>% 
+  group_by(provincia,grupos_superficie) %>% 
+  summarise(casos = n()) %>% 
+  ungroup() %>% 
+  complete(provincia,grupos_superficie,fill = list("casos" = 0))
+```
 
  

@@ -1,6 +1,6 @@
 ---
 title: "Flujo de trabajo en R"
-subtitle: "Ciencias Sociales Computacionales"
+subtitle: "Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales"
 output:
   xaringan::moon_reader:
     self_contained: true
@@ -15,80 +15,98 @@ output:
 ---
 
 
-```{r include=FALSE}
-options(tibble.width = NULL)
-```
-
-
-```{r xaringanExtra-clipboard, eval=FALSE, include=FALSE}
-htmltools::tagList(
- xaringanExtra::use_clipboard(
-   button_text = "<i class=\"fa fa-clipboard\"></i>",
-   success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
- ),
- rmarkdown::html_dependency_font_awesome()
-)
-```
-
-```{r xaringan-extra-styles, echo=FALSE}
-# These are the defaults
-xaringanExtra::use_extra_styles(
-  hover_code_line = TRUE,         #<<
-  mute_unhighlighted_code = TRUE  
-)
-```
-
-```{r xaringanExtra-scribble, echo=FALSE}
-xaringanExtra::use_scribble()
-```
-
-```{r xaringan-panelset, echo=FALSE}
-xaringanExtra::use_panelset()
-
-xaringanExtra::style_panelset_tabs(
-  active_foreground = "#0051BA",
-  hover_foreground = "#d22",
-  font_family = "Roboto"
-)
-```
-
 <style type="text/css">
+
 .remark-slide-content {
     font-size: 25px;
     padding: 1em 1em 1em 1em;
 }
-</style>
+
+```{css, eval = TRUE, echo = FALSE}
+
+.remark-code{
+  line-height: 1.5; font-size: 80%
+}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+```
 
 
+```{r xaringan-scribble, echo=FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                                  PIZARRA                                 ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+xaringanExtra::use_scribble()
+```
+
+
+```{r xaringanExtra-clipboard, echo=FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                                  cLIPBOARD                               ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-Copiar código\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+```
+
+
+```{r xaringan-fit-screen, echo=FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                          PRESENTACION VS RSTUDIO                         ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+xaringanExtra::use_fit_screen()
+```
+
+
+```{r xaringan-extra-styles, echo = FALSE}
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                          ESTILOS EXTRA -RESALTADO-                       ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
 
 ```{r, include = F}
-# This is the recommended set up for flipbooks
-# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
-knitr::opts_chunk$set(fig.width = 10,  message = FALSE, warning = FALSE, comment = "", cache = F)
-
 
 library(flipbookr)
 library(tidyverse)
+library(openxlsx)
 library(xaringanthemer)
 library(xaringan)
 library(gt)
 library(icons)
+library(here)
 library(kableExtra)
+
+options(scipen = 999)
+
 ```
 
 
 # Hoja de ruta
 
-
-## ✔️ Paquetes complementarios
-
 ## ✔️ Proyectos en R
 
-## ✔️ Importación de bases de datos
+## ✔️ Nombrando archivos
 
 ## ✔️ Mirada exploratoria de la base
 
+## ✔️ Uniendo dataframes
+
 ## ✔️ Exportación de resultados
+
+
 
 <br>
 
@@ -115,18 +133,19 @@ class: inverse, center, middle
 ¿Cómo garantizar que la ruta para importar bases de datos al ambiente de R y para exportar resultados pueda funcionar si muevo mis carpetas o las comparto?
 
 .left-column[
+
 ```{r echo=FALSE, eval=TRUE}
-knitr::include_graphics("img/meme si y no.jpg")
+knitr::include_graphics("img/no y si.png")
 ```
 ]
 
 .right-column[
 ```{r echo=TRUE, eval=FALSE}
-read.csv("C:\Users\Guido\Investigación\Bases_COvid\Base Covid19.csv")
+read.csv("C:\Users\Guido\Clase 4\bases\inmuebles-estado-nacional.csv")
 ```
 
 ```{r echo=TRUE, eval=FALSE}
-dir.create("C:\Users\Guido\Investigación\Resultados")
+dir.create("C:\Users\Guido\Clase 4\Resultados")
 ```
 
 ```{r echo=TRUE, eval=FALSE}
@@ -157,7 +176,7 @@ knitr::include_graphics("img/nuevo_proyecto2.png")
 ---
 #Práctica  
 
-- Abran RStudio en sus computadoras y creen un nuevo proyecto en un nuevo directorio de sus computadoras.     
+- Abran RStudio en sus computadoras y creen un nuevo proyecto en una carpeta de sus computadoras que este a mano.     
 
 - Abran un nuevo script, importen las librerías **"openxlsx"** y **"tidyverse"** al ambiente de trabajo. Instalenlas previamente en caso de no haberlo hecho aún. Recuerden: `install.packages("nombre_del_paquete")`
 
@@ -189,28 +208,28 @@ class: inverse, center, middle
 
 - No utilizar espacios en blanco ni caracteres especiales (^.*?+|$) 
 
-✅  procesamiento_base_covid.r  
-❌  procesamiento base covid.r  
-❌  procesamiento.base.covid.r  
-✅  graficos_evolucion_covid.r  
-❌  gráficos_evolución_covid.r  
+✅  procesamiento_inmuebles.r  
+❌  procesamiento inmuebles.r
+❌  procesamiento.inmuebles.r     
+✅  graficos_evolucion_inmuebles.r  
+❌  gráficos_evolución_inmuebles.r  
 
 ---
 #Nombrando archivos (y/o carpetas)
   
   - Guardar consistencia en los caracteres utilizados y el orden de los componentes de los nombres
 
-✅  procesamiento_base_covid.r   
-✅  graficos_evolucion_covid.r  
-❌  covid-19-informe.rmd  
+✅  procesamiento_inmuebles.r   
+✅  graficos_evolucion_inmuebles.r  
+❌  inmuebles-informe.rmd  
 
 - Si tengo muchos archivos en una carpeta: utilizar números para ordenar y palabras clave para documentos similares  
 
-✅  01_procesamiento_base_covid.r  
-✅  02_graficos_evolucion_covid.r  
-✅  03_graficos_provincias_covid.r  
-✅  04_informe_covid.r  
-❌  COVID_datos-VF20210414.r  
+✅  01_procesamiento_base_inmuebles.r  
+✅  02_graficos_evolucion_inmuebles.r  
+✅  03_graficos_provincias_inmuebles.r  
+✅  04_informe_inmuebles.r  
+❌  inmuebles-datos-VF20210414.r  
 
 
 ---
@@ -218,7 +237,7 @@ class: inverse, center, middle
 
 class: inverse, center, middle
 
-# Importación y Exportación de archivos
+# Importación de archivos (repaso)
 
 <html>
   <div style='float:left'></div>
@@ -277,10 +296,10 @@ kable(importacion, format = 'html') %>%
 
 ## Archivos de texto plano
 .pull-left[
-En archivos de texto plano, el paquete se recomienda usar el paquete **readr** (que forma parte de tidyverse). Las diferencias entre cada una de sus funciones está en los parámetros que poseen para mejorar la importación.
+En archivos de texto plano, se recomienda usar el paquete **readr** (que forma parte de tidyverse). Las diferencias entre cada una de sus funciones está en los parámetros que poseen para mejorar la importación.
 
 ```{r echo=FALSE, warning=TRUE}
-knitr::include_graphics("img/read_csv.png")
+knitr::include_graphics("img/readcsv.png")
 ```
 ]
 .pull-right[
@@ -293,28 +312,27 @@ knitr::include_graphics("img/read_csv.png")
 ]
 
 ---
-#Importación de bases de datos
-
-El primer y más importante parámetro de las funciones para importar datos suele llamarse  **`file`**. Allí debemos especificar la ruta hasta el archivo, incluyendo la extensión del mismo. 
+#Importación de bases de datos (usando proyectos)
 
 Si tenemos abierto un proyecto, el punto de partida para la ruta a especificar será la carpeta del proyecto. Si queremos ir hacia atrás en las carpetas agregamos  **`../`**
-```{r eval=FALSE, include=T}
-base.vacunas<- read_csv(
-  file = "../Fuentes/Covid19VacunasAgrupadas.csv",
-  col_names = TRUE, # TRUE si la primera fila tiene nombres de columnas
-  n_max = 100)      # Puedo especificar cuantas filas levantar
+```{r eval=T, message=FALSE, warning=FALSE, comment=FALSE, include=T}
 
-base.covid <- readRDS(file = "../Fuentes/base_covid_sample.RDS")
+inmuebles<- read_csv(
+  file = "bases/inmuebles-estado-nacional.csv")  
+
+comunas <- read.xlsx(xlsxFile = "bases/comunas.xlsx")
 ```
-**IMPORTANTE**: Siempre que lean bases de datos asignarlas a un nuevo objeto. De lo contrario, las va a mostrar completas en consola y no va a guardarlas en el ambiente de trabajo (enviroment)
+**IMPORTANTE**: Siempre que lean bases de datos asignarlas a un nuevo objeto. De lo contrario, las va a mostrar completas en consola y no va a guardarlas en el ambiente de trabajo (enviroment)       
+
+
 ---
 #Práctica
 
-- Copien la carpeta "Bases adicionales" adentro de la carpeta del proyecto que crearon previamente.
+- Copien la carpeta "bases" adentro de la carpeta del proyecto que crearon previamente.
 
-- Con el proyecto y script previos abiertos en RStudio, importen correctamente a su ambiente de trabajo el archivo **"Covid19VacunasAgrupadas.csv"**
+- Con el proyecto y script previos abiertos en RStudio, importen correctamente a su ambiente de trabajo el archivo **"inmuebles-estado-nacional.csv"**
 
-- Utilicen la función `read.xlsx` para importar como dos objetos separados las bases que se encuentran en ambas pestañas del excel **"Adquisiciones y vuelos covid.xlsx"**. (Pista: Pueden inspeccionar los parámetros de la función ejecutando **`?read.xlsx`**  
+- Utilicen la función `read.xlsx` para importar como dos objetos separados las bases que se encuentran en ambas pestañas del excel **"comunas.xlsx"**. (Pista: Pueden inspeccionar los parámetros de la función ejecutando **`?read.xlsx`**  
 
 ---
 #Mirada exploratoria de la base de datos
@@ -331,19 +349,81 @@ Algunas funciones útiles para explorar rápidamente el contenido de nuestra bas
 
 <sup>t</sup> Pertenecen al paquete **tidyverse**
 
+---
+
+```{r summary, include=FALSE}
+inmuebles %>% #BREAK
+  summary() #BREAK
+```
+
+`r chunk_reveal("summary", widths = c(1.1, 1.9), title = "# Ejemplo - summary()")`
+
+---
+
+```{r glimpse, include=FALSE}
+inmuebles %>% #BREAK
+  glimpse()#BREAK
+```
+
+`r chunk_reveal("glimpse", widths = c(1.1, 1.9), title = "# Ejemplo - glimpse()")`
+
+---
+
+```{r sample, include=FALSE}
+inmuebles %>% #BREAK
+  sample_n(size = 10)#BREAK
+```
+
+`r chunk_reveal("sample", widths = c(1.1, 1.9), title = "# Ejemplo - sample_n()")`
 
 ---
 #Práctica
-- Lleven a la carpeta del proyecto la base de datos **"base_covid_sample.RDS"** que está en la carpeta Fuentes.
 - Importen la base de datos al ambiente de trabajo (Ver función adecuada para importar archivos .RDS)
 - Apliquen la función **`summary(nombre_base_datos)`**. Observen el resultado en consola. ¿Algo les llama atención de la información arrojada?
-- Ejecuten **`table(nombre_base_datos$sexo)`** y observen el total de casos de la base por sexo
-- ¿Qué valores puedo encontrar en la variable **clasificacion_resumen**?
-- Elaboren un tabulado bivariado entre las variables **sexo** y **clasificacion_resumen**
+- Ejecuten **`table(inmuebles$pais)`** y observen el total de casos de la base por provincia
+- Elaboren un tabulado bivariado entre las variables **pais** y **situacion_inmueble**
+- ¿Qué valores puedo encontrar en la variable **organizacion**?
 
 ---
+
+class: inverse, center, middle
+
+# Uniendo dataframes
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+---
+# Uniendo dataframes - dplyr (dentro de tidyverse)
+
+.pull-left[
+**Joins**: Nos permiten unir horizontalmente dos bases, a partir de alguna/s variable/s en común   
+
+```{r echo=FALSE, warning=TRUE}
+knitr::include_graphics("img/joins.png",dpi = 200)
+```
+[Fuente](http://rstudio-pubs-static.s3.amazonaws.com/227171_618ebdce0b9d44f3af65700e833593db.html)
+
+]
+.pull-right[
+**bind_rows()**: Nos permiten unir verticalmente dos bases, apilando los valores de aquellas variables en común 
+
+```{r echo=FALSE, warning=TRUE}
+knitr::include_graphics("img/bind_rows.png",dpi = 200)
+```
+
+<br>
+
+[Fuente](https://blog.exploratory.io/merging-two-data-frames-with-union-or-bind-rows-a55e79766d0?gi=dbebe4a50052)
+
+]
+
+---
+
 #Exportación de resultados
-Por lo general, cada paquete que presenta funciones para importar bases de dato, tiene como complemento una función para exportar (guardar en el disco de nuestra PC) un objeto con la misma extensión. Ejemplos: 
+Por lo general, cada paquete que presenta funciones para importar bases de datos, tiene como complemento una función para exportar (guardar en el disco de nuestra PC) un objeto con la misma extensión. Ejemplos: 
 
 
  - el paquete **openxlsx** tiene una función denominada **`write.xlsx()`** que nos permite exportar un dataframe creando un archivo **.xslx**
@@ -358,10 +438,16 @@ saveRDS(object = objeto_resultados,file = "Resultados/base_nueva.RDS")
 
 ---
 #Práctica
-- Elaboren un tabulado bivariado con **table()** y asignenlo para generar un objeto en su ambiente de trabajo
+- Importen todas las bases de datos de la carpeta **bases** a su ambiente de trabajo
 
-- Prueben ejecutar la siguiente línea de código: ```dir.create("Resultados/")```. ¿Que generó en la carpeta de su proyecto?
+- Usen la función bind_rows() para unir la base **inmuebles-estado-nacional.csv** con la base **otros-inmuebles-estado-nacional.csv**
 
-- Exporten el objeto que contiene el tabulado anterior hacia un Excel utilizando la funcion **`write.xlsx`**. 
+- Prueben correr las funciones unique() y duplicated() sobre el resultado anterior. Luego, en caso de haber, eliminen los registros duplicados 
 
+- Observen los valores que toma la variable `COMUNAS` en el listado que presenta el archivo **Comunas.xlsx**.Creen  una nueva columna llamada "localidad" que les sirva para unir la informacion con la de la base de los inmuebles 
 
+- Usen la función left_join() para incorporar a la base de inmuebles la informacion de los barrios que tiene cada comuna
+
+- Ejecuten ```dir.create("Resultados/")```. ¿Que generó en la carpeta de su proyecto?
+
+- Exporten el objeto que contiene la base final hacia un Excel utilizando la funcion **`write.xlsx`**. 

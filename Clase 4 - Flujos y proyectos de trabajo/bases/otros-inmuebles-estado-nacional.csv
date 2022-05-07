@@ -1,0 +1,12 @@
+codigo_del_inmueble,organizacion,pais,provincia,departamento,localidad,calle,numero,situacion_inmueble,superficie_aproximada_m2,longitud,latitud
+1000002204,INSTITUTO NACIONAL DE VITIVINICULTURA,Argentina,Catamarca,Tinogasta,Tinogasta,Estación Terminal de Omnibus,LOCALES 15 Y 16,Alquilado,386.16,-67.55931661,-28.06801961
+1400001371,INSTITUTO NACIONAL DE VITIVINICULTURA,Argentina,Cordoba,Capital,Cordoba,Calle Humberto Primo,832,Propiedad del ENA,288.21,-64.19285381,-31.40656243
+2200000393,INSTITUTO NACIONAL DE VITIVINICULTURA,Argentina,Chaco,San Fernando,Resistencia,Calle Arbos y Blanco,925,Propiedad del ENA,33,-58.9893943,-27.46322825
+5000000495,INSTITUTO NACIONAL DE VITIVINICULTURA,Argentina,Mendoza,Guaymallen,Buena Nueva,Calle Tirasso,2131,Propiedad del ENA,97348.62,-68.75687794,-32.89546149
+200009029,MINISTERIO DE ENERGÍA Y MINERÍA,Argentina,Ciudad Autonoma de Buenos Aires,Comuna 3,,S.Bustamante,95/97,Propiedad del ENA,1937.51,-58.41417986,-34.60964466
+200023013,MINISTERIO DE MODERNIZACIÓN,Argentina,Ciudad Autonoma de Buenos Aires,Comuna 1,,Belgrano,637,Propiedad del ENA,957.32,-58.3753358,-34.61231207
+200023021,MINISTERIO DE MODERNIZACIÓN,Argentina,Ciudad Autonoma de Buenos Aires,Comuna 1,,Presidente Roque Sáenz Peña,511,Propiedad del ENA,1000.65,-58.3738061,-34.60751924
+600002589,SEGEMAR- Servicio Geológico Minero,Argentina,Buenos Aires,General San Martin,Ciudad del Libertador General San Martin,Colectora Norte - Av. General Paz,5445,Propiedad del ENA,454203.56,-58.51550236,-34.57406854
+600002597,SEGEMAR- Servicio Geológico Minero,Argentina,Buenos Aires,General San Martin,Ciudad del Libertador General San Martin,Colectora Norte - Av. General Paz,5445,Propiedad del ENA,454203.56,-58.51550236,-34.57406854
+1400002351,SEGEMAR- Servicio Geológico Minero,Argentina,Cordoba,Capital,Cordoba,Celso Barrios,1712,Propiedad del ENA,9246.54,-64.17048681,-31.46077212
+6600000452,SEGEMAR- Servicio Geológico Minero,Argentina,Salta,Capital,Capital,Bernardo Houssay,1099,Propiedad del ENA,13854.56,-65.4096141,-24.73055754
