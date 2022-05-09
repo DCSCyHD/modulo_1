@@ -29,8 +29,8 @@ if (nrow(base.covid)<1000000) {
 
 
 - Diseñar una estructura de código condicional que:
-   - calcule la cantidad de casos diarios confrimados **por departamento**, en caso de que la base de datos cuenta con menos de 100.000 registros**
-   - calcule la cantidad de casos diarios confrimados **por provincia**, si la base de datos cuenta con 100.000 registros o más**
+   - calcule la cantidad de casos diarios confrimados **por departamento**, en caso de que la base de datos cuenta con menos de 100.000 registros
+   - calcule la cantidad de casos diarios confrimados **por provincia**, si la base de datos cuenta con 100.000 registros o más
 
 
 ```{r}
@@ -77,9 +77,16 @@ Crear una **función** que dado un parametro _vector_:
 ```{r}
 
 ```
-## loops
-A partir del gráfico sencillo utilizado en clase: diseñar un loop que imprima un gráfico por cada provincia con la cantidad de casos diarios
+## loops    
+
+- A partir del gráfico sencillo utilizado en clase: diseñar un loop que imprima un gráfico por cada provincia con la cantidad de casos diarios
 ```{r}
 
 ```
+- Diseñar un loop que nos permita exportar un excel con las siguientes caracteristicas 
+  - Debemos crear 1 pestaña por provincia, nombrada según el nombre de la provincia
+  - Cada pestaña debe tener un título que diga "Cantidad de casos por sexo - Provincia de ..." (con la provincia en cuestión)
+  - Luego, debe visualizarse un cuadro que muestre la cantidad de casos por sexo
+```{r}
 
+```

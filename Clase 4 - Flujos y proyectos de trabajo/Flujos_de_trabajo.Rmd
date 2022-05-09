@@ -402,9 +402,9 @@ class: inverse, center, middle
 **Joins**: Nos permiten unir horizontalmente dos bases, a partir de alguna/s variable/s en común   
 
 ```{r echo=FALSE, warning=TRUE}
-knitr::include_graphics("img/joins.png",dpi = 200)
+knitr::include_graphics("img/joins2.png",dpi = 200)
 ```
-[Fuente](http://rstudio-pubs-static.s3.amazonaws.com/227171_618ebdce0b9d44f3af65700e833593db.html)
+[Fuente](https://www.youtube.com/watch?v=Yg-pNqzDuN4)
 
 ]
 .pull-right[
@@ -413,8 +413,6 @@ knitr::include_graphics("img/joins.png",dpi = 200)
 ```{r echo=FALSE, warning=TRUE}
 knitr::include_graphics("img/bind_rows.png",dpi = 200)
 ```
-
-<br>
 
 [Fuente](https://blog.exploratory.io/merging-two-data-frames-with-union-or-bind-rows-a55e79766d0?gi=dbebe4a50052)
 

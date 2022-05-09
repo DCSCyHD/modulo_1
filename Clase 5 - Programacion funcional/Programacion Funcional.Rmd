@@ -16,6 +16,7 @@ Trabajaremos con una muestra (de elaboración propia) de la base de casos de cov
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
+library(openxlsx)
 base.covid <- readRDS('bases/base_covid_sample.RDS')
 ```
 
@@ -184,16 +185,22 @@ return(vector.max/vector.min)
 
 ```
 Veamos que pasa
+
 ```{r}
-calcula_ratio(vector = c(456,78,1232,6565,12,0))
+calcula_ratio(vector = c(1,2,3,4))
 ```
+
+
 # Loops
 
-Un __loop__ es una estructura de código que nos permite aplicar iterativamente un mismo conjunto de comandos, variando el valor de una variable. Por ejemplo:
+Un __loop__ es una estructura de código que nos permite aplicar iterativamente un mismo conjunto de comandos, variando el valor de una variable. Veremos aquí únicamente el loop **for**, cuya sintaxis es la siguiente:       
+
+```   for (variable in vector) {conjunto de procedimientos a realizar}```     
 
 ```{r,warning=FALSE}
 for(i in 1:10){
    print(i^2)
+
 }
 ```
 
@@ -266,4 +273,91 @@ hist(x = base.filtrada$edad,
 }
 ```
 
+
+# Exportar resultados a Excel
+La función __write.xlsx__ de la libreria [openxlsx](https://ycphs.github.io/openxlsx/) nos permite exportar uno o más dataframes a una o más pestañas de un archivo de Excel. Hay una infinidad de variantes para hacer la exportación. Podemos destacar algunas funcionalidades para:      
+- Agregar títulos a los cuadros    
+- Apilar múltiples dataframes en una misma solapa del excel    
+- Agregar colores y/o bordes a los cuadros    
+- Cambiar la fuente del texto exportado
+
+
+Todas estas variantes, con ejemplos, se pueden consultar [acá](https://ycphs.github.io/openxlsx/articles/Introduction.html).   
+
+
+Supongamos que queremos un cuadro que nos muestre la cantidad de casos, según ``clasificacion_resumen`` y ``provincia``.
+
+```{r,eval=T,echo=T}
+cuadro_por_provincia<- base.covid %>% 
+  group_by(residencia_provincia_nombre,clasificacion_resumen) %>% 
+  summarise(casos = n())
+  
+```
+
+La forma más simple, como ya vimos sólo requiere indicar el dataframe a exportar, y la ruta completa, con extensión del archivo incluido.   
+
+```{r,eval=FALSE,echo=TRUE}
+dir.create("Resultados")#Si quiero crear una nueva carpeta
+
+openxlsx::write.xlsx(x = cuadro_por_provincia,
+                     file ="Resultados/miexportacion.xlsx")
+
+```
+La alternativa que me permite exportar datos con más chiches, tiene la siguiente forma:   
+
+-```createWorkbook()```: Creo un objeto Workbook en mi ambiente     
+-```addWorksheet()```: Le agrego a ese objeto una pestaña/hoja de excel    
+-```writeData()```: Le agrego la data que quiera a una determinada pestaña del excel (creada previamente). **Acá puedo ajustar todo tipo de parámetros estéticos**     
+-```saveWorkbook()```: Guardo el excel creado (lo creará en mi disco de la computadora) 
+
+```{r,eval=FALSE,echo=TRUE}
+wb <- createWorkbook() 
+
+addWorksheet(wb,sheetName =  "Casos Provincias") 
+
+writeData(wb,  
+          sheet="Casos Provincias", 
+          x = "Cuadro 1. Cantidad de Casos por provincia", #Lo uso para crear un titulo
+          startRow = 1)
+
+
+writeData(wb, 
+          sheet="Casos Provincias",
+          x = cuadro_por_provincia,   #Acá va la base de datos
+          borders = "rows" ,#Parametro de Estilo
+          borderStyle = "dashed", #Parametro de Estilo
+          startRow = 3) #Dejo un espacio entre titulo y datos
+
+saveWorkbook(wb, "Resultados/miexportacion_piola.xlsx")
+
+```
+
+# Loops + Exportacion de Excels          
+Un ejemplo típico es la necesidad de exportar a varias pestañas de un excel  cada data.frame que surge como resultado de un loop. Iteremos sobre el cuadro anterior, para exportar en una pestaña distinta los resultados para cada provincia:   
+
+```{r echo=TRUE,eval = FALSE}
+provincias <- unique(cuadro_por_provincia$residencia_provincia_nombre)
+
+wb <- createWorkbook() #Creo nuevo libro
+
+
+
+for (prov in provincias) {
+
+  #Este cuadro ira cambiando de provincia a medida que avanza el loop
+cuadro.prov <- cuadro_por_provincia %>%  
+    filter(residencia_provincia_nombre == prov)
+  
+addWorksheet(wb, sheetName =  prov) #Al poner "prov" estoy agregando una pestaña con cada nombre de provincia 
+
+writeData(wb,                #Especifico mi base de datos
+          sheet=prov,
+          x = cuadro.prov,   
+          startRow = 1) 
+  
+}
+
+saveWorkbook(wb, "Resultados/miexportacion_loop.xlsx")
+
+```
 
