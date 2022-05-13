@@ -64,19 +64,53 @@ sum(1:x)
   }
 
 sumatoria_enteros(x = 10)
-
-
 ```
 
-Crear una **función** que dado un parametro _vector_:
+Modificar la **función** anterior para que brinde un mensaje de error claro en caso de que al utilizarla se especifique un valor no numérico.
+```{r,error=TRUE}
+sumatoria_enteros_correc <- function(x){
+assertthat::assert_that(is.numeric(x),
+                        msg = "Ingresa un valor numérico")
+  sum(1:x)
+  }
 
-- Imprima (**print()**) la media del vector
-- Devuelva (**return()**) el ratio entre el máximo y mínimo valor de un vector
-- Garantizar que la función sólo opere en caso de que todos los valores del vector índicado sean números positivos.
+sumatoria_enteros_correc(x = "a")
+```
+
+
+Crear una función llamada `estandariza_vector` que, dado un parámetro denominado `vector_num`:     
+
+- Imprima en consola (``print()``) un texto que me muestre los siguientes datos:      
+    - la media del vector
+    - el máximo valor del vector
+    - el minimo valor del vector
+    - el desvío estándar del vector (función ``sd()``)    
+- Devuelva (``return()``) el vector estandarizado (Esto es, a cada elemento del vector restarle la media y dividirlo por el desvío estándar)       
+
 
 ```{r}
+estandariza_vector <- function(vector_num){
 
+     media <- mean(vector_num)
+     maximo <- max(vector_num)
+     minimo <- min(vector_num)
+     desvio <- sd(vector_num)
+     print(paste0("La media del vector era: ",media))
+     print(paste0("El máximo valor del vector era: ",maximo))
+     print(paste0("El mínimo del vector era: ",minimo))
+     print(paste0("El desvio estándar era: ",desvio))
+    
+     vector_estandarizado <- (vector_num-media)/desvio
+     return(vector_estandarizado)
+  }
+
+vec_stand <- estandariza_vector(c(19,990,223,420,3,4))
 ```
+
+```{r}
+vec_stand
+```
+
 ## loops    
 
 - A partir del gráfico sencillo utilizado en clase: diseñar un loop que imprima un gráfico por cada provincia con la cantidad de casos diarios
