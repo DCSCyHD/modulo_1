@@ -419,6 +419,65 @@ knitr::include_graphics("img/bind_rows.png",dpi = 200)
 ]
 
 ---
+# Uniendo dataframes - dplyr (dentro de tidyverse)    
+**left_join**: Veamos como funciona si tengo estos dos dataframes (el de la izquierda seria mi base de datos y el de la derecha un diccionario de como esta codificado el nivel educativo)
+```{r,eval=TRUE,include=F}
+base_encuesta <- data.frame(
+  sexo = sample(x = 1:2,size = 15,replace = T),
+  edad = sample(x = 1:99,size = 15,replace = T),
+  nivel_ed = sample(x = 1:7,size = 15,replace = T))
+
+diccionario_niveles <- data.frame(nivel_ed = 1:7,
+                                  nivel_ed_text = c(
+                                    "Primaria incompleta",
+                                    "Primaria completa",
+                                    "Secundaria incompleta",
+                                    "Secundaria completa",
+                                    "Terc/Univ incompleta",
+                                    "Terc/Univ completa",
+                                    "Sin Instruccion")) 
+
+diccionario_niveles_posgrad <- data.frame(
+  nivel_ed = 8:9,
+  nivel_ed_text = c("Posgrado incompleto",
+                    "Posgrado completo"))
+```
+
+.pull-left[
+
+```{r}
+base_encuesta
+```
+]
+.pull-right[
+```{r}
+
+diccionario_niveles
+```
+]
+
+---
+
+```{r leftjoin, include=FALSE}
+base_encuesta %>%  #BREAK
+  left_join(.,diccionario_niveles)
+
+```
+
+`r chunk_reveal("leftjoin", widths = c(1.1, 1.9), title = "# Ejemplo - left_join()")`
+
+---
+
+class: inverse, center, middle
+
+# Exportacion de Resultados
+
+<html>
+  <div style='float:left'></div>
+  <hr color='#EB811B' size=1px width=1125px>
+</html>
+
+---
 
 #Exportación de resultados
 Por lo general, cada paquete que presenta funciones para importar bases de datos, tiene como complemento una función para exportar (guardar en el disco de nuestra PC) un objeto con la misma extensión. Ejemplos: 
@@ -446,6 +505,8 @@ saveRDS(object = objeto_resultados,file = "Resultados/base_nueva.RDS")
 
 - Usen la función left_join() para incorporar a la base de inmuebles la informacion de los barrios que tiene cada comuna
 
+---
+#Práctica
 - Ejecuten ```dir.create("Resultados/")```. ¿Que generó en la carpeta de su proyecto?
 
-- Exporten el objeto que contiene la base final hacia un Excel utilizando la funcion **`write.xlsx`**. 
+- Exporten el objeto que contiene la base final hacia un Excel utilizando la funcion **`write.xlsx`**.   
