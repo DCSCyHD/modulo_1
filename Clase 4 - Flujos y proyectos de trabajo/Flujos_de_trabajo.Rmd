@@ -419,8 +419,9 @@ knitr::include_graphics("img/bind_rows.png",dpi = 200)
 ]
 
 ---
-# Uniendo dataframes - dplyr (dentro de tidyverse)    
-**left_join**: Veamos como funciona si tengo estos dos dataframes (el de la izquierda seria mi base de datos y el de la derecha un diccionario de como esta codificado el nivel educativo)
+# Uniendo dataframes - dplyr (dentro de tidyverse)     
+
+**left_join()**: Veamos como funciona si tengo estos dos dataframes (el de la izquierda seria mi base de datos y el de la derecha un diccionario de como esta codificado el nivel educativo)
 ```{r,eval=TRUE,include=F}
 base_encuesta <- data.frame(
   sexo = sample(x = 1:2,size = 15,replace = T),
@@ -460,12 +461,46 @@ diccionario_niveles
 
 ```{r leftjoin, include=FALSE}
 base_encuesta %>%  #BREAK
-  left_join(.,diccionario_niveles)
+  left_join(diccionario_niveles)
 
 ```
 
 `r chunk_reveal("leftjoin", widths = c(1.1, 1.9), title = "# Ejemplo - left_join()")`
 
+Esta forma sirve si estamos trabajando en una secuencia con *pipes*. Podríamos tambien alcanzar lo mismo haciendo:   `left_join(x = base_encuesta,y = diccionario_niveles)`    
+
+---
+# Uniendo dataframes - dplyr (dentro de tidyverse)     
+
+**bind_rows()**: En este caso, podríamos querer agregar a nuestro data.frame que representa el diccionario de códigos, dos categorías que tenemos almacenadas en `diccionario_niveles_posgrad`
+```{r,eval=TRUE,include=F}
+
+```
+
+.pull-left[
+
+```{r}
+diccionario_niveles
+```
+]
+.pull-right[
+```{r}
+diccionario_niveles_posgrad
+```
+]
+
+---
+
+```{r bindrows, include=FALSE}
+diccionario_niveles %>% 
+  bind_rows(diccionario_niveles_posgrad)
+
+```
+
+`r chunk_reveal("bindrows", widths = c(1.1, 1.9), title = "# Ejemplo - bind_rows()")`
+
+Al igual que antes, podríamos tambien hacer: `bind_rows(diccionario_niveles,diccionario_niveles_posgrad)`: Acá si pongo otra `,` puedo seguir agregando dataframes para apilar!    
+  
 ---
 
 class: inverse, center, middle
