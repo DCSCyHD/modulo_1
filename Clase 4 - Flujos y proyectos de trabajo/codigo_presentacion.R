@@ -1,4 +1,7 @@
-#### Codigo de de la presentacion
+###################################### Código de la presentación
+###CORRER EL CODIGO CON EL PROYECTO DE LA CLASE 4 ABIERTO!!! (clase_4_flujo_trabajo.Rproj)
+
+
 #Cargo librerias ####
 library(tidyverse)
 library(openxlsx)
