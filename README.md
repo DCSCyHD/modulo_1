@@ -43,6 +43,8 @@ __Clases 2 y 3 – Data wrangling – Tidyverse:__
 
 __Clase 4 – Flujos de Trabajo en R y repaso:__
 
+ [![](img/Download.png)](Clase_4_proyectos_y_flujos_de_trabajo.rar)
+
 + Temas de clase:
   + Directorios de trabajo
   + Proyectos
