@@ -58,6 +58,9 @@ __Clase 4 – Flujos de Trabajo en R y repaso:__
 
 __Encuentro 5: Loops y Programación Funcional__
 
+ [![](img/Download.png)](Clase_5_programacion_funcional.rar)
+
+
 + Temas de clase:
   + Creación de funciones propias por parte del usuario 
   + Estructuras de código condicionales (if)
