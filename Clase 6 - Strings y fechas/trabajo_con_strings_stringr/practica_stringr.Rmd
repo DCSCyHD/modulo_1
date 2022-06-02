@@ -1,0 +1,114 @@
+---
+title:  Practica - stringr - Diplomatura UNSAM
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+```{r setup, message = FALSE,echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE,include = TRUE,message = FALSE)
+
+```
+## Cargamos librerias
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(RVerbalExpressions)
+```
+
+## Cargamos la base
+Utilizaremos para la práctica la base de twitter con motor de búsqueda en la palabra "vacuna".
+```{r message=FALSE, warning=FALSE}
+base.tweets <- readRDS("../Fuentes/Bases adicionales/vacuna.tweets.RDS")
+```
+
+
+## Práctica Guiada
+Veamos un breve ejercicio simplificado para limpieza de datos, a partir de observar algunos casos.
+```{r}
+base.tweets$text[1:6]
+```
+ - Limpiamos expresiones que no hacen al contenido del texto (como #,@, links a paginas web). Aquí hay algunos casos más polémicos que requieren decisiones metodológicas. Puede ser que un # o una mención a cierta persona (@) refiera al contenido de lo que se está expresando. O bien, puede ser que simplemente se lo agregue para generar cierto impacto.
+```{r}
+mencion_hasthag_link <- rx() %>% 
+  rx_either_of(c("#","@","http")) %>% 
+  rx_anything_but(value = ' ')
+
+
+
+base.limpieza <- base.tweets %>% 
+  mutate(texto.limpio = str_remove_all(string = text, 
+                                       pattern = mencion_hasthag_link))
+
+base.limpieza$texto.limpio[1:6]
+```
+ - Removemos todo lo que no empiece con un caracter alfanumérico o un espacio en blanco. Nos permite principalmente quitar imágenes, que comienzan con el caracter **`\`**
+```{r}
+base.limpieza2 <- base.limpieza %>% 
+  mutate(texto.limpio = str_remove_all(
+    string = texto.limpio, 
+    pattern = "[^[:alnum:][:blank:]]"))
+
+base.limpieza2$texto.limpio[1:6]
+```
+- Podemos pasar todo a minúscula, y eliminar los espacios. A partir de ahí, tenemos casi lista nuestra variable para analizar (por ej: armar una nube de palabras más frecuentes)    
+- Hay otras etapas de "limpieza" que aquí no veremos pero vale mencionar como ejemplos centrales 2:   
+   - StopWords: eliminar las preposiciones del idioma ("a", "ante","bajo", etc), u otros conectores que no expresan contenido. 
+   - Lematización: Agrupar palabras que aparecen en sus formas flexionadas (plural, femenino, conjugado, etc.) a partir de su lema o raíz común.   
+```{r}
+base.limpieza3 <- base.limpieza2 %>% 
+  mutate(texto.limpio = str_to_lower(string = texto.limpio),
+         texto.limpio = str_trim(string = texto.limpio,side = "both"),
+         )
+
+base.limpieza3$texto.limpio[1:6]
+```
+## Otros ejericios de prácitca     
+
+- Crear un objeto que guarde los registros de la base que pertenecen  a usuarios cuyos nombres (**screen_name**) tengan exactamente 10 caracteres
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+ejercicio1 <- base.tweets %>% 
+  filter(str_length(screen_name) == 10)
+```
+- Inspeccionar la función **`str_replace_na()`**. Utilizarla para reemplazar los valores **NA** de la variable de descripción del usuario (**quoted_description**), dejando en su lugar un espacio en blanco
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.ejercicio.2 <- base.tweets %>% 
+  mutate(quoted_description = str_replace_na(quoted_description,replacement = "")) 
+```
+
+- A partir del resultado anterior, crear una columna en la base de datos que concatene el **screen_name** con la descripción del usuario (**quoted_description**), obteniendo resultados de la siguiente forma:  
+`"nombre_usuario: descripcion"`  
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.ejercicio.2 %>% 
+  mutate(nombre_desc = str_c(screen_name,": ",quoted_description)) %>% 
+  select(screen_name,quoted_description,nombre_desc)
+```
+- Filtrar en la base de datos aquellos tweets que hacen referencia a Rusia
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.tweets %>% 
+  mutate(text = tolower(text)) %>% 
+  filter(str_detect(string = text,
+                    pattern = "rusia"))
+```
+- Crear dos nuevas variable en la base de datos:
+  -  una que identifique los primeros 4 digitos de la variable **user_id**
+  -  otra que identifique los últimos 4 digitos de la variable **user_id**
+  -  una que identifique el digito del medio de la variable **user_id**
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.digitos <- base.tweets %>% 
+  mutate(digitos1a4 = str_sub(string = user_id,
+                              start = 1,
+                              end = 4),
+         ultimos4 = str_sub(string = user_id,
+                              start = -4,
+                              end = -1),
+         digitocentral = str_sub(user_id,
+                                 str_length(user_id)/2,
+                                 str_length(user_id)/2)
+         )
+```
+
+
