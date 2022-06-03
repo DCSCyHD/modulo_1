@@ -69,6 +69,8 @@ __Encuentro 5: Loops y Programación Funcional__
 
 __Encuentro 6: Manejo de Strings__
 
+ [![](img/Download.png)](Clase_6_strings_y_fechas.rar)
+
 + Temas de clase:
   + Funciones principales del paquete stringr:
     + Substraer dígitos específicos, detectar patrones simples, operar con el largo de los caracteres 

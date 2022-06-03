@@ -1,12 +1,11 @@
-## ----setup, message = FALSE,echo=FALSE----------------------------------------------------
-knitr::opts_chunk$set(echo = TRUE,include = TRUE,message = FALSE)
 
 
 ## ----message=FALSE,warning=FALSE----------------------------------------------------------
  #install.packages("rtweet")
 library(tidyverse)
+library(tidytext)
 library(RVerbalExpressions)
-library(rtweet) # (insalación no necesaria) descargar info de twitter
+#library(rtweet) # (insalación no necesaria) descargar info de twitter
 library(wordcloud2) #  (instalación opcional) para armar nube de palabras al final 
 
 
@@ -298,8 +297,8 @@ stop_words <- read_delim('bases/stopwords.txt',
 stop_words <- stop_words %>%
   add_row(word=c('vacuna',"vacunas"))
 
-alabras_sin_stop_words <- palabras %>%
-  anti_join(stop_words_agreg)
+palabras_sin_stop_words <- palabras %>%
+  anti_join(stop_words)
 
 palabras_frecuentes <- palabras_sin_stop_words %>% 
   group_by(word) %>% 
@@ -307,4 +306,4 @@ palabras_frecuentes <- palabras_sin_stop_words %>%
   filter(freq>100) %>% 
   arrange(desc(freq)) 
 
-wordcloud2::wordcloud2(vacunas_tidy) 
+wordcloud2::wordcloud2(palabras_frecuentes) 

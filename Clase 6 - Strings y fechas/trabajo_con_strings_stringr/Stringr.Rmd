@@ -20,9 +20,12 @@ La presente clase está destinada a introducir las principales funciones del paq
 
 ```{r,message=FALSE,warning=FALSE}
  #install.packages("rtweet")
-library(rtweet) # descargar info de twitter
 library(tidyverse)
+library(tidytext)
 library(RVerbalExpressions)
+#library(rtweet) # (opcional) para descargar info de twitter
+library(wordcloud2) # (opcional) para hacer nube de palabras al final
+
 ```
 
 # Fuente de Info
@@ -337,7 +340,9 @@ nrow(base.filtrada) # Ganamos más casos.
 ```
 > Ganamos más casos. ¿Cuales pueden haber sido?
 
-###str_extract 
+
+###str_extract       
+
 La funciones `str_extract` y `str_extract_all` nos permiten extraer de nuestros strings, determinados patrones específicados.     
 
 Su utilización cobrará más sentido cuando veamos como diseñar patrones  más complejos. 
@@ -449,7 +454,7 @@ Un flujo de trabajo con strings requiere tener en consideración al estos pasos:
 
 - __Eliminar puntuación__. Nos referimos acá a todo tipo de caracteres especiales indeseados       
 
-- __Tokenization__: Es el proceso de partir un string de texto en palabras y signos de puntuación.
+- __Tokenization__: Es el proceso de partir un string de texto en palabras.
 
 - __Stop Words__: remover las palabras más comunes del idioma ("a", "ahí", “el”, “la”, “los”, “de”, "que", "quien", etc. ) ya que aparecen en todos los textos y no aportan información valiosa para distinguirlos.
 
@@ -484,11 +489,11 @@ palabras<- tweets_limpios %>%
   select(text) %>% 
   unnest_tokens(output = word,input = text)
 
-head(palabras)
+palabras
 ```
 
-Si quiero además conservar el dato de qué usuario usó cada una de las palabras.... 
-```{r,include=F,eval=F}
+Si además quisiera conservar el dato de qué usuario usó cada una de las palabras.... 
+```{r}
 palabras_usuarios<- tweets_limpios %>% 
   select(text,screen_name) %>% 
   group_by() %>% 
@@ -512,7 +517,7 @@ stop_words <- stop_words %>%
 Realizamos un `anti_join()` (repasar clase 4) con el diccionario de stop_words para eliminar palabras que no aportan información sobre de qué se está hablando...
 ```{r}
 palabras_sin_stop_words <- palabras %>%
-                anti_join(stop_words_agreg)
+                anti_join(stop_words)
 ```
 ## Palabras más frecuentes      
 
@@ -530,6 +535,6 @@ palabras_frecuentes
 
 Como yapa:       
 ```{r}
-wordcloud2::wordcloud2(vacunas_tidy) 
+wordcloud2::wordcloud2(palabras_frecuentes) 
 ```
 
