@@ -78,6 +78,9 @@ __Encuentro 6: Manejo de Strings__
 
 __Encuentro 7: R-Markdown__
 
+[![](img/Download.png)](Clase_7_Reportes.rar)
+
+
 + Temas de clase:
   + Manejo de las extensiones del software “Rmarkdown” y “RNotebook” para elaborar documentos de trabajo, presentaciones interactivas e informes:
     + Opciones para mostrar u ocultar código en los reportes
