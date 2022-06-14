@@ -1,0 +1,23 @@
+---
+title: "TEXTO"
+author: "Pablo Tiscornia"
+date: '2022-06-13'
+output: html_document
+---
+
+
+
+# Demostración
+
+Markdown ofrece una versión estandarizada para formateo de texto. Por ejemplo:
+
+- Formato *itálica*
+- Formato **Negrita**
+- Formato `código`
+- Formato con [hipervínculo](https://www.youtube.com/watch?v=7ejQ_CL_dWA)
+- Formato con notas al pie [^1]
+- Formato con ecuaciones $E = mc^{2}$ [^2]
+
+[^1]: Esta es la nota al pie
+[^2]: [Sintaxis para ecuaciones](https://rpruim.github.io/s341/S19/from-class/MathinRmd.html)
+

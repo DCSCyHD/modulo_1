@@ -906,11 +906,11 @@ summary(base_inmuebles$superficie_aproximada_m2)
 ```{r mutate_3, eval = F, echo = F}
 base_inmuebles %>%
   select(pais, superficie_aproximada_m2) %>% #BREAK
-  mutate(sup_rango = case_when(superficie_aproximada_m2 %in% c(0:200)   ~ "0 a 400",
-                               superficie_aproximada_m2 %in% c(201:400) ~ "401 a 800",
-                               superficie_aproximada_m2 %in% c(401:600) ~ "801 a 1200",
-                               superficie_aproximada_m2 %in% c(601:800) ~ "1201 a 1400",
-                               superficie_aproximada_m2 > 800           ~ "Mayor a 1400"))
+  mutate(sup_rango = case_when(superficie_aproximada_m2 %in% c(0:400)   ~ "0 a 400",
+                               superficie_aproximada_m2 %in% c(401:800) ~ "401 a 800",
+                               superficie_aproximada_m2 %in% c(801:1200) ~ "801 a 1200",
+                               superficie_aproximada_m2 %in% c(1201:1400) ~ "1201 a 1400",
+                               superficie_aproximada_m2 > 1400           ~ "Mayor a 1400"))
 ```
 
 `r chunk_reveal("mutate_3", widths = c(1.4, 1.6), title = "# Recodificando con mutate() y case_when()")`
@@ -1063,7 +1063,7 @@ base_inmuebles %>%
 class: middle, center, inverse
   
 ```{r echo=FALSE, out.width = '30%', fig.align = 'center'}
-knitr::include_graphics(here("img", "logo tidyr.png"))
+knitr::include_graphics(here::here("Clase 2y3 - Limpieza de datos", "img", "logo tidyr.png"))
 ```
 
 ---
