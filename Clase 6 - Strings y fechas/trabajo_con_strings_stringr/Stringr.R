@@ -37,16 +37,24 @@ head(vacuna_tweets_select)
 string1 <- c("SputnikV")
 str_length(string1)
 
+str_length(string = c("Hola","que","Tal"))
 
 ## -----------------------------------------------------------------------------------------
 string2 <- "Sputnik V"
 str_length(string2)
 
 ####
-#Ejercicio: Crear en la base de datos una nueva columna que identifique en cada caso el largo del tweet. Luego, mostrar el o los casos de máxima longitud de esta variable.
+#Ejercicio: Crear en la base de datos una nueva columna que identifique en cada caso el largo del tweet.
+#Luego, mostrar el o los casos de máxima longitud de esta variable.
 
 ## ----1er Ejercicio-----------------------------------------------------------
+vacuna_tweets_select <- vacuna_tweets_select %>%
+  mutate(numero_caract = str_length(text))
 
+opcion_rbase<- vacuna_tweets_select[vacuna_tweets_select$numero_caract == max(vacuna_tweets_select$numero_caract),]
+
+opcion_tidy<- vacuna_tweets_select %>% 
+  top_n(n = 1,wt = numero_caract)
 
 ## -----------------------------------------------------------------------------------------
 texto1 <- "qué"
@@ -74,7 +82,7 @@ str_c("011-",telefonos)
 ## -----------------------------------------------------------------------------------------
 #quiero el tercer caracter
 string1
-str_sub(string1,3,3)
+str_sub(string = string1,start = 3,end = 3)
 
 
 ## -----------------------------------------------------------------------------------------
@@ -106,7 +114,9 @@ str_trim(string3, side = 'both')
 ## -----------------------------------------------------------------------------------------
 str_trim(string3, "left")
 
+mi_texto <- " Hola, estoy procesando algo escrito a las  apuradas que tiene  espacios  dobles "
 
+str_squish(mi_texto)
 ## -----------------------------------------------------------------------------------------
 string1
 
@@ -125,6 +135,8 @@ str_to_title("vacunación en argentina")
 
 
 ## 2do ejercicio ------------------------------------------------------------
+vacuna_tweets_select <- vacuna_tweets_select %>% 
+  mutate(texto_minus = str_to_lower(text))
 
 
 ## -----------------------------------------------------------------------------------------
@@ -137,7 +149,7 @@ tweets.ejemplo.split <- str_split(tweets.ejemplo,pattern = " ")
 
 tweets.ejemplo.split 
 
-
+class(tweets.ejemplo.split)
 ## -----------------------------------------------------------------------------------------
 # Si queremos acceder al primer elemento de la lista
 tweets.ejemplo.split[[1]]
@@ -169,18 +181,25 @@ str_replace_all(string = primer.tweet,
 
 
 ## 3er ejercicio------------------------------------------------------------
+#Ejercicio: Crear en la base de datos una nueva columna, que contenga el texto de los tweets,
+#pero que reemplace todos los signos de puntuación por un espacio vacío.
+ejercicio3<- vacuna_tweets_select %>% 
+  mutate(nueva_col = str_replace_all(text,pattern = ",",replacement = ""))
 
+
+tweets.ejemplo
 ## -----------------------------------------------------------------------------------------
 str_detect(tweets.ejemplo, "Astra")
 
 
 ## -----------------------------------------------------------------------------------------
 base.filtrada <- vacuna_tweets %>% 
-  filter(str_detect(string = text,
-                    pattern =  "Astra"))
+  filter(str_detect(string = text,pattern =  "Astra"))
 
 nrow(base.filtrada)
 
+sample_n(base.filtrada,size = 10) %>% 
+  select(text)
 
 ## -----------------------------------------------------------------------------------------
 base.filtrada <- vacuna_tweets %>% 
@@ -203,9 +222,9 @@ base.filtrada <- vacuna_tweets %>%
 
 nrow(base.filtrada) # Ganamos más casos.
 
-
+tweets.ejemplo
 ## -----------------------------------------------------------------------------------------
-str_extract(tweets.ejemplo, "@")
+str_extract(tweets.ejemplo,pattern =  "@")
 
 
 ## -----------------------------------------------------------------------------------------
@@ -241,8 +260,13 @@ vacuna_tweets %>%
   select(text)
 
 
+vacuna_tweets %>% 
+  filter(str_detect(string = text,pattern = "^[[:digit:]]")) %>%
+  select(text)
+
+
 ## -----------------------------------------------------------------------------------------
-menciones <- rx() %>% 
+menciones <- rx() %>%  
   rx_find('@')%>% 
   rx_anything_but(value = ' ')
 
@@ -252,7 +276,8 @@ menciones
 ## -----------------------------------------------------------------------------------------
 tweets.ejemplo
 
-
+usuaries_mencionados <- str_extract_all(tweets.ejemplo,pattern = menciones)
+usuaries_mencionados
 ## -----------------------------------------------------------------------------------------
 ejemplos.limpieza<- str_remove_all(tweets.ejemplo, pattern = menciones)
 ejemplos.limpieza
@@ -281,16 +306,16 @@ palabras<- tweets_limpios %>%
   select(text) %>% 
   unnest_tokens(output = word,input = text)
 
-head(palabras)
+#head(palabras)
 
 palabras_usuarios<- tweets_limpios %>% 
   select(text,screen_name) %>% 
-  group_by() %>% 
+  group_by(screen_name) %>% 
   unnest_tokens(output = word,input = text)
 
 
 stop_words <- read_delim('bases/stopwords.txt', 
-                        delim = '\t',
+                        delim = ';',
                         col_names = c('word')) 
 
 ## Agregamos algunas palabras al listado de stopwords que queremos eliminar específicamente por nuestro dataset...
@@ -306,4 +331,5 @@ palabras_frecuentes <- palabras_sin_stop_words %>%
   filter(freq>100) %>% 
   arrange(desc(freq)) 
 
-wordcloud2::wordcloud2(palabras_frecuentes) 
+wordcloud2::wordcloud2(palabras_frecuentes,size = 0.8,color = "red",
+                       maxRotation = 0) 

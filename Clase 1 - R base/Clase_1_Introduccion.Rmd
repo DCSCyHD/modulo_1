@@ -518,6 +518,22 @@ max(Datos$EDAD)
 unique(Datos$AGLOMERADO)
 
 ```
+> Practica: Abrir la pequeña base contenida en el archivo "comunas.xlsx". Luego:            
+1) Calcular el area promedio de las comunas               
+2) Calcular el area total de la Ciudad de Buenos Aires     
+3) Crear un nuevo dataframe que contenga solo las columnas AREA y COMUNA     
+4) Crear un nuevo dataframe que contenga todas las columnas, pero solo las filas donde el area sea mayor a 15 millones.      
+
+```{r,eval=F,include=F}
+comunas <- read_excel("bases/comunas.xlsx")
+mean(comunas$AREA)
+sum(comunas$AREA)
+area_comunas_df<- comunas[,c("AREA","COMUNAS")]
+grandes_df<- comunas[comunas$AREA > 15000000,]
+
+```
+
+
 # Instalación de paquetes complementarios al R Base
 
 Hasta aquí hemos visto múltiples funciones que están contenidas dentro del lenguaje básico de R. Ahora bien, al tratarse de un software libre, distintos usuarios de R contribuyen sistemáticamente a expandir este lenguaje mediante la creación y actualización de __paquetes__ complementarios. Lógicamente, los mismos no están incluidos en la instalación inicial del programa, pero podemos descargarlos e instalarlos con el siguiente comando:   

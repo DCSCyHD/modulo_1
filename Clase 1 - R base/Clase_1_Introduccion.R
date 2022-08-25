@@ -1,3 +1,6 @@
+###ABRIR MANUALMENTE LA BASE DE LAS COMUNAS de CABA####
+
+### OBJETOS ####
 A <- 1
 A 
 
@@ -204,3 +207,8 @@ max(Datos$EDAD)
 #Valores únicos de un vector
 unique(Datos$AGLOMERADO)
 
+## Practica:     
+# 1) Calcular el area promedio de las comunas        
+# 2) Calcular el area total de la ciudad de buenos aires  
+# 3) Crear un nuevo dataframe que contenga solo las columnas AREA y COMUNA 
+# 4) Crear un nuevo dataframe que contenga las columnas donde el area sea mayor a 1,5 millon de metros cuadrados
