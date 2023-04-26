@@ -1,6 +1,4 @@
-###ABRIR MANUALMENTE LA BASE DE LAS COMUNAS de CABA####
 
-### OBJETOS ####
 A <- 1
 A 
 
@@ -156,12 +154,13 @@ Datos$AGLOMERADO[2]
 Datos$AGLOMERADO[3,2]
 
 Datos[Datos$AGLOMERADO==32, ]
+subset(Datos,AGLOMERADO==32)
 
-Edad_Aglo32 <- Datos[Datos$AGLOMERADO==32,"EDAD"]
-Edad_Aglo32
+aglo32 <- subset(Datos,AGLOMERADO==32)
 
-## Otra forma de llegar a lo mismo
-Datos$EDAD[Datos$AGLOMERADO==32]
+mean(aglo32$EDAD)
+# mean(subset(Datos,AGLOMERADO==32)$EDAD) ## Otra forma de llegar a lo mismo
+
 
 mean(Edad_Aglo32)
 
@@ -208,7 +207,7 @@ max(Datos$EDAD)
 unique(Datos$AGLOMERADO)
 
 ## Practica:     
-# 1) Calcular el area promedio de las comunas        
+# 1) Abrir la pequeña base "comunas.xlsx". Calcular el area promedio de las comunas        
 # 2) Calcular el area total de la ciudad de buenos aires  
 # 3) Crear un nuevo dataframe que contenga solo las columnas AREA y COMUNA 
 # 4) Crear un nuevo dataframe que contenga las columnas donde el area sea mayor a 1,5 millon de metros cuadrados

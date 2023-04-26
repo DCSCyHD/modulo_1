@@ -115,12 +115,57 @@ vec_stand
 
 - A partir del gráfico sencillo utilizado en clase: diseñar un loop que imprima un gráfico por cada provincia con la cantidad de casos diarios
 ```{r}
+base.confirmados  <- base.covid %>% 
+    filter(clasificacion_resumen  == "Confirmado")  
 
+for(prov in unique(base.confirmados$residencia_provincia_nombre)){
+  
+base_prov <- base.confirmados %>% 
+  filter(residencia_provincia_nombre == prov)
+ 
+ hist(x = base_prov$fecha_diagnostico,
+     main = paste("Casos Confirmados: ", prov),
+     freq = T,
+     format = "",
+     breaks = "days")
+
+    
+}
 ```
 - Diseñar un loop que nos permita exportar un excel con las siguientes caracteristicas 
   - Debemos crear 1 pestaña por provincia, nombrada según el nombre de la provincia
   - Cada pestaña debe tener un título que diga "Cantidad de casos por sexo - Provincia de ..." (con la provincia en cuestión)
   - Luego, debe visualizarse un cuadro que muestre la cantidad de casos por sexo
 ```{r}
+baese.casos.sexo <-   base.covid %>%
+    group_by(residencia_provincia_nombre,sexo) %>% 
+    summarise(casos = n())
+
+wb <- createWorkbook() # CREAR OBJETO TIPO WORKBOOK 
+
+for(prov in unique(baese.casos.sexo$residencia_provincia_nombre)){
+  
+base_1_prov <-  baese.casos.sexo %>% 
+    filter(residencia_provincia_nombre == prov)
+ 
+addWorksheet(wb,sheetName =  prov) # AGREGAR UNA PESTAÑA
+
+writeData(wb,
+          sheet=prov,
+          x = paste0("Cantidad de casos por sexo - Provincia de ",prov), #Lo uso para crear un titulo
+          startRow = 1)
+
+
+writeData(wb,
+          sheet=prov,
+          x = base_1_prov,   #Acá va la base de datos
+          startRow = 3) #Dejo un espacio entre titulo y datos
+
+
+ 
+}
+
+
+saveWorkbook(wb, "Resultados/excel.xlsx") ## EXPORTACION FINAL
 
 ```

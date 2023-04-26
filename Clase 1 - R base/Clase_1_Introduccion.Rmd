@@ -428,25 +428,29 @@ Datos$AGLOMERADO[3,2]
 
 Nótese que el último comando tiene un número incorrecto de dimensiones, porque estamos refiriendonos 2 veces a la columna AGLOMERADO.    
 
-Acorde a lo visto anteriormente, el acceso a los __dataframes__ mediante  ```[ ]``` puede utilizarse también para realizar filtros (devolver el o los valores en función de otro valor definido). 
+Acorde a lo visto anteriormente, el acceso a los __dataframes__ mediante  ```[ ]``` puede utilizarse también para realizar filtros.    
+
 Por ejemplo, puedo utilizar los  ```[ ]``` para obtener del __dataframe__ ```Datos ```  unicamente los registros del AGLOMERADO 32:
 ```{r error=TRUE}
 Datos[Datos$AGLOMERADO==32, ]
+
 ```
 
-La lógica del paso anterior sería: Accedo al dataframe ```Datos```, pidiendo únicamente conservar las filas (por eso la condición se ubica a la _izquierda_ de la  ```, ```) que cumplan el requisito de pertenecer a la categoría __32__ de la variable __AGLOMERADO__.      
+La lógica del paso anterior sería: Accedo al dataframe ```Datos```, pidiendo únicamente conservar las filas (por eso la condición se ubica a la _izquierda_ de la  ```, ```) que cumplan el requisito de pertenecer a la categoría __32__ de la variable __AGLOMERADO__.             
 
-Aún más, podría aplicar el filtro (reduzco filas) y al mismo tiempo seleccionar una variable de interés (columna). Ello me permitiría  luego realizar un cálculo sobre el vector resultante. Por ejemplo, podría calcular la media de la edad en aquellas personas que residen en el aglomerado 32.
-```{r error=TRUE}
-Edad_Aglo32 <- Datos[Datos$AGLOMERADO==32,"EDAD"]
-Edad_Aglo32
+<br>
 
-## Otra forma de llegar a lo mismo
-Datos$EDAD[Datos$AGLOMERADO==32]
+Alternativamente, también dentro de RBase tengo la función ``subset()`` con la cual puedo filtrar de manera **mucho más intuitiva**. Le paso como primer parámetro el Dataframe en cuestión y como segundo parámetro la condición lógica que deseo.
+```{r}
+subset(Datos,AGLOMERADO==32)
 ```
 
+Si quiero realizar un cálculo sobre el subgrupo resultante del filtro anterior, puedo guardar este dataframe como un nuevo objeto, y acceder a alguna columna en particular. Por ejemplo, podría querer calcular la media de la edad para aquellas personas que residen en el aglomerado 32.
 ```{r error=TRUE}
-mean(Edad_Aglo32)
+aglo32 <- subset(Datos,AGLOMERADO==32)
+mean(aglo32$EDAD)
+
+# mean(subset(Datos,AGLOMERADO==32)$EDAD) # PODRIA HACERLO TODO DE UNA ASÍ
 ```
 <br>
 
@@ -548,3 +552,162 @@ library(nombre_del_paquete)
 ```
 Nótese que al cargar/activar el paquete no son necesarias las comillas.
 
+# Lectura y escritura de archivos (**Adelanto de clase 4**)
+A la hora de importar una base de datos nos podemos llegar a enfrentar a distintos tipos de archivos. En R contamos con **distintos paquetes y funciones** según el **tipo de extensión** del archivo:    
+
+```{r echo=FALSE, message = FALSE,warning=FALSE}
+library(tidyverse)
+library(kableExtra)
+
+importacion <- tibble(
+  "Tipo de archivo" = c("Texto Plano",
+                        "Texto Plano",
+                        "Texto Plano",
+                        "Extension de R",
+                        "Extension de R",
+                         "Otros Softwares",
+                         "Otros Softwares",
+                         "Excel",
+                         "Excel"),
+           "Paquete" =c("readr",
+                        "readr",
+                        "readr",
+                        "RBase",
+                        "RBase",
+                        "haven",
+                        "haven",
+                        "openxlsx",
+                        "readxl"),
+             "Extension" =c(".csv",
+                          ".txt",
+                          ".tsv",
+                          ".RDS",
+                          ".RDATA",
+                          ".dta",
+                          ".sav",
+                          ".xlsx",
+                          ".xls"),
+         "Funciones" = c("read_csv()",
+                           "read_txt()","read_tsv()",
+                           "readRDS()", "open()",
+                           "read_dta()","read_spss()",
+                           "read.xlsx()","read_excel()")    
+)  
+
+kableExtra::kable(importacion, format = 'html') %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  collapse_rows(columns = 1)
+```
+
+
+## Archivos de texto plano (csv, txt)
+En archivos de texto plano, el paquete se recomienda usar el paquete **readr** (que forma parte de tidyverse). Las diferencias entre cada una de sus funciones está en los parámetros que poseen para mejorar la importación.
+
+```{r echo=FALSE, warning=TRUE}
+knitr::include_graphics("img/read_csv.png")
+```
+Es importante tener en cuenta que una base de datos que proviene de archivos _.txt_, o _.csv_ puede presentar diferencias en cuanto a los siguientes parametros:
+
+¿Qué es lo que indican algunos de los parámetros que tenemos en la imagen?
+
+-   encabezado (¿Tiene o no una primera fila con los nombes de las variables?)
+-   delimitador (¿Cómo están separadas las variables en el archivo?: Ej: `,`, `;`, tab)
+-   separador decimal (¿Cómo figuran los números en la base? Ej: ¿10.000, 10000 o 10,000)
+-   quotes: ¿Como están indicados los valores de las variables de texto en la base?, ¿Aparecen entre comillas?
+
+<br> 
+
+Un ejemplo de cómo importar un archivo de tipo _delimitado por comas_
+``` 
+dataframe <- read.delim(file, header = TRUE, sep = ",", quote = "\"", dec = ".", fill = TRUE, comment.char = "", ...) 
+```
+
+Vamos con una base de la EPH (base individual - 1er trimestre 2017) 
+
+En el parametro `file` tengo que especificar el nombre completo del archivo, incluyendo el directorio donde se encuentra. Lo más sencillo es abrir comillas, apretar `Tab` y se despliega el menú de las cosas que tenemos en el directorio de trabajo. Si queremos movernos hacia arriba en el directorio, agregamos `../`
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+individual_t117 <- read.table(file = 'bases/usu_individual_t117.txt',
+                              sep=";", 
+                              dec=",", 
+                              header = TRUE, 
+                              fill = TRUE)
+```
+
+<br> 
+
+  
+La base de la EPH cuenta con más de 58.000 registros y 177 variables.
+Al trabajar con bases de microdatos, resulta conveniente contar con algunos comandos para tener una mirada rápida de la base, antes de comenzar a realizar los procesamientos que deseemos.     
+
+Veamos algunos de ellos:
+```{r}
+#View(individual_t117) # Abre la base en una ventana aparte
+
+names(individual_t117)[1:10] # Devuelve el nombre de  las variables. Le pido solo los primeros 10
+
+summary(individual_t117)[ ,c(8,10,31,133)] # Devuelve algunas medidas de resumen. Le pido ciertas columnas
+
+head(individual_t117)[ ,1:5] # Devuelve sólo los primeros valores para las columnas seleccionadas
+
+unique(individual_t117$REGION)# Muestra los únicos valores que toma una variable
+
+# Notar que seguimos utilizando funciones de R base ya que no necesitamos cargar ningún 'paquete' para utilizarlos
+```
+
+## Excel 
+
+Para leer y escribir archivos excel debemos utilizar los comandos que vienen con la librería ´´´openxlsx´´´
+```{r, warning=FALSE}
+library(openxlsx) 
+
+# Creamos una tabla cualquiera de prueba
+x <- 1:10
+y <- 11:20
+tabla_de_R <- data.frame(x, y)
+tabla_de_R
+
+# Escribimos el archivo
+write.xlsx( x = tabla_de_R, file = "archivo_tabla.xlsx",
+            row.names = FALSE)
+```
+
+Dónde lo guardó? Si trabajamos con un proyecto, R establece un directorio por default que es aquella carpeta donde hayamos creado el proyecto. Podemos entrar a las sub-carpetas agregando niveles con las ´´´__/__´´´ y al final escribiendo el nombre del archivo con su extensión (´´´archivo_tabla.xlsx´´´)
+
+# Directorio de trabajo (**Adelanto de clase 4**)
+
+A la hora de trabajar con archivos que tenemos guardados (o queremos guardar) en nuestra computadora, es importante tener en cuenta que R siempre esta operando con un directorio de trabajo específico. Este directorio será el punto de partida para importar archivos al ambiente de R, o exportar objetos del ámbiente y guardarlos como archivos nuevos en nuestra PC
+
+Con la función `getwd()` podemos visualizar la ruta que el programa tiene seteada como directorio de trabajo:
+
+```{r}
+getwd()
+```
+
+Supongamos que quisieramos setear el directorio de trabajo en nuestra carpeta de "Fuentes", con el fin de facilitar la importación de bases de datos. La función setwd() nos permite realizar esto.
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+setwd("C:/Users/usuario/Desktop/Guido/Trabajo/Cursos Intro a R/Fuentes")
+```
+
+> ¿ Que problema tiene setear la ruta de trabajo de esta manera?
+
+Cuando especifico de esta forma un directorio de trabajo en mi computadora para importar y exportar archivos:
+
+-   Si le comparto código y archivos a otra persona no podrá abrirlos.\
+-   Si cambio de lugar la carpeta que contiene en mi computadora, tampoco podré abrir los archivos.
+
+Rstudio tiene una herramienta muy útil de trabajo que son los **proyectos**.
+
+![](img/Rproject.png)
+
+Los proyectos permiten mantener un ambiente de trabajo delimitado por cada uno de nuestros trabajos. Es decir:
+
+-   El directorio de trabajo siempre toma como punto inicial la carpeta donde esta ubicada el archivo .Rproj
+-   El Environment es específico de nuestro proyecto. No se nos mezclará con resultados de código que podamos correr en otros proyecos.
+
+Un proyecto no es un sólo script, sino toda una carpeta de trabajo.
+
+Para crearlo, vamos al logo de nuevo projecto (Arriba a la derecha de la panatalla), y elegimos la carpeta de trabajo.
+
+![](img/nuevo_proyecto.png){width="410"}![](img/nuevo_proyecto2.png){width="410"}\

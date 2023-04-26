@@ -1,0 +1,123 @@
+---
+title: "Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales - UNSAM"
+subtitle: "Clase 1 - Practica EPH"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+---
+# Ejercicios para practicar
+
+> Primero: reiniciar R (`Session --> Restart R`)
+
+```{r setup}
+knitr::opts_chunk$set(include = FALSE)
+```
+
+
+## Ejercicio 1 - Metodos de Acceso:
+- Cargar la base Individual del 1er trimestre de 2017 de la EPH. Con el paquete "eph" pueden hacerlo así de sencillo
+
+```{r echo=TRUE, include=TRUE}
+library(eph)
+baset117 <- get_microdata(year = 2017,trimester = 1)
+```
+- Crear un VECTOR llamado "mis variables" (o el nombre que deseen) que contenga los nombres de 4 variables de la EPH
+
+```{r}
+mis_variables <- c("CODUSU","NRO_HOGAR","COMPONENTE","P21")
+```
+
+- Utilizando el métodos de acceso ```[]```, crear un objeto llamado **basesita** que tome la base original de la EPH pero que conserve solo las variables del vector que crearon
+```{r}
+basesita  <- baset117[,mis_variables]
+```
+
+- Para realizar una primera exploración sobre la base de datos, se les solicita que a partir de  **basesita**  creen un objeto que conserve sólo los primeros 100 casos. 
+
+```{r}
+basesita_2 <- basesita[1:100,]
+```
+
+- Para hacer otras pruebas un poquito más "serias", se solicita crear un nuevo objeto que sea una muestra aleatoria de 10000 casos de la base de la EPH. La función ```sample()``` permite a través de sus argumentos principales especificar como ```x``` un número entero y como ```size``` un tamaño de muestra. A partir de ello, la función devuelve un vector de dimensión ```size``` con números enteros aleatoriamente seleccionados entre 1 y el ``x`` especificado. Utilicen dicha función para lograr el cometido.    
+
+
+Pueden inspeccionar en más detalle su descripción ejecutando  ```?sample```. Por ejemplo, ahí pueden ver que por _default_ el muestreo se realiza sin reposición.
+
+```{r}
+seleccionados <- sample(x = 58675,size = 10000)
+
+base_sample <- baset117[seleccionados,]
+```
+
+- Para automatizar a futuro este proceso con otras bases de la eph, se solicita que utilicen la función  ```nrow()``` para medir la longitud de la base en cuestión, y que el número especificado como ```x``` para seleccionar los casos  responda a la dimensión de la base de que se trate.
+
+```{r}
+seleccionados <- sample(x = nrow(baset117),size = 10000)
+
+base_sample <- baset117[seleccionados,]
+
+```
+
+- Ejemplo más avanzado del ejercicio (para revisar a futuro, no para esta instancia): Crear una función propia para hacer un muestreo simple, que requiera como parámetros una base a procesar y el tamaño de muestra deseado
+```{r}
+muestro_simple_bases <- function(base,tamanio){
+
+
+  seleccionados <-   sample(x = nrow(base),
+                            size = tamanio)
+  
+base_sample <- baset117[seleccionados,]
+}
+
+mi_muestra<- muestro_simple_bases(baset117,5000) # Ejecuto la función para tomar 5.000 casos
+```
+
+
+## Ejercicio 2 - Repasando algunos funciones útiles de RBase:
+
+Supongamos que tenemos que realizar un trabajo únicamente para estudiar los ingresos laborales de la población menor a 30 años. Queremos agilizar el procesamiento de la base de datos, por lo cual vamos a aplicar la función ```subset()``` de Rbase, que permite al mismo tiempo seleccionar ciertas variables, y aplicar un filtro a partir de alguna condición lógica.
+
+- Creemos una base sólo con la población menor o igual a 30 años, y sólo conservemos las siguientes variables:
+**"CODUSU","NRO_HOGAR","COMPONENTE","AGLOMERADO","CH04","CH06","P21","PONDIIO"**
+```{r}
+base_jovenes <- subset(baset117,
+                       CH06 <= 30,
+             select = c("CODUSU","NRO_HOGAR","COMPONENTE","AGLOMERADO","CH04","CH06","P21","PONDIIO"))
+
+```
+
+- Utilicemos la función dir.create() para crear dentro de nuestra carpeta de trabajo del curso, una carpeta que se denomine "Bases Procesadas"
+
+```{r}
+dir.create("Bases Procesadas")
+```
+
+- Guardemos la base de datos de menores de 30 años en formato **.RDS** (formato propio de R) en la carpeta creada
+```{r}
+saveRDS(base_jovenes,"Bases Procesadas/base_jovenes.RDS")
+```
+
+- ¿Cual es el máximo ingreso de la ocupación principal, para algún individuo de los de nuestra base de menores de 30 años?
+```{r}
+max(base_jovenes$P21)
+```
+- Apliquemos la función summary() a la variable P21 para tener distintos momentos de la distribución del ingreso de la ocupación principal
+
+```{r}
+summary(base_jovenes$P21)
+```
+- Utilicemos la función weigthed.mean() para calcular el ingreso promedio de la ocupación principal, utilizando el ponderador correspondiente
+
+```{r}
+weighted.mean(base_jovenes$P21,base_jovenes$PONDIIO)
+```
+
+- ¿Qué valores únicos toma la variable AGLOMERADO? 
+```{r}
+unique(base_jovenes$AGLOMERADO)
+```
+
+
