@@ -3,7 +3,7 @@ title: "Procesando datos con el paquete tidyverse"
 subtitle: "Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales"
 output:
   xaringan::moon_reader:
-    self_contained: true
+    self_contained: false
     css: [default, metropolis, metropolis-fonts]
     lib_dir: libs
     nature:
@@ -92,15 +92,15 @@ library(gt)
 library(icons)
 library(here)
 library(gt)
+#remotes::install_github("mitchelloharawild/icons")
 
 options(scipen = 999)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##  ~ Cargo la base de trabajo  ----
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-base_inmuebles <- read.csv("bases/inmuebles-estado-nacional.csv") %>% 
-  mutate(str_trim(calle))
+##~~~~~~~~~~~~~~~~~~~x~~~~~~~~~~~~~~~
+eph_3t2023 <- read.table("bases/EPH_usu_3er_Trim_2022_txt/usu_individual_T322.txt.txt", 
+                             header = TRUE, sep = ";", dec = ",")
 ```
 
 ---
@@ -225,7 +225,7 @@ class: inverse, middle, center
 
 
 ```{r echo=FALSE, fig.align = 'center'}
-knitr::include_graphics(here("img", "tidyverse.png"))
+knitr::include_graphics("img/tidyverse.png")
 ```
 ]
 
@@ -257,7 +257,7 @@ class: inverse, middle, center
 
 .pull-left[
 ```{r echo=FALSE, fig.align = 'center', out.width='100%'}
-knitr::include_graphics(here("img", "circuito_del_dato.png"))
+knitr::include_graphics("img/circuito_del_dato.png")
 ```
 ]
 
@@ -265,7 +265,7 @@ knitr::include_graphics(here("img", "circuito_del_dato.png"))
 
 .pull-right[
 ```{r echo=FALSE, fig.align = 'center', out.width='100%'}
-knitr::include_graphics(here("img", "circuito_del_dato_tidy.png"))
+knitr::include_graphics("img/circuito_del_dato_tidy.png")
 ```
 ]
 
@@ -412,7 +412,11 @@ class: middle, center, inverse
 ---
 # Base de trabajo
 
-En el material de la clase se puso a disposición una base de ejercicio. La informaciuón con la que se cuenta es aquella referida a los _Inmuebles Propios del Estado Nacional y Alquilados_, provista por la Dirección Nacional del Registro de Bienes Inmuebles - Agencia de Administración de Bienes del Estado - Jefatura de Gabinete de Ministros. 
+- **Base de trabajo: ** Encuesta Permanente de Hogares
+
+- [Acceso a bases desde INDEC](https://www.indec.gob.ar/indec/web/Institucional-Indec-BasesDeDatos)
+
+- [Paquete `{eph}`](https://holatam.github.io/eph/)
 
 
 --
@@ -420,8 +424,10 @@ En el material de la clase se puso a disposición una base de ejercicio. La info
 Con la siguiente sentencia puedo importarla a R:
 
 ```r
-base_inmuebles <- read_csv(file = "C:/Users/pablo/Documents/Pablo/Cursos R/R+UNSAM/cohorte2022/modulo_1/Clase 2y3 - Limpieza de datos/bases/inmuebles-estado-nacional.csv",
-                           col_names = TRUE)
+eph_3t2023 <- read.delim("bases/EPH_usu_3er_Trim_2022_txt/usu_individual_T322.txt.txt", 
+                             header = TRUE, 
+                             sep = ";", 
+                             dec = ",")
 ```
 
 ---
@@ -430,7 +436,7 @@ class: middle, center, inverse
   EL PIPE
 
 ```{r echo=FALSE, out.width = '20%', fig.align = 'center'}
-knitr::include_graphics(here("img", "pipe.png"))
+knitr::include_graphics("img/pipes.png")
 ```
 
 _<p style="color:grey;" align:"center">Una forma de escribir</p>_
@@ -444,7 +450,7 @@ _<p style="color:grey;" align:"center">Una forma de escribir</p>_
 
 ```{r eval=F}
 ### Calculo la media
-round(prop.table(table(`base_inmuebles$pais`)), digits = 2)
+round(prop.table(table(`eph_3t2023$ESTADO`)), digits = 2)
 ```
 
 ]
@@ -462,7 +468,7 @@ round(prop.table(table(`base_inmuebles$pais`)), digits = 2)
 library(tidyverse)
 
 ### Calculo la media
-`base_inmuebles$pais` %>% 
+`eph_3t2023$ESTADO` %>% 
   table() %>% 
   prop.table() %>% 
   round(digits = 2)
@@ -476,7 +482,7 @@ class: middle, center, inverse
   
 
 ```{r echo=FALSE, out.width = '30%', fig.align = 'center'}
-knitr::include_graphics(here("img", "logo dplyr.png"))
+knitr::include_graphics("img/logo dplyr.png")
 ```
 
 ---
@@ -526,7 +532,7 @@ base_de_datos %>%
 ---
 # select()
 
-### Supongamos que quiero trabajar con las variables que permiten ubicar a cada uno de los inmuebles del Estado alrededor del país y también del mundo.
+### Supongamos que quiero trabajar con las variables para medir la **condicion de actividad** por **sexo** y **edad**
 
 
 ---
@@ -536,13 +542,13 @@ base_de_datos %>%
 ### selecciono las columnas que deseo de la base de datos:
 
 ```r
-base_inm_seleccion <- `base_inmuebles` %>% 
-  select(codigo_del_inmueble, pais, provincia, departamento)
+b_eph_seleccion <- `eph_3t2023` %>% 
+  select(ESTADO, CH04, CH06)
 ```
 
 ```{r echo = FALSE}
-base_inm_seleccion <- base_inmuebles %>% 
-  select(codigo_del_inmueble, pais, provincia, departamento)
+b_eph_seleccion <- eph_3t2023 %>% 
+  select(ESTADO, CH04, CH06)
 ```
 
 --
@@ -550,7 +556,7 @@ base_inm_seleccion <- base_inmuebles %>%
 ### Chequeo la operación:
 
 ```{r}
-colnames(base_inm_seleccion)
+colnames(b_eph_seleccion)
 ```
  
 
@@ -558,14 +564,14 @@ colnames(base_inm_seleccion)
 # select() - por posición de la columna
 
 
-### Supongamos que quiero las columnas __"codigo_del_inmueble"__, __"calle"__ y __"numero"__ 
+### Supongamos que quiero las columnas __"CODUSU"__, __"TRIMESTRE"__ y __"PONDERA"__ 
 
 --
 
 1) Chequeo la posición de las columnas que deseo:
 
 ```{r}
-colnames(base_inmuebles)
+colnames(eph_3t2023)
 ```
 
 
@@ -577,13 +583,13 @@ colnames(base_inmuebles)
 
 
 ```r
-base_covid_seleccion2 <- base_covid %>% 
-  select(1, 7, 8)
+b_eph_seleccion2 <- eph_3t2023 %>% 
+  select(1, 3, 10)
 ```
 
 ```{r echo = FALSE}
-base_inm_seleccion2 <- base_inmuebles %>%
-  select(1, 7, 8)
+b_eph_seleccion2 <- eph_3t2023 %>% 
+  select(1, 3, 10)
 ```
 
 --
@@ -591,15 +597,16 @@ base_inm_seleccion2 <- base_inmuebles %>%
 ### chequeo seleccion:
 
 ```{r}
-colnames(base_inm_seleccion2)
+colnames(b_eph_seleccion2)
 ```
 
 
 ---
 
 ```{r select_1, include=FALSE}
-base_inmuebles %>% #BREAK
-  select(8:10) #BREAK
+eph_3t2023 %>% 
+  select(8:10) %>%
+  print()
 ```
 
 `r chunk_reveal("select_1", widths = c(1.1, 1.9), title = "# Otra forma de selecionar")`
@@ -613,8 +620,9 @@ class: inverse, middle, center
 
 
 ```{r select_2, eval = F, echo = F}
-base_inmuebles %>%
-  select(superficie_aproximada_m2:latitud)
+eph_3t2023 %>%
+  select(ANO4:COMPONENTE) %>%
+  print()
 ```
 
 `r chunk_reveal("select_2", widths = c(1.3, 1.7), title = "# Otra forma de selecionar")`
@@ -630,8 +638,9 @@ class: inverse, middle, center
 `r chunk_reveal("select_3", widths = c(1.3, 1.7), title = "# Otra forma de selecionar")`
 
 ```{r select_3, eval = F, echo = F}
-base_inmuebles %>%
-  select(starts_with("s"))
+eph_3t2023 %>%
+  select(starts_with("POND")) %>%
+  print()
 ```
 
 ---
@@ -646,8 +655,9 @@ class: inverse, middle, center
 
 
 ```{r select_4, eval = F, echo = F}
-base_inmuebles %>%
-  select(ends_with("o"))
+eph_3t2023 %>%
+  select(ends_with("_M")) %>%
+  print()
 ```
 
 ---
@@ -662,8 +672,9 @@ class: inverse, middle, center
 
 
 ```{r select_5, eval = F, echo = F}
-base_inmuebles %>%
-  select(contains("it"))
+eph_3t2023 %>%
+  select(contains("02")) %>%
+  print()
 ```
 
 
@@ -685,12 +696,17 @@ class: inverse, middle
 
 ## Práctica
 
-
-1) Crear un objeto en donde importamos la base de inmuebles del Estado (recordar tener en cuenta la extensión del archivo)
+1) Crear un objeto en donde importamos la base de datos de la EPH (recordar tener en cuenta la extensión del archivo)
 
 2) Crear otro objeto en donde selecciono 3 columnas de interés según sus nombres
 
 3) Crear otro objeto en donde selecciono 3 columnas de interés según su posición
+
+4) Escribir el siguiente código en el esquema "paso a paso (con pipes)"
+
+```{r eval=F}
+base_ejercicio <- select(eph_3t2023, ESTADO, CH04, CAT_OCUP)
+```
 
 
 ---
@@ -720,7 +736,7 @@ base_de_datos %>%
 --
 
 
-### **Caso:** Supongamos que deseo quedarme sólo con los inmuebles ubicados en Estados Unidos:
+### **Caso:** Supongamos que deseo quedarme sólo con la población de 14 o más años de edad
 
 
 ---
@@ -730,15 +746,30 @@ base_de_datos %>%
 
 
 ```{r filter, eval = F, echo = F}
-base_inmuebles %>% 
-  select(codigo_del_inmueble, pais) %>%  #BREAK
-  filter(pais == "Estados Unidos")
+eph_3t2023 %>% 
+  filter(CH04 >= 14) %>% #BREAK
+  print()
 ```
 
 
 ---
-# filter()
+# filter() - chequeo
 
+- Chequeamos la operacion
+
+```{r}
+b_eph_filtro1 <- eph_3t2023 %>% 
+  filter(CH06 >= 14)
+```
+
+```{r}
+summary(b_eph_filtro1$CH06)
+```
+
+
+
+---
+# filter()
 
 #### Operadores para filtrar:
 
@@ -773,41 +804,49 @@ base_inmuebles %>%
 ---
 # filter()
 
-### **Caso:** Quiero quedarme tanto con los inmuebles de la provincia de _Cordoba_ como los de **(o)** la provincia _Buenos aires_, **y** que sean _propios_ (no alquilados):
-
-
-<br>
-
-- Provincias: Córdoba o Buenos Aires (`provincia == "Cordoba" | provincia == "Buenos Aires")`);
-
---> Alternativa:
-
-- Provincias: Córdoba o Buenos Aires (`provincia %in% c("Cordoba", "Buenos Aires")`);
+### **Caso:** Necesito delimitar el universo a la población que reside en la _Ciudad Autónoma de buenos Aires_ __o__ en los _Partidos del Buenos aires_.
 
 --
 
-- Inmuebles propios (`situacion_inmueble  == "Propiedad del ENA"`);
+
+- Chequeo categorías de la variable:
+
+```{r}
+unique(eph_3t2023$AGLOMERADO)
+```
+
+--
+
+- Reviso en el diseño de registro los códigos correspondientes.
+
+---
+
+`r chunk_reveal("filter_0", widths = c(1.7, 1.3), title="# filter")`
+
+```{r filter_0, eval = F, echo = F}
+eph_3t2023 %>% 
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %>% #BREAK
+  filter(AGLOMERADO == 32 | AGLOMERADO == 33) %>%
+  print()
+```
 
 
 ---
 
+`r chunk_reveal("filter_2", widths = c(1.7, 1.3), title="# filter")`
 
-```{r filter_1, eval = F, echo = F}
-base_inmuebles %>% 
-  select(pais, 
-         provincia, 
-         situacion_inmueble) %>% #BREAK
-  filter(provincia %in% c("Cordoba","Buenos Aires")) %>% #BREAK
-  filter(situacion_inmueble == "Propiedad del ENA") 
+```{r filter_2, eval = F, echo = F}
+eph_3t2023 %>% 
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %>% #BREAK
+  filter(AGLOMERADO %in% c(32,33)) %>%
+  print()
 ```
 
-
-`r chunk_reveal("filter_1", widths = c(1.3, 1.7), title="#filter")`
 
 ---
 class: inverse, middle, center
 
-# _PRÁCTICA_
+# _PRÁCTICA GRUPAL_
 
 <html>
   <div style='float:left'></div>
@@ -818,9 +857,12 @@ class: inverse, middle, center
 ---
 class: inverse, middle
 
-# Práctica
+# Práctica Grupal
 
-- Crear un objeto que contenga las variables __codigo_del_inmueble__, __pais__, __superficie__. Filtrar los los inmuebles que se encuentren argentina y cuya superficie sea menor a 100 mts2.
+- A partir de la base de la EPH, crear un objeto nuevo que **contenga** las variables __AGLOMERADO__ y __CH06__ y **filtar** por aquella población que tenga _18 o más años de edad_ y que resida en los aglomerados de _Neuquén_ o _Río Negro_
+
+- Chequear que las operaciones hayan sido un éxito (_pista: funciones como **unique()**, **table()** o **colnames()** pueden ser de ayuda)_
+
 
 
 ---
@@ -852,24 +894,33 @@ base_de_datos %>%
 
 
 ---
+# mutate()
 
-`r chunk_reveal("mutate_1", widths = c(1.4, 1.6), title="# mutate()")`
+<br><br>
+
+### **Indicador:** Sumatoria de ingresos por la ocupación principal y secundaria(s)
+
+<br><br>
+
+
+---
+
+`r chunk_reveal("mutate_1", widths = c(1.7, 1.3), title="# mutate()")`
 
 ```{r mutate_1, eval = F, echo = F}
-base_inmuebles %>%
-  select(pais, calle, numero) %>% #BREAK
-  filter(pais == "Argentina") %>% #BREAK
-  mutate(direccion = paste0(calle, " ", numero))
+eph_3t2023 %>% 
+  select(P21, TOT_P12) %>% #BREAK
+  mutate(ingreso_ocup_tot = P21 + TOT_P12)
 ```
 
 
 ---
 # mutate() - case_when()
 
-### Función complementaria: `case_when()`, utilizada para recodificación de variables:
+### Función complementaria: `case_when()`, mayormente utilizada para recodificación de variables
 
 ```{r echo=FALSE, fig.align = 'center', out.width='100%'}
-knitr::include_graphics(here("img", "mutate_case.png"))
+knitr::include_graphics("img/mutate_case.png")
 ```
 
 
@@ -877,78 +928,58 @@ knitr::include_graphics(here("img", "mutate_case.png"))
 
 
 ```{r mutate_2, eval = F, echo = F}
-base_inmuebles %>%
-  select(pais, situacion_inmueble) %>% #BREAK
-  mutate(sit_inmb_2 = case_when(situacion_inmueble == "Propiedad del ENA" ~ "Propio",
-                                situacion_inmueble == "Alquilado" ~ "Alquilado"))
+eph_3t2023 %>%
+  select(CH04, CH06) %>% #BREAK
+  mutate(sexo = case_when(CH04 == 1 ~ "Varón",
+                          CH04 == 2 ~ "Mujer"))
 ```
 
-`r chunk_reveal("mutate_2", widths = c(1.4, 1.6), title = "# Recodificando con mutate() y case_when()")`
+`r chunk_reveal("mutate_2", widths = c(1.7, 1.3), title = "# Recodificando con mutate() y case_when()")`
 
-
----
-# mutate()
-
-
-## Caso: _Quiero crear una variable superficie en rangos de mts2:_
-
---
-
-Breve chequeo de la distribución de la variable numérica:
-
-```{r}
-summary(base_inmuebles$superficie_aproximada_m2)
-```
 
 ---
 
 
 ```{r mutate_3, eval = F, echo = F}
-base_inmuebles %>%
-  select(pais, superficie_aproximada_m2) %>% #BREAK
-  mutate(sup_rango = case_when(superficie_aproximada_m2 %in% c(0:400)   ~ "0 a 400",
-                               superficie_aproximada_m2 %in% c(401:800) ~ "401 a 800",
-                               superficie_aproximada_m2 %in% c(801:1200) ~ "801 a 1200",
-                               superficie_aproximada_m2 %in% c(1201:1400) ~ "1201 a 1400",
-                               superficie_aproximada_m2 > 1400           ~ "Mayor a 1400"))
+eph_3t2023 %>%
+  select(CH06) %>% #BREAK
+  mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
+                                CH06 %in% c(19:29) ~ "19 a 29",
+                                CH06 %in% c(30:39) ~ "30 a 39",
+                                CH06 %in% c(40:49) ~ "40 a 49",
+                                CH06 %in% c(50:59) ~ "50 a 59",
+                                CH06 >= 60 ~ "60 o más"))
 ```
 
-`r chunk_reveal("mutate_3", widths = c(1.4, 1.6), title = "# Recodificando con mutate() y case_when()")`
+`r chunk_reveal("mutate_3", widths = c(1.7, 1.3), title = "# Recodificando con mutate() y case_when()")`
 
----
 
-```{r mutate_4, eval = F, echo = F}
-base_inmuebles %>%
-  select(pais, superficie_aproximada_m2) %>% #BREAK
-  mutate(superficie_aproximada_m2 = round(superficie_aproximada_m2, digits = 0)) %>% #BREAK
-  mutate(sup_rango = case_when(superficie_aproximada_m2 %in% c(0:200)   ~ "0 a 400",
-                               superficie_aproximada_m2 %in% c(201:400) ~ "401 a 800",
-                               superficie_aproximada_m2 %in% c(401:600) ~ "801 a 1200",
-                               superficie_aproximada_m2 %in% c(601:800) ~ "1201 a 1400",
-                               superficie_aproximada_m2 > 800           ~ "Mayor a 1400"))
-```
-
-`r chunk_reveal("mutate_4", widths = c(1.4, 1.6), title = "# Recodificando con mutate() y case_when()")`
 
 ---
 class: inverse, middle, center
 
-# _PRÁCTICA_
+# _PRÁCTICA GRUPAL_
 
-<html>
-  <div style='float:left'></div>
-  <hr color='#EB811B' size=1px width=1125px>
-</html>
+***
 
 ---
 class: inverse
 
 
-# Práctica
+# Práctica Grupal
 
-- Recodificar la variable __provincia__, para que los valores _Ciudad Autónoma de Buenos Aires_ pasen a ser _CABA_.
 
-- Crear una nueva variable con la __superficie en mts2__ redondeada a _1 dígito_
+1) Crear una variable nueva con las etiquetas correspondientes a los valores de **CAT_OCUP**:
+
+```r
+1 --> Patrón
+2 --> Cuenta propia
+3 --> Obrero o empleado
+4 --> Trabajador familiar sin remuneración
+9 --> Ns./Nr.
+```
+
+1) Recodificar la variable de ingresos P21 en 5 rangos.
 
 
 
@@ -970,41 +1001,61 @@ _<p style="color:grey;" align:"center">Resume la información en una nueva tabla
 <br><br>
 <br><br>
 
-```r
-base_de_datos %>% 
-        summarise(var1_resumen = sum(var1),
-                  var2_media   = mean(var2),
-                  var2_desvio  = sd(var2),
-                  var2_cv      = var2_desvio / var2_media * 100)
-```
+#### **Caso:**
+
+
+- **Indicador1:** Quiero conocer cuántas personas ocupadas hay
+
+- **Indicador2:** Quiero conocer el ingreso medio de la ocupación principal
+
+
 
 ---
 
 
 ```{r summarise_1, eval = F, echo = F}
-base_inmuebles %>%
-  select(codigo_del_inmueble, superficie_aproximada_m2) %>% #BREAK
-  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
-            max = max(superficie_aproximada_m2, na.rm = TRUE),
-            media = mean(superficie_aproximada_m2, na.rm = TRUE),
-            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
-            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
-            cv = desvio / media * 100)
+eph_3t2023 %>%
+  select(ESTADO, P21, PONDERA) %>% #BREAK
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]), 
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21),
+            ingr_oc_princ_media = questionr::wtd.mean(x = P21, 
+                                                      weights = PONDERA))
 ```
 
-`r chunk_reveal("summarise_1", widths = c(1.3, 1.7), title = "# _summarise()_")`
+`r chunk_reveal("summarise_1", widths = c(1.7, 1.3), title = "# _summarise()_")`
+
+
+---
+
+
+```{r summarise_2, eval = F, echo = F}
+library(questionr)
+
+eph_3t2023 %>%
+  select(ESTADO, P21, PONDERA) %>% #BREAK
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]), 
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21),
+            ingr_oc_princ_media = wtd.mean(x = P21, # Paquete questionr
+                                           weights = PONDERA))
+```
+
+`r chunk_reveal("summarise_2", widths = c(1.7, 1.3), title = "# _summarise()_")`
+
 
 ---
 class: inverse, middle, center
 
 # _group_by()_
 
-<html>
-  <div style='float:left'></div>
-  <hr color='#EB811B' size=1px width=1125px>
-</html>
+***
 
 _<p style="color:grey;" align:"center">Aplica una operación sobre la población de forma segmentada</p>_
+
+
 
 ---
 # group_by()
@@ -1021,49 +1072,78 @@ base_de_datos %>%
 
 
 ```{r group_by_1, eval = F, echo = F}
-base_inmuebles %>%
-  select(codigo_del_inmueble, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
-  group_by(situacion_inmueble) %>% 
-  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
-            max = max(superficie_aproximada_m2, na.rm = TRUE),
-            media = mean(superficie_aproximada_m2, na.rm = TRUE),
-            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
-            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
-            cv = desvio / media * 100)
+library(questionr)
+
+eph_3t2023 %>%
+  group_by(CH04) %>% 
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]), 
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21),
+            ingr_oc_princ_media = wtd.mean(x = P21, # Paquete questionr
+                                           weights = PONDERA))
 ```
 
 `r chunk_reveal("group_by_1", widths = c(1.3, 1.7), title = "# _group_by()_")`
 
 ---
-# summarise()
-
-## **Caso:** Queremos conocer la cantidad de inmuebles por provincia y la superficie media, según si el inmueble es propio o alquilado. Al mismo tiempo, queremos eliminar casos outliers, que puedan estar distorcionando los resultados de los promedios.
-
----
+# Paso a Paso
 
 
-```{r group_by_2, eval = F, echo = F}
-base_inmuebles %>% 
-  select(pais, provincia, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
-  filter(pais == "Argentina") %>% 
-  filter(superficie_aproximada_m2 < 10000) %>% #BREAK
-  mutate(provincia = case_when(provincia == "Ciudad Autonoma de Buenos Aires" ~ "CABA",
-                               TRUE ~ provincia),
-         situacion_inmueble = case_when(situacion_inmueble == "Propiedad del ENA" ~ "Propio",
-                                        situacion_inmueble == "Alquilado" ~ situacion_inmueble)) %>% #BREAK
-  group_by(provincia, situacion_inmueble) %>% 
-  summarise(cantidad = n(),
-            media_sup_mts2 = mean(superficie_aproximada_m2, na.rm = TRUE)) %>% #BREAK
-  arrange(-cantidad) #BREAK
+```{r echo=FALSE, out.width = '60%', fig.align = 'center'}
+knitr::include_graphics("https://media.tenor.com/images/6c8cf7404cd3fdc8f518221899116825/tenor.gif")
 ```
 
-`r chunk_reveal("group_by_2", widths = c(1.4, 1.6), title = "# _group_by()_")`
+---
+# **Caso**
+
+### - **Indicador 1:** *Principales tasas del mercado de trabajo para el aglomerado de CABA y Partidos del GBA*
+
+### - **Indicador 2:** *Indicador 1 según el __sexo__ y __edad__ de las personas.*
+
+--
+
+Según el [Diseño de registro](https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_registro_t318.pdf), las variables de trabajo son:
+
+- **Aglomerado de residencia** = `AGLOMERADO`
+
+- **Condición de actividad** = `ESTADO`
+
+- **Sexo** = `CH04`
+
+- **Edad** = `CH06`
+
+- **Factor de ponderación** = `PONDERA`
+
+---
+```{r group_by_2, eval = F, echo = F}
+eph_3t2023 %>% #BREAK
+  select(AGLOMERADO, CH04, CH06, ESTADO, P21, PONDERA) %>% #BREAK
+  mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
+                                CH06 %in% c(19:29) ~ "19 a 29",
+                                CH06 %in% c(30:39) ~ "30 a 39",
+                                CH06 %in% c(40:49) ~ "40 a 49",
+                                CH06 %in% c(50:59) ~ "50 a 59",
+                                CH06 >= 60 ~ "60 o más"),
+         sexo = case_when(CH04 == 1 ~ "Varón",
+                          CH04 == 2 ~ "Mujer")) %>% #BREAK
+  filter(AGLOMERADO %in% c(32, 33)) %>% 
+  group_by(sexo, edad_rango) %>% 
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]), 
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21),
+            ingr_oc_princ_media = wtd.mean(x = P21, # Paquete questionr
+                                           weights = PONDERA))
+```
+
+`r chunk_reveal("group_by_2", widths = c(1.7, 1.3), title = "# _group_by()_")`
 
 ---
 class: middle, center, inverse
   
 ```{r echo=FALSE, out.width = '30%', fig.align = 'center'}
-knitr::include_graphics(here::here("Clase 2y3 - Limpieza de datos", "img", "logo tidyr.png"))
+knitr::include_graphics("img/logo tidyr.png")
 ```
 
 ---
@@ -1086,7 +1166,7 @@ knitr::include_graphics(here::here("Clase 2y3 - Limpieza de datos", "img", "logo
 .pull-left[
 
 ```{r echo=FALSE, out.width = '80%', fig.align = 'center'}
-knitr::include_graphics(here("img", "dato_ancho.png"))
+knitr::include_graphics("img/dato_ancho.png")
 ```
 
 ]
@@ -1094,7 +1174,7 @@ knitr::include_graphics(here("img", "dato_ancho.png"))
 .pull-right[
 
 ```{r echo=FALSE, out.width = '80%', fig.align = 'center'}
-knitr::include_graphics(here("img", "dato_largo.png"))
+knitr::include_graphics("img/dato_largo.png")
 ```
 
 ]
@@ -1105,10 +1185,7 @@ class: inverse, middle, center
 
 # _pivot_longer()_
 
-<html>
-  <div style='float:left'></div>
-  <hr color='#EB811B' size=1px width=1125px>
-</html>
+***
 
 _<p style="color:grey;" align:"center">Reestructura la base, apilando varias columnas en una. De ancho a largo</p>_
 
@@ -1116,18 +1193,17 @@ _<p style="color:grey;" align:"center">Reestructura la base, apilando varias col
 
 
 ```{r pivot_longer_1, eval = F, echo = F}
-base_inmuebles %>%
-  select(codigo_del_inmueble, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
-  group_by(situacion_inmueble) %>% 
-  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
-            max = max(superficie_aproximada_m2, na.rm = TRUE),
-            media = mean(superficie_aproximada_m2, na.rm = TRUE),
-            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
-            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
-            cv = desvio / media * 100) %>% 
-  select(situacion_inmueble, media, mediana, desvio) %>% #BREAK
-  pivot_longer(cols = c(media, mediana, desvio), #<<
-               names_to = "variable",
+eph_3t2023 %>%
+  group_by(CH04) %>% 
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]), 
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21),
+            ingr_oc_princ_media = wtd.mean(x = P21, # Paquete questionr
+                                           weights = PONDERA)) %>% 
+  select(CH04, cant_ocupados, ingr_oc_princ_media) %>% 
+  pivot_longer(cols = c(cant_ocupados, ingr_oc_princ_media), #<<
+               names_to = "variable", 
                values_to = "valor")
 ```
 
@@ -1138,35 +1214,32 @@ class: inverse, middle, center
 
 # _pivot_wider()_
 
-<html>
-  <div style='float:left'></div>
-  <hr color='#EB811B' size=1px width=1125px>
-</html>
- 
+***
+
 _<p style="color:grey;" align:"center">Reestructura la base, encolumnando varias filas de una variable. De largo a ancho</p>_
 
 ---
 
 ```{r, echo = F}
-base_largo <- base_inmuebles %>%
-  select(codigo_del_inmueble, situacion_inmueble, superficie_aproximada_m2) %>% #BREAK
-  group_by(situacion_inmueble) %>% 
-  summarise(min = min(superficie_aproximada_m2, na.rm = TRUE),
-            max = max(superficie_aproximada_m2, na.rm = TRUE),
-            media = mean(superficie_aproximada_m2, na.rm = TRUE),
-            mediana = median(superficie_aproximada_m2, na.rm = TRUE),
-            desvio = sd(superficie_aproximada_m2, na.rm = TRUE),
-            cv = desvio / media * 100) %>% 
-  select(situacion_inmueble, media, mediana, desvio) %>% #BREAK
-  pivot_longer(cols = c(media, mediana, desvio), #<<
-               names_to = "variable",
+base_largo <- eph_3t2023 %>%
+  group_by(CH04) %>% 
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]), 
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21),
+            ingr_oc_princ_media = wtd.mean(x = P21, # Paquete questionr
+                                           weights = PONDERA)) %>% 
+  select(CH04, cant_ocupados, ingr_oc_princ_media) %>% 
+  pivot_longer(cols = c(cant_ocupados, ingr_oc_princ_media), #<<
+               names_to = "variable", 
                values_to = "valor")
 ```
 
-```{r pivot_wider_1, eval = F, echo = F}
+```{r pivot_wider_2, eval = F, echo = F}
 base_largo %>%
-  pivot_wider(names_from = "variable", #<<
-              values_from = "valor")
+  pivot_wider(names_from = "variable", #BREAK
+              values_from = "valor") %>%
+  print()
 ```
 
-`r chunk_reveal("pivot_wider_1", widths = c(1.3, 1.7), title = "# _pivot_wider()_")`
+`r chunk_reveal("pivot_wider_2", widths = c(1.3, 1.7), title = "# _pivot_wider()_")`
