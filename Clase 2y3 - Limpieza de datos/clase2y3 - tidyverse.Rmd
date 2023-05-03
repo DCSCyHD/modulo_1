@@ -99,8 +99,9 @@ options(scipen = 999)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##  ~ Cargo la base de trabajo  ----
 ##~~~~~~~~~~~~~~~~~~~x~~~~~~~~~~~~~~~
-eph_3t2023 <- read.table("bases/EPH_usu_3er_Trim_2022_txt/usu_individual_T322.txt.txt", 
-                             header = TRUE, sep = ";", dec = ",")
+
+eph_3t2022 <- eph::get_microdata(year = 2022, 
+                            trimester = 3,type='individual')
 ```
 
 ---
@@ -424,7 +425,7 @@ class: middle, center, inverse
 Con la siguiente sentencia puedo importarla a R:
 
 ```r
-eph_3t2023 <- read.delim("bases/EPH_usu_3er_Trim_2022_txt/usu_individual_T322.txt.txt", 
+eph_3t2022 <- read.delim("bases/EPH_usu_3er_Trim_2022_txt/usu_individual_T322.txt.txt", 
                              header = TRUE, 
                              sep = ";", 
                              dec = ",")
@@ -450,7 +451,7 @@ _<p style="color:grey;" align:"center">Una forma de escribir</p>_
 
 ```{r eval=F}
 ### Calculo la media
-round(prop.table(table(`eph_3t2023$ESTADO`)), digits = 2)
+round(prop.table(table(`eph_3t2022$ESTADO`)), digits = 2)
 ```
 
 ]
@@ -468,7 +469,7 @@ round(prop.table(table(`eph_3t2023$ESTADO`)), digits = 2)
 library(tidyverse)
 
 ### Calculo la media
-`eph_3t2023$ESTADO` %>% 
+`eph_3t2022$ESTADO` %>% 
   table() %>% 
   prop.table() %>% 
   round(digits = 2)
@@ -542,12 +543,12 @@ base_de_datos %>%
 ### selecciono las columnas que deseo de la base de datos:
 
 ```r
-b_eph_seleccion <- `eph_3t2023` %>% 
+b_eph_seleccion <- `eph_3t2022` %>% 
   select(ESTADO, CH04, CH06)
 ```
 
 ```{r echo = FALSE}
-b_eph_seleccion <- eph_3t2023 %>% 
+b_eph_seleccion <- eph_3t2022 %>% 
   select(ESTADO, CH04, CH06)
 ```
 
@@ -571,7 +572,7 @@ colnames(b_eph_seleccion)
 1) Chequeo la posición de las columnas que deseo:
 
 ```{r}
-colnames(eph_3t2023)
+colnames(eph_3t2022)
 ```
 
 
@@ -583,12 +584,12 @@ colnames(eph_3t2023)
 
 
 ```r
-b_eph_seleccion2 <- eph_3t2023 %>% 
+b_eph_seleccion2 <- eph_3t2022 %>% 
   select(1, 3, 10)
 ```
 
 ```{r echo = FALSE}
-b_eph_seleccion2 <- eph_3t2023 %>% 
+b_eph_seleccion2 <- eph_3t2022 %>% 
   select(1, 3, 10)
 ```
 
@@ -604,7 +605,7 @@ colnames(b_eph_seleccion2)
 ---
 
 ```{r select_1, include=FALSE}
-eph_3t2023 %>% 
+eph_3t2022 %>% 
   select(8:10) %>%
   print()
 ```
@@ -620,7 +621,7 @@ class: inverse, middle, center
 
 
 ```{r select_2, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(ANO4:COMPONENTE) %>%
   print()
 ```
@@ -638,7 +639,7 @@ class: inverse, middle, center
 `r chunk_reveal("select_3", widths = c(1.3, 1.7), title = "# Otra forma de selecionar")`
 
 ```{r select_3, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(starts_with("POND")) %>%
   print()
 ```
@@ -655,7 +656,7 @@ class: inverse, middle, center
 
 
 ```{r select_4, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(ends_with("_M")) %>%
   print()
 ```
@@ -672,7 +673,7 @@ class: inverse, middle, center
 
 
 ```{r select_5, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(contains("02")) %>%
   print()
 ```
@@ -705,7 +706,7 @@ class: inverse, middle
 4) Escribir el siguiente código en el esquema "paso a paso (con pipes)"
 
 ```{r eval=F}
-base_ejercicio <- select(eph_3t2023, ESTADO, CH04, CAT_OCUP)
+base_ejercicio <- select(eph_3t2022, ESTADO, CH04, CAT_OCUP)
 ```
 
 
@@ -746,7 +747,7 @@ base_de_datos %>%
 
 
 ```{r filter, eval = F, echo = F}
-eph_3t2023 %>% 
+eph_3t2022 %>% 
   filter(CH04 >= 14) %>% #BREAK
   print()
 ```
@@ -758,7 +759,7 @@ eph_3t2023 %>%
 - Chequeamos la operacion
 
 ```{r}
-b_eph_filtro1 <- eph_3t2023 %>% 
+b_eph_filtro1 <- eph_3t2022 %>% 
   filter(CH06 >= 14)
 ```
 
@@ -812,7 +813,7 @@ summary(b_eph_filtro1$CH06)
 - Chequeo categorías de la variable:
 
 ```{r}
-unique(eph_3t2023$AGLOMERADO)
+unique(eph_3t2022$AGLOMERADO)
 ```
 
 --
@@ -824,7 +825,7 @@ unique(eph_3t2023$AGLOMERADO)
 `r chunk_reveal("filter_0", widths = c(1.7, 1.3), title="# filter")`
 
 ```{r filter_0, eval = F, echo = F}
-eph_3t2023 %>% 
+eph_3t2022 %>% 
   select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %>% #BREAK
   filter(AGLOMERADO == 32 | AGLOMERADO == 33) %>%
   print()
@@ -836,7 +837,7 @@ eph_3t2023 %>%
 `r chunk_reveal("filter_2", widths = c(1.7, 1.3), title="# filter")`
 
 ```{r filter_2, eval = F, echo = F}
-eph_3t2023 %>% 
+eph_3t2022 %>% 
   select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %>% #BREAK
   filter(AGLOMERADO %in% c(32,33)) %>%
   print()
@@ -908,7 +909,7 @@ base_de_datos %>%
 `r chunk_reveal("mutate_1", widths = c(1.7, 1.3), title="# mutate()")`
 
 ```{r mutate_1, eval = F, echo = F}
-eph_3t2023 %>% 
+eph_3t2022 %>% 
   select(P21, TOT_P12) %>% #BREAK
   mutate(ingreso_ocup_tot = P21 + TOT_P12)
 ```
@@ -928,7 +929,7 @@ knitr::include_graphics("img/mutate_case.png")
 
 
 ```{r mutate_2, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(CH04, CH06) %>% #BREAK
   mutate(sexo = case_when(CH04 == 1 ~ "Varón",
                           CH04 == 2 ~ "Mujer"))
@@ -941,7 +942,7 @@ eph_3t2023 %>%
 
 
 ```{r mutate_3, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(CH06) %>% #BREAK
   mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
                                 CH06 %in% c(19:29) ~ "19 a 29",
@@ -1014,7 +1015,7 @@ _<p style="color:grey;" align:"center">Resume la información en una nueva tabla
 
 
 ```{r summarise_1, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(ESTADO, P21, PONDERA) %>% #BREAK
   summarise(cant_pob_tot = sum(PONDERA),
             cant_ocupados = sum(PONDERA[ESTADO == 1]), 
@@ -1033,7 +1034,7 @@ eph_3t2023 %>%
 ```{r summarise_2, eval = F, echo = F}
 library(questionr)
 
-eph_3t2023 %>%
+eph_3t2022 %>%
   select(ESTADO, P21, PONDERA) %>% #BREAK
   summarise(cant_pob_tot = sum(PONDERA),
             cant_ocupados = sum(PONDERA[ESTADO == 1]), 
@@ -1074,7 +1075,7 @@ base_de_datos %>%
 ```{r group_by_1, eval = F, echo = F}
 library(questionr)
 
-eph_3t2023 %>%
+eph_3t2022 %>%
   group_by(CH04) %>% 
   summarise(cant_pob_tot = sum(PONDERA),
             cant_ocupados = sum(PONDERA[ESTADO == 1]), 
@@ -1117,7 +1118,7 @@ Según el [Diseño de registro](https://www.indec.gob.ar/ftp/cuadros/menusuperio
 
 ---
 ```{r group_by_2, eval = F, echo = F}
-eph_3t2023 %>% #BREAK
+eph_3t2022 %>% #BREAK
   select(AGLOMERADO, CH04, CH06, ESTADO, P21, PONDERA) %>% #BREAK
   mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
                                 CH06 %in% c(19:29) ~ "19 a 29",
@@ -1193,7 +1194,7 @@ _<p style="color:grey;" align:"center">Reestructura la base, apilando varias col
 
 
 ```{r pivot_longer_1, eval = F, echo = F}
-eph_3t2023 %>%
+eph_3t2022 %>%
   group_by(CH04) %>% 
   summarise(cant_pob_tot = sum(PONDERA),
             cant_ocupados = sum(PONDERA[ESTADO == 1]), 
@@ -1221,7 +1222,7 @@ _<p style="color:grey;" align:"center">Reestructura la base, encolumnando varias
 ---
 
 ```{r, echo = F}
-base_largo <- eph_3t2023 %>%
+base_largo <- eph_3t2022 %>%
   group_by(CH04) %>% 
   summarise(cant_pob_tot = sum(PONDERA),
             cant_ocupados = sum(PONDERA[ESTADO == 1]), 
