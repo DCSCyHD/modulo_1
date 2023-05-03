@@ -1,0 +1,471 @@
+---
+title: "LA EPH"
+subtitle: "Aspectos metodológicos y operativos de la encuesta"
+autor: "Pablo Tiscornia"
+output:
+  xaringan::moon_reader:
+    #self_contained: true
+    css: [default, metropolis, metropolis-fonts]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+---
+
+```{r include=FALSE}
+options(tibble.width = NULL)
+```
+
+```{r include=FALSE}
+hook_source <- knitr::knit_hooks$get('source')
+knitr::knit_hooks$set(source = function(x, options) {
+  x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
+  hook_source(x, options)
+})
+```
+
+
+```{r xaringanExtra-clipboard, eval=FALSE, include=FALSE}
+htmltools::tagList(
+ xaringanExtra::use_clipboard(
+   button_text = "<i class=\"fa fa-clipboard\"></i>",
+   success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+ ),
+ rmarkdown::html_dependency_font_awesome()
+)
+```
+
+
+```{r xaringan-extra-styles, echo=FALSE}
+# These are the defaults
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  
+)
+```
+
+
+```{r xaringanExtra-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+class: inverse, middle, center
+
+<style type="text/css">
+
+.remark-slide-content {
+    font-size: 25px;
+    padding: 1em 1em 1em 1em;
+}
+</style>
+
+# ¿Qué es la EPH?
+
+***
+
+---
+class: inverse, middle, center
+
+```{r echo=FALSE, out.width = '60%', fig.align = 'center'}
+knitr::include_graphics(here::here("img/ni_idea.gif"))
+```
+
+---
+class: inverse, middle, center
+
+```{r echo=FALSE, out.width = '80%', fig.align = 'center'}
+knitr::include_graphics(here::here("img/marco_analitico_coneptual_eph.jpg"))
+```
+  
+---
+class: inverse, middle, center
+
+# Traduzcamos
+
+---
+
+# Fuentes de datos
+
+<br><br>
+
+--
+
+### - Censos
+ 
+--
+
+### - Registros administrativos
+
+--
+
+### - Encuestas
+
+--
+
+### - Dispositivos interconectados
+
+
+---
+# Fuentes de datos
+
+<br><br>
+
+### - Censos (_Le pregunto a la TODA población sobre sus características_)
+ 
+### - Registros administrativos
+
+### - Encuestas
+
+### - Dispositivos interconectados
+
+
+---
+# Fuentes de datos
+
+<br><br>
+
+### - Censos 
+ 
+### - Registros administrativos (_La población está registrada en formularios con fines o no estadísticos_)
+
+### - Encuestas
+
+### - Dispositivos interconectados
+
+
+---
+# Fuentes de datos
+
+<br><br>
+
+### - Censos 
+ 
+### - Registros administrativos
+
+### - Encuestas (_No puedo acceder a toda la población, le pregunto sólo a una porción de ella_)
+
+### - Dispositivos interconectados
+
+
+---
+# Fuentes de datos
+
+<br><br>
+
+### - Censos 
+ 
+### - Registros administrativos
+
+### - Encuestas
+
+### - Dispositivos interconectados (_La población "deja" rastros en celulares, internet, operaciones digitales_)
+
+
+---
+
+class: inverse, middle, center
+
+# Objetivos de la EPH
+
+
+***
+
+
+---
+
+# Objetivo general
+    
+El __objetivo general__ de la encuesta es el análisis de la inserción de la población en la estructura económico-social<sup>1</sup>.
+
+--
+
+Dicha inserción puede ser analizada a partir de tres ejes:
+  
+--
+  
+1. Características demográficas.
+
+--
+
+1. Inserción en la producción de bienes y servicios.
+
+--
+
+1. Participación en la distribución del producto social.
+  
+<br>
+
+.footnote[
+[1] [La nueva Encuesta Permanente deHogares de Argentina. 2003](https://www.indec.gob.ar/ftp/cuadros/sociedad/metodologia_eph_continua.pdf)]
+
+
+---
+class: center, middle, inverse
+
+# Características de la EPH
+
+---
+class: inverse, middle, center
+
+# Características de la EPH
+
+```{r echo=FALSE, out.width = '50%', fig.align = 'center'}
+knitr::include_graphics(here::here("img/hitos_eph.jpg"))
+```
+
+  
+---
+
+# Características de la EPH
+  
+<br>
+
+- __Cobertura o dominio de estimación__: Principales aglomerados urbanos. Fue creciendo progresivamente desde la puntual hacia la continua, hasta llega a 31 aglomerados urbanos (todas las capitales de provincia + aquellos aglomerados con +100.000 habitantes).
+
+--
+
+- __Concepto de aglomerado__: *En  las  encuestas  de  fuerza  de  trabajo  dos  localidades  distintas,  pero  próximas  y  que  conforman  en  realidad  un  único  mercado  de  trabajo,  son  tomadas  como  un  único  aglomerado.*<sup>2</sup>
+
+---
+# Características de la EPH
+
+
+- __¿De quiénes habla?:__ 
+
+    - La encuesta representa al 65% del total de la población.
+    
+    - Una vez al año se releva la EAHU, extensión de la EPH al 100% de la población urbana (localidades de 2.000 y más habitantes, que al último censo disponible -2010-, el 90% de la población residía en estas localidades).
+    
+    - Proyecto en etapa de pruebas: cobertura del ámbito rural/urbano-rural (extensión al total país -100% de la población-).
+
+---
+
+# La Muestra
+  
+
+- La Encuesta Permanente de Hogares es una encuesta por muestreo: tomo a un "pequeño" (¿pequeño?) puñado de hogares que representan al conjunto del universo.
+
+```{r echo=FALSE, out.width = '90%', fig.align = 'center'}
+knitr::include_graphics(here::here("img/poblacion_muestra.PNG"))
+```
+<small>_Fuente de la imágen: Hernández-Sampieri, "Metodología de la Investigación"._</small>
+  
+---
+# La Muestra
+
+<br>
+
+- Por cada trimestre, se relevan aproximadamente:
+
+    - 18.000 hogares (que _representan_ a más 9 millones)
+    
+    - 58.000 personas (que _representan_ a más de 27 millones)
+
+---
+
+# La Muestra
+
+- __El diseño muestral:__ bietápico estratificado.
+
+    - En  la  primer  etapa, dentro de cada aglomerado, se selecciona una cantidad de **radios censales** o subdivisiones de los mismos (áreas).
+    
+    - En la segunda etapa se listan todas las **viviendas** particulares de las áreas seleccionadas, para efectuar a partir de ese listado una selección aleatoria de viviendas. Los hogares que habitan esas viviendas son los **hogares** a encuestar.
+
+--
+
+    + Esquema de rotación: 2-2-2
+  
+    
+---
+# Principales temáticas abordadas
+  
+--
+
+<br>
+  
+- Características demográficas básicas
+  
+--
+   
+- Características ocupacionales
+  
+--
+  
+- Características migratorias
+  
+--
+  
+- Características habitacionales
+  
+--
+  
+- Características educacionales
+  
+--
+  
+- Características de ingreso
+
+---
+class: center, middle, inverse
+
+# Tres cuestionarios
+ 
+---
+
+# Cuestionario de vivienda
+
+  
+- __Definición__: _"cualquier recinto fijo o móvil que ha sido construído o adaptado para alojar personas. Las viviendas pueden ser particulares o colectivas. La EPH sólo encuesta las particulares"._
+  
+--
+  
+      - Principales dimensiones que aborda el cuestionario de vivienda:
+  
+--
+  
+        * Identificación de viviendas y hogares
+  
+--
+  
+        * Características de la vivienda y hábitat
+  
+--
+  
+        * Condición de residencia
+
+---
+# Cuestionario de hogar
+
+- __Definición__: _"Persona o grupo de personas parientes o no, que viven bajo un mismo techo y comparten los gastos de alimentación"_
+
+
+---
+# Cuestionario de hogar
+
+## El jefe o la jefa de hogar
+
+__Definición:__ *Aquella persona reconocida como tal por los demás miembros del hogar.*
+
+--
+
+- __No es estático.__ Responde tanto a un modelo general de asignación social y sexual de roles al interior del hogar como a criterios operativos:
+    + económicos (quien trabaja / quien más cobra)
+    + antigüedad
+    + horarios (a quien se encuentra en el hogar)
+
+---
+# Cuestionario de hogar
+
+## El jefe o la jefa de hogar
+
+- En caso de no haber acuerdo entre los miembros del hogar acerca de quién es el jefe o la jefa, se asigna por el o la encuestadora según los siguientes criterios (en orden de prioridad):
+
+      1. Quien tiene a su cargo la responsabilidad económica del hogar
+      1. El miembro más antiguo del hogar
+      1. Quien haya acudido al llamado
+
+---
+# Cuestionario de individuos
+
+<br>
+
+- __Aplicación:__ Todas aquellas personas residentes del hogar, mayores de 10 años (niños y niñas -¿en edad de trabajar?-. 
+
+--
+
+- __Respondentes__ Mayor de 18 años (Puede ser auto o no auto-respondente)
+
+
+---
+# Indicadores de bienestar / salud
+
+- % de personas que tienen **cobertura de salud** solo por el sistema público.
+
+- % de hogares / población en hogares **sin agua de red** dentro de la vivienda.
+
+- % de hogares / población en hogares **sin acceso a la red de servicio cloacal**.
+
+- % de población **asalariada informal** (sin descuento jubilatorio) por decil de ingreso per cápita familiar. --> p/ sexo
+
+---
+# Indicadores de bienestar / salud
+
+- % de población **desocupada** por decil de ingreso per capita familiar. --> p/ sexo
+      
+- Porcentaje de ocupados que trabajan **más de 45 horas semanales**
+      
+- Tasa de participación en el **trabajo doméstico no remunerado**
+
+- Promedio de horas diarias destinadas al trabajo doméstico no remunerado
+
+---
+# Indicadores de bienestar / salud
+
+- Porcentaje de **población en edad de jubilarse** (mujeres de 60 años y más y varones de 65 años y más) que cobra una jubilación o pensión
+
+- Porcentaje de niños, niñas y adolescentes de hasta 17 años cubiertos por la **AUH**
+
+- Porcentaje de la población de 18 años y más sometida a **violencia física o sexual** en los 12 últimos meses
+
+- Tasa de **participación de la población de 5 a 17 años** en actividades productivas por sexo y tipo de actividad
+
+
+---
+
+# Clasificadores utilizados en la EPH (Rama de actividad y Tarea / Ocupación)
+  
+--
+  
+- __Actividad (rama):__ [Clasificador de Actividades para Encuestas Sociodemográficas (CAES-MERCOSUR)](https://www.indec.gob.ar/ftp/cuadros/menusuperior/clasificadores/notas_explicativas_caes_v2018.pdf)
+  
+--
+  
+- __Ocupación:__ [Clasificador Nacional de Ocupaciones (CNO-2001-INDEC)](https://www.indec.gob.ar/ftp/cuadros/menusuperior/clasificadores/definiciones_conceptuales_cno.pdf)
+  
+--
+  
+- __Códigos geográficos:__ [Países](https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/codigospaises_09.pdf) y [provincias](https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/codigosprovincias_09.pdf)
+
+---
+# Documentación de la Encuesta:
+    
+- [Diseño de registro a agosto de 2019](https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_registro_1t19.pdf)
+  
+- [Cuestionario individual](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPHContinua_CIndividual.pdf)
+  
+- [Cuestionario Hogar](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPHContinua_CHogar.pdf)
+  
+- [Cuestionario vivienda](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPHContinua_CVivienda.pdf)
+  
+- [La nueva EPH contínua](https://www.indec.gob.ar/ftp/cuadros/sociedad/metodologia_eph_continua.pdf)
+
+- [Sistema Integrado de Estadísticas Sociales](https://www.indec.gob.ar/ftp/cuadros/publicaciones/publicacion_sies.pdf)
+
+---
+# Documentación de la Encuesta:
+
+- [Consideraciones sobre la revisión, evaluación y recuperación de la EPH. Nota metodológica actualizada para el uso de los datos del primer trimestre de 2019](https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_nota_metodologica_1_trim_2019.pdf)
+
+- [Informe de mercado de trabajo a 1er trimestre de 2019](https://www.indec.gob.ar/uploads/informesdeprensa/mercado_trabajo_eph_1trim19B489ACCDF9.pdf)
+  
+- [Sistema de consulta a los cuadros regulares de la EPH contínua](https://www.indec.gob.ar/indec/web/Institucional-Indec-bases_EPH_tabulado_continua)
+  
+- [Cartografía de la EPH](https://www.indec.gob.ar/indec/web/Nivel4-Tema-1-39-120)
+  
+
+---
+class: middle, center, inverse
+# Ejercicios
+
+- Identificar en los cuestionarios de vivienda, de hogar e individual las preguntas que dan cuenta de las áreas temáticas abordadas por la eph.
+
+- Identificar, a su vez, qué preguntas dan cuenta de las temáticas del mercado de trabajo (tipo de inserción) y cuáles vinculadas al circuito de satisfacción de necesidades.
+
+---
+class: center, middle, inverse
+
+Gracias!
