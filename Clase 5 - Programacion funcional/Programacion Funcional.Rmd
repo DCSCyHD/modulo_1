@@ -187,7 +187,7 @@ return(vector.max/vector.min)
 Veamos que pasa
 
 ```{r}
-calcula_ratio(vector = c(1,2,3,4))
+calcula_ratio(vector = c(1,0,3,4))
 ```
 
 
