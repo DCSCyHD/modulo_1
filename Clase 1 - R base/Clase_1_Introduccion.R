@@ -1,6 +1,5 @@
-
+# Carga de paquetes ####
 A <- 1
-A 
 
 A + 6
 
@@ -10,16 +9,20 @@ B
 A <- 150
 B <- 132
 
-A = B #Ahora A toma el valor de B 
-print(A)
+# Preprocesamiento ####
 
+## Creo nueva columna ####
+A = B # Ahora A toma el valor de B 
+print(A)
 #(B continua conservando el mismo valor)
 
 #suma 
 5+6
-
+## Filtro salarios altos ####
 #Resta
 6-8
+
+# Modelado de daots ####
 
 #cociente
 6/2
@@ -40,12 +43,12 @@ A > B
 A >= B
 A < B
 A <= B
-A == B
+A == B # IMPORTANTE
 A != B
 
 
 C <- A != B
-C
+class(C)
 
 #Redefinimos los valores A y B
 A <- 50
@@ -54,13 +57,26 @@ B <- 72
 
 (A > 60 & B > 65)
 (A < 60 | B < 65) 
+#MAYUSCULAS Y MINUSCULAS
+a <- 90
 
+rm(`mi numero`)
+# INDICES DEL CODIGO
 
 ## Practica:     
 #1) Crear un objeto llamado "mi_numero" que almecene un número que ustedes quieran. ¿Qué pasa si lo intentan nombrar como "mi numero"?         
 #2) Realizar alguna operación matemática con el objeto y guardar el resultado como un nuevo objeto llamado "otro_numero".     
 #3) Comprobar lógicamente si el segundo objeto es igual a 10.    
 #4) Comprobar lógicamente si alguno de los dos objetos es mayor a 10 
+
+mi_numero <- 888
+#mi numero <-  88
+
+otro_numero <- mi_numero*2
+
+otro_numero == 10
+
+(otro_numero > 10|mi_numero> 10)
 
 
 A <- 1
@@ -78,8 +94,8 @@ class(vec_num)
 
 # Vector de caracteres
 dias_char <- c("Lunes","Viernes","Viernes","Jueves",
-       "Martes", "Martes","Miercoles","Martes",
-       "Miercoles")
+               "Martes", "Martes","Miercoles",
+               "Martes","Miercoles")
 class(dias_char)
 
 # Vector de tipo fecha
@@ -92,22 +108,23 @@ table(dias_char)
 
 # Una propiedad del factor: las etiquetas.
 dias_factor <- factor(dias_char,
-                 levels = c("Lunes",
-                            "Martes",
-                            "Miercoles",
-                            "Jueves",
-                            "Viernes"))
+                       c("Lunes",
+                                 "Martes",
+                                 "Miercoles",
+                                 "Jueves",
+                                 "Viernes"))
+
 class(dias_factor)
 
 table(dias_factor)
 
-as.numeric(dias_factor)
+#as.numeric(dias_factor)
 
 D <- c(1, 3, 4)
-D <- D + 2
+D <- D + c(2,2,2)
 D
-
-E <- D + 1:3 #esto es equivalente a hacer 3+1, 5+2, 6+9 
+1:10
+E <- D + 1:3 #esto es equivalente a hacer 3+1, 5+2, 6+3 
 E
 
 # Si quiero al valor 2 del objeto E:
