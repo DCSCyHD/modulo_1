@@ -47,6 +47,17 @@ str_length(string2)
 #Ejercicio: Crear en la base de datos una nueva columna que identifique en cada caso el largo del tweet.
 #Luego, mostrar el o los casos de máxima longitud de esta variable.
 
+suena_bien <- vacuna_tweets %>% 
+  mutate(largo = str_length(text))
+
+maslargo <- unique(suena_bien$largo)
+
+suena_bien$text[suena_bien$largo == max(suena_bien$largo)]
+
+a <- suena_bien %>% 
+  top_n(n = 1,wt=largo) %>% #slice_max()
+  select(text)
+
 ## ----1er Ejercicio-----------------------------------------------------------
 vacuna_tweets_select <- vacuna_tweets_select %>%
   mutate(numero_caract = str_length(text))
