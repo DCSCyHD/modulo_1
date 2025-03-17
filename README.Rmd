@@ -93,20 +93,8 @@ __Encuentro 5: Loops y Programación Funcional__
  [![](img/Download.png)](Clase_5_programacion_funcional.rar)   
  
  
-__Encuentro 6: Manejo de Strings__
 
-+ Temas de clase:  
-  + Funciones principales del paquete stringr:  
-    + Substraer dígitos específicos, detectar patrones simples, operar con el largo de los caracteres   
-  + Introducción a expresiones regulares  
-
-
-<u> *Pueden descargarse la totalidad de los materiales de la clase para trabajar en un único archivo .zip*  </u>    
-
- [![](img/Download.png)](Clase_6_strings_y_fechas.rar)  
- 
-
-__Encuentro 7: R-Markdown__
+__Encuentro 6: R-Markdown__
 
 
 + Temas de clase:  
@@ -118,7 +106,19 @@ __Encuentro 7: R-Markdown__
 
 <u> *Pueden descargarse la totalidad de los materiales de la clase para trabajar en un único archivo .zip*  </u>    
 
-[![](img/Download.png)](Clase_7_Reportes.rar)  
+[![](img/Download.png)](Clase_6_Reportes.rar)  
+ 
+__Encuentro 7: Manejo de Strings__
+
++ Temas de clase:  
+  + Funciones principales del paquete stringr:  
+    + Substraer dígitos específicos, detectar patrones simples, operar con el largo de los caracteres   
+  + Introducción a expresiones regulares  
+
+
+<u> *Pueden descargarse la totalidad de los materiales de la clase para trabajar en un único archivo .zip*  </u>    
+
+ [![](img/Download.png)](Clase_7_strings_y_fechas.rar)  
 
 
 # Bibliografía complementaria
