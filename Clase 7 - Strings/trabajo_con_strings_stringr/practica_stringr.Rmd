@@ -1,0 +1,90 @@
+---
+title:  Practica - Fechas - Diplomatura UNSAM
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+```{r setup, message = FALSE,echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE,include = TRUE,message = FALSE)
+
+```
+
+## Cargamos librerias
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(RVerbalExpressions)
+```
+
+## Cargamos la base
+Utilizaremos para la práctica la base de twitter con motor de búsqueda en la palabra "vacuna".   
+
+```{r message=FALSE, warning=FALSE}
+base.tweets <- readRDS("../bases/vacuna_tweets.RDS")
+```
+
+## Ejericios de práctica     
+
+- Crear un objeto que guarde los registros de la base que pertenecen  a usuarios cuyos nombres (**screen_name**) tengan exactamente 10 caracteres
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+ejercicio1 <- base.tweets %>% 
+  filter(str_length(screen_name) == 10)
+```
+- Inspeccionar la función **`str_replace_na()`**. Utilizarla para reemplazar los valores **NA** de la variable de descripción del usuario (**quoted_description**), dejando en su lugar un espacio en blanco
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.ejercicio.2 <- base.tweets %>% 
+  mutate(quoted_description = str_replace_na(quoted_description,replacement = "")) 
+```
+
+- A partir del resultado anterior, crear una columna en la base de datos que concatene el **screen_name** con la descripción del usuario (**quoted_description**), obteniendo resultados de la siguiente forma:  
+`"nombre_usuario: descripcion"`  
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.ejercicio.2 %>% 
+  mutate(nombre_desc = str_c(screen_name,": ",quoted_description)) %>% 
+  select(screen_name,quoted_description,nombre_desc)
+```
+- Filtrar en la base de datos aquellos tweets que hacen referencia a Rusia
+
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.tweets %>% 
+  mutate(text = tolower(text)) %>% 
+  filter(str_detect(string = text,
+                    pattern = "rusia"))
+```
+- Crear dos nuevas variable en la base de datos:
+  -  una que identifique los primeros 4 digitos de la variable **user_id**
+  -  otra que identifique los últimos 4 digitos de la variable **user_id**
+  -  una que identifique el digito del medio de la variable **user_id**
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+base.digitos <- base.tweets %>% 
+  mutate(digitos1a4 = str_sub(string = user_id,
+                              start = 1,
+                              end = 4),
+         ultimos4 = str_sub(string = user_id,
+                              start = -4,
+                              end = -1),
+         digitocentral = str_sub(user_id,
+                                 str_length(user_id)/2,
+                                 str_length(user_id)/2)
+         )
+```
+
+- Filtrar la base para quedarse con casos que representen tweets duplicados:   
+  - ¿Que usuarios tienen más tweets duplicados?  
+  - (Opcional) ¿Qué palabras son más frecuentes en sus tweets? (pueden traer código del notebook de la clase con los distintos pasos para la limpieza)
+  
+```{r eval=FALSE, warning=FALSE, include=FALSE}
+duplicados<- base.tweets %>% 
+  filter(duplicated(text))
+
+cantidad_tweets_repetidos<- duplicados %>% 
+  group_by(screen_name) %>% 
+  summarise(cantidad_tweets = n()) %>% 
+  arrange(desc(cantidad_tweets))
+
+cantidad_tweets_repetidos
+```
