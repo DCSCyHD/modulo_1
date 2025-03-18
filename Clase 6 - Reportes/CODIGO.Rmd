@@ -1,0 +1,23 @@
+---
+title: "CODIGO"
+author: "Pablo Tiscornia"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+```{r librerias, include=FALSE}
+library(tidyverse)
+```
+
+```{r importacion, include=FALSE}
+b_inmuebles <- read_csv("../Clase 2y3 - Limpieza de datos/bases/inmuebles-estado-nacional.csv")
+```
+
+```{r tabulado, echo=FALSE}
+table(b_inmuebles$situacion_inmueble)
+```
+
+
+```
+
