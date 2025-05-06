@@ -6,12 +6,17 @@
 
 <img src="img/logo-factor-data-solo.jpg" width="200" />
 
+**Coordinación:**  
+-[Germán Rosati](https://x.com/FactorData)
+
 **Equipo Docente:**  
 -[Pablo Tiscornia](https://pablotis.github.io/intro_r/about.html)  
--[Guido Weksler](https://ar.linkedin.com/in/guido-weksler-962677bb)  
+-[Guido Weksler](https://ar.linkedin.com/in/guido-weksler-962677bb) \|
+[Github](https://github.com/Guidowe) \| [X](https://x.com/guidoweks)  
 -[Santiago Nuñez
 Rimedio](https://ar.linkedin.com/in/santiago-nu%C3%B1ez-rimedio-902ba474)  
--[Nayla Sol Garcilazo](www.linkedin.com/in/nayla-sol-garcilazo)
+-[Nayla Sol Garcilazo](http://ar.linkedin.com/in/nayla-sol-garcilazo) \|
+[Github](https://github.com/NaylaSolG)
 
 ## **Introducción a la Ciencia de Datos para Científicos Sociales**
 
