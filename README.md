@@ -146,3 +146,8 @@ archivo .zip* </u>
 
 -   [Wickham, H. (2019), The tidyverse style
     guide](https://style.tidyverse.org/)
+
+-   [Introduction to Modern
+    Statistics](https://openintro-ims.netlify.app/) Este manual no forma
+    parte del contenido de la diplomatura, pero recomendamos su lectura
+    para quienes necesiten acompañamiento en nociones de estadística.
