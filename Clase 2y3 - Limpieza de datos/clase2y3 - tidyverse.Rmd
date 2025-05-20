@@ -359,7 +359,7 @@ _{haven}_:
 
 ☑️️ `mutate()`   ☑️️ `rename()`
 
-☑️️ `arragne()`  ☑️️ `summarise()`
+☑️️ `arrange()`  ☑️️ `summarise()`
 
 ☑️️ `group_by()`
 
@@ -748,7 +748,7 @@ base_de_datos %>%
 
 ```{r filter, eval = F, echo = F}
 eph_3t2022 %>% 
-  filter(CH04 >= 14) %>% #BREAK
+  filter(CH06 >= 14) %>% #BREAK
   print()
 ```
 
