@@ -52,13 +52,13 @@ output:
 
 <br><br> 
 
-#### **e.** Crear una tabla en base a la población anterior que contenga, para cada provincia:
+#### **e.** Crear una tabla que contenga, para cada provincia:
 
-- Superficie media de la población
+- Superficie media 
 
-- Superficie mínima de la población
+- Superficie mínima 
 
-- Superficie máxima de la población
+- Superficie máxima
 
 ```{r}
 
@@ -67,7 +67,7 @@ output:
 <br><br> 
 
 
-#### **f.** Dado el siguiente código, agregar a la base una columna que contenga el peso relativo de la población de cada provincia respecto al total:
+#### **f.** Dado el siguiente código, agregar a la base una columna que exprese la proporción que representa cada situacion de inmueble respecto al totalde inmuebles:
 
 ```r
 library(tidyverse)
@@ -75,7 +75,7 @@ library(tidyverse)
 base_3_provincias <- base_inmuebles %>% 
   filter(provincia %in% c("Cordoba", "Buenos Aires")) %>% 
   group_by(situacion_inmueble) %>% 
-  summarise(cantidad_personas = n())
+  summarise(cantidad = n())
 ```
 
 <br><br> 
