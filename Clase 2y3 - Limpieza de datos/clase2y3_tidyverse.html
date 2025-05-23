@@ -3,7 +3,7 @@
   <head>
     <title>Procesando datos con el paquete tidyverse</title>
     <meta charset="utf-8" />
-    <script src="libs/header-attrs-2.19/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -15,8 +15,8 @@
     <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-Copiar código\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
-    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
     <script src="libs/xaringanExtra_fit-screen-0.2.6/fit-screen.js"></script>
     <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
   </head>
@@ -317,7 +317,7 @@ _{haven}_:
 
 ☑️️ `mutate()`   ☑️️ `rename()`
 
-☑️️ `arragne()`  ☑️️ `summarise()`
+☑️️ `arrange()`  ☑️️ `summarise()`
 
 ☑️️ `group_by()`
 
@@ -406,7 +406,7 @@ _&lt;p style="color:grey;" align:"center"&gt;Una forma de escribir&lt;/p&gt;_
 ### **Sin EL PIPE:**
 
 
-```r
+``` r
 ### Calculo la media
 round(prop.table(table(`eph_3t2022$ESTADO`)), digits = 2)
 ```
@@ -421,7 +421,7 @@ round(prop.table(table(`eph_3t2022$ESTADO`)), digits = 2)
 
 
 
-```r
+``` r
 ### Cargo la librería
 library(tidyverse)
 
@@ -509,7 +509,7 @@ b_eph_seleccion &lt;- `eph_3t2022` %&gt;%
 ### Chequeo la operación:
 
 
-```r
+``` r
 colnames(b_eph_seleccion)
 ```
 
@@ -529,7 +529,7 @@ colnames(b_eph_seleccion)
 1) Chequeo la posición de las columnas que deseo:
 
 
-```r
+``` r
 colnames(eph_3t2022)
 ```
 
@@ -592,7 +592,7 @@ b_eph_seleccion2 &lt;- eph_3t2022 %&gt;%
 ### chequeo seleccion:
 
 
-```r
+``` r
 colnames(b_eph_seleccion2)
 ```
 
@@ -610,7 +610,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_1-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -619,25 +619,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -647,7 +647,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(8:10)
 ```
@@ -669,7 +669,7 @@ eph_3t2022 %&gt;%
 ##  8 S               29     345
 ##  9 S               29     345
 ## 10 S               29     345
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -679,7 +679,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(8:10) %&gt;%
 * print()
@@ -702,7 +702,7 @@ eph_3t2022 %&gt;%
 ##  8 S               29     345
 ##  9 S               29     345
 ## 10 S               29     345
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -750,7 +750,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_2-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -759,25 +759,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -787,7 +787,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(ANO4:COMPONENTE)
 ```
@@ -809,7 +809,7 @@ eph_3t2022 %&gt;%
 ##  8  2022         3         1          3
 ##  9  2022         3         1          4
 ## 10  2022         3         1          5
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -819,7 +819,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(ANO4:COMPONENTE) %&gt;%
 * print()
@@ -842,7 +842,7 @@ eph_3t2022 %&gt;%
 ##  8  2022         3         1          3
 ##  9  2022         3         1          4
 ## 10  2022         3         1          5
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -888,7 +888,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_3-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -897,25 +897,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -925,7 +925,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_3-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(starts_with("POND"))
 ```
@@ -947,7 +947,7 @@ eph_3t2022 %&gt;%
 ##  8     345     345    345    321
 ##  9     345     345    345    321
 ## 10     345     345    345    321
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -957,7 +957,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_3-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(starts_with("POND")) %&gt;%
 * print()
@@ -980,7 +980,7 @@ eph_3t2022 %&gt;%
 ##  8     345     345    345    321
 ##  9     345     345    345    321
 ## 10     345     345    345    321
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -1028,7 +1028,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_4-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -1037,25 +1037,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -1065,7 +1065,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_4-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(ends_with("_M"))
 ```
@@ -1087,7 +1087,7 @@ eph_3t2022 %&gt;%
 ##  8      0     0     0     0     0     0     0     0     0     0     0
 ##  9  31800     0     0     0     0     0     0     0     0     0     0
 ## 10      0     0     0     0     0     0     0     0     0     0     0
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -1097,7 +1097,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_4-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(ends_with("_M")) %&gt;%
 * print()
@@ -1120,7 +1120,7 @@ eph_3t2022 %&gt;%
 ##  8      0     0     0     0     0     0     0     0     0     0     0
 ##  9  31800     0     0     0     0     0     0     0     0     0     0
 ## 10      0     0     0     0     0     0     0     0     0     0     0
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -1169,7 +1169,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_5-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -1178,25 +1178,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -1206,7 +1206,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_5-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(contains("02"))
 ```
@@ -1228,7 +1228,7 @@ eph_3t2022 %&gt;%
 ##  8      0      0      0      0      0      0      0      0     0     2     2
 ##  9      0      0      0      0      0      0      0      0     0     0     0
 ## 10      0      0      0      0      0      0      0      0     0     0     0
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -1238,7 +1238,7 @@ count: false
 # Otra forma de selecionar
 .panel1-select_5-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(contains("02")) %&gt;%
 * print()
@@ -1261,7 +1261,7 @@ eph_3t2022 %&gt;%
 ##  8      0      0      0      0      0      0      0      0     0     2     2
 ##  9      0      0      0      0      0      0      0      0     0     0     0
 ## 10      0      0      0      0      0      0      0      0     0     0     0
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -1325,7 +1325,7 @@ class: inverse, middle
 4) Escribir el siguiente código en el esquema "paso a paso (con pipes)"
 
 
-```r
+``` r
 base_ejercicio &lt;- select(eph_3t2022, ESTADO, CH04, CAT_OCUP)
 ```
 
@@ -1368,7 +1368,7 @@ count: false
 # filter()
 .panel1-filter-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -1377,25 +1377,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -1405,23 +1405,35 @@ count: false
 # filter()
 .panel1-filter-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
-* filter(CH04 &gt;= 14)
+* filter(CH06 &gt;= 14)
 ```
 ]
  
 .panel2-filter-auto[
 
 ```
-## # A tibble: 0 × 177
-## # … with 177 variables: CODUSU &lt;chr&gt;, ANO4 &lt;int&gt;, TRIMESTRE &lt;int&gt;,
-## #   NRO_HOGAR &lt;int&gt;, COMPONENTE &lt;int&gt;, H15 &lt;int&gt;, REGION &lt;int&gt;, MAS_500 &lt;chr&gt;,
-## #   AGLOMERADO &lt;int&gt;, PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## # A tibble: 39,988 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          5     1     40 S               29
+##  9 TQRMNOR…  2022         3         1          1     1     44 N               91
+## 10 TQRMNOR…  2022         3         1          2     1     44 N               91
+## # ℹ 39,978 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
 ## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
 ## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
 ## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
-## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;, …
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -1431,9 +1443,9 @@ count: false
 # filter()
 .panel1-filter-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
-  filter(CH04 &gt;= 14) %&gt;%
+  filter(CH06 &gt;= 14) %&gt;%
 * print()
 ```
 ]
@@ -1441,14 +1453,26 @@ eph_3t2022 %&gt;%
 .panel2-filter-auto[
 
 ```
-## # A tibble: 0 × 177
-## # … with 177 variables: CODUSU &lt;chr&gt;, ANO4 &lt;int&gt;, TRIMESTRE &lt;int&gt;,
-## #   NRO_HOGAR &lt;int&gt;, COMPONENTE &lt;int&gt;, H15 &lt;int&gt;, REGION &lt;int&gt;, MAS_500 &lt;chr&gt;,
-## #   AGLOMERADO &lt;int&gt;, PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## # A tibble: 39,988 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          5     1     40 S               29
+##  9 TQRMNOR…  2022         3         1          1     1     44 N               91
+## 10 TQRMNOR…  2022         3         1          2     1     44 N               91
+## # ℹ 39,978 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
 ## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
 ## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
 ## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
-## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;, …
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -1491,13 +1515,13 @@ eph_3t2022 %&gt;%
 - Chequeamos la operacion
 
 
-```r
+``` r
 b_eph_filtro1 &lt;- eph_3t2022 %&gt;% 
   filter(CH06 &gt;= 14)
 ```
 
 
-```r
+``` r
 summary(b_eph_filtro1$CH06)
 ```
 
@@ -1552,7 +1576,7 @@ summary(b_eph_filtro1$CH06)
 - Chequeo categorías de la variable:
 
 
-```r
+``` r
 unique(eph_3t2022$AGLOMERADO)
 ```
 
@@ -1572,7 +1596,7 @@ count: false
 # filter
 .panel1-filter_0-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -1581,25 +1605,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -1609,7 +1633,7 @@ count: false
 # filter
 .panel1-filter_0-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA)
 ```
@@ -1631,7 +1655,7 @@ eph_3t2022 %&gt;%
 ##  8         29     1    12      3     345
 ##  9         29     1     7      4     345
 ## 10         29     2    17      1     345
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -1641,7 +1665,7 @@ count: false
 # filter
 .panel1-filter_0-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
 * filter(AGLOMERADO == 32 | AGLOMERADO == 33)
@@ -1664,7 +1688,7 @@ eph_3t2022 %&gt;%
 ##  8         33     2    69      3    2433
 ##  9         32     1    31      1    2030
 ## 10         33     2    60      1     971
-## # … with 7,334 more rows
+## # ℹ 7,334 more rows
 ```
 ]
 
@@ -1674,7 +1698,7 @@ count: false
 # filter
 .panel1-filter_0-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
   filter(AGLOMERADO == 32 | AGLOMERADO == 33) %&gt;%
@@ -1698,7 +1722,7 @@ eph_3t2022 %&gt;%
 ##  8         33     2    69      3    2433
 ##  9         32     1    31      1    2030
 ## 10         33     2    60      1     971
-## # … with 7,334 more rows
+## # ℹ 7,334 more rows
 ```
 ]
 
@@ -1741,7 +1765,7 @@ count: false
 # filter
 .panel1-filter_2-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -1750,25 +1774,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -1778,7 +1802,7 @@ count: false
 # filter
 .panel1-filter_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA)
 ```
@@ -1800,7 +1824,7 @@ eph_3t2022 %&gt;%
 ##  8         29     1    12      3     345
 ##  9         29     1     7      4     345
 ## 10         29     2    17      1     345
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -1810,7 +1834,7 @@ count: false
 # filter
 .panel1-filter_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
 * filter(AGLOMERADO %in% c(32,33))
@@ -1833,7 +1857,7 @@ eph_3t2022 %&gt;%
 ##  8         33     2    69      3    2433
 ##  9         32     1    31      1    2030
 ## 10         33     2    60      1     971
-## # … with 7,334 more rows
+## # ℹ 7,334 more rows
 ```
 ]
 
@@ -1843,7 +1867,7 @@ count: false
 # filter
 .panel1-filter_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
   filter(AGLOMERADO %in% c(32,33)) %&gt;%
@@ -1867,7 +1891,7 @@ eph_3t2022 %&gt;%
 ##  8         33     2    69      3    2433
 ##  9         32     1    31      1    2030
 ## 10         33     2    60      1     971
-## # … with 7,334 more rows
+## # ℹ 7,334 more rows
 ```
 ]
 
@@ -1970,7 +1994,7 @@ count: false
 # mutate()
 .panel1-mutate_1-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -1979,25 +2003,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2007,7 +2031,7 @@ count: false
 # mutate()
 .panel1-mutate_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(P21, TOT_P12)
 ```
@@ -2029,7 +2053,7 @@ eph_3t2022 %&gt;%
 ##  8     0       0
 ##  9     0       0
 ## 10     0       0
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2039,7 +2063,7 @@ count: false
 # mutate()
 .panel1-mutate_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(P21, TOT_P12) %&gt;%
 * mutate(ingreso_ocup_tot = P21 + TOT_P12)
@@ -2062,7 +2086,7 @@ eph_3t2022 %&gt;%
 ##  8     0       0                0
 ##  9     0       0                0
 ## 10     0       0                0
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2116,7 +2140,7 @@ count: false
 # Recodificando con mutate() y case_when()
 .panel1-mutate_2-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -2125,25 +2149,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2153,7 +2177,7 @@ count: false
 # Recodificando con mutate() y case_when()
 .panel1-mutate_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(CH04, CH06)
 ```
@@ -2175,7 +2199,7 @@ eph_3t2022 %&gt;%
 ##  8     1    12
 ##  9     1     7
 ## 10     2    17
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2185,7 +2209,7 @@ count: false
 # Recodificando con mutate() y case_when()
 .panel1-mutate_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(CH04, CH06) %&gt;%
 * mutate(sexo = case_when(CH04 == 1 ~ "Varón",
@@ -2209,7 +2233,7 @@ eph_3t2022 %&gt;%
 ##  8     1    12 Varón
 ##  9     1     7 Varón
 ## 10     2    17 Mujer
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2253,7 +2277,7 @@ count: false
 # Recodificando con mutate() y case_when()
 .panel1-mutate_3-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -2262,25 +2286,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2290,7 +2314,7 @@ count: false
 # Recodificando con mutate() y case_when()
 .panel1-mutate_3-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(CH06)
 ```
@@ -2312,7 +2336,7 @@ eph_3t2022 %&gt;%
 ##  8    12
 ##  9     7
 ## 10    17
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2322,7 +2346,7 @@ count: false
 # Recodificando con mutate() y case_when()
 .panel1-mutate_3-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(CH06) %&gt;%
 * mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
@@ -2350,7 +2374,7 @@ eph_3t2022 %&gt;%
 ##  8    12 0 a 18    
 ##  9     7 0 a 18    
 ## 10    17 0 a 18    
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2436,7 +2460,7 @@ _&lt;p style="color:grey;" align:"center"&gt;Resume la información en una nueva
 
 - **Indicador1:** Quiero conocer cuántas personas ocupadas hay
 
-- **Indicador2:** Quiero conocer el ingreso medio de la ocupación principal
+- **Indicador2:** Quiero conocer el mínimo y máximo valor del ingreso de la ocupación principal
 
 
 
@@ -2450,7 +2474,7 @@ count: false
 # _summarise()_
 .panel1-summarise_1-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -2459,25 +2483,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2487,7 +2511,7 @@ count: false
 # _summarise()_
 .panel1-summarise_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * select(ESTADO, P21, PONDERA)
 ```
@@ -2509,7 +2533,7 @@ eph_3t2022 %&gt;%
 ##  8      3     0     345
 ##  9      4     0     345
 ## 10      1     0     345
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2519,26 +2543,23 @@ count: false
 # _summarise()_
 .panel1-summarise_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   select(ESTADO, P21, PONDERA) %&gt;%
 * summarise(cant_pob_tot = sum(PONDERA),
 *           cant_ocupados = sum(PONDERA[ESTADO == 1]),
 *           min_ingr_oc_princ = min(P21),
-*           max_ingr_oc_princ = max(P21),
-*           ingr_oc_princ_media = questionr::wtd.mean(x = P21,
-*                                                     weights = PONDERA))
+*           max_ingr_oc_princ = max(P21))
 ```
 ]
  
 .panel2-summarise_1-auto[
 
 ```
-## # A tibble: 1 × 5
-##   cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ ingr_oc_princ…¹
-##          &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;           &lt;dbl&gt;
-## 1     29203810      12922101                -9           3500000          25154.
-## # … with abbreviated variable name ¹​ingr_oc_princ_media
+## # A tibble: 1 × 4
+##   cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##          &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     29203810      12922101                -9           3500000
 ```
 ]
 
@@ -2582,24 +2603,7 @@ count: false
 # _summarise()_
 .panel1-summarise_2-auto[
 
-```r
-*library(questionr)
-```
-]
- 
-.panel2-summarise_2-auto[
-
-]
-
----
-count: false
- 
-# _summarise()_
-.panel1-summarise_2-auto[
-
-```r
-library(questionr)
-
+``` r
 *eph_3t2022
 ```
 ]
@@ -2608,25 +2612,25 @@ library(questionr)
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2636,9 +2640,7 @@ count: false
 # _summarise()_
 .panel1-summarise_2-auto[
 
-```r
-library(questionr)
-
+``` r
 eph_3t2022 %&gt;%
 * select(ESTADO, P21, PONDERA)
 ```
@@ -2660,7 +2662,7 @@ eph_3t2022 %&gt;%
 ##  8      3     0     345
 ##  9      4     0     345
 ## 10      1     0     345
-## # … with 49,222 more rows
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -2670,28 +2672,23 @@ count: false
 # _summarise()_
 .panel1-summarise_2-auto[
 
-```r
-library(questionr)
-
+``` r
 eph_3t2022 %&gt;%
   select(ESTADO, P21, PONDERA) %&gt;%
 * summarise(cant_pob_tot = sum(PONDERA),
 *           cant_ocupados = sum(PONDERA[ESTADO == 1]),
 *           min_ingr_oc_princ = min(P21),
-*           max_ingr_oc_princ = max(P21),
-*           ingr_oc_princ_media = wtd.mean(x = P21,  # Paquete questionr
-*                                          weights = PONDERA))
+*           max_ingr_oc_princ = max(P21))
 ```
 ]
  
 .panel2-summarise_2-auto[
 
 ```
-## # A tibble: 1 × 5
-##   cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ ingr_oc_princ…¹
-##          &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;           &lt;dbl&gt;
-## 1     29203810      12922101                -9           3500000          25154.
-## # … with abbreviated variable name ¹​ingr_oc_princ_media
+## # A tibble: 1 × 4
+##   cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##          &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     29203810      12922101                -9           3500000
 ```
 ]
 
@@ -2757,24 +2754,7 @@ count: false
 # _group_by()_
 .panel1-group_by_1-auto[
 
-```r
-*library(questionr)
-```
-]
- 
-.panel2-group_by_1-auto[
-
-]
-
----
-count: false
- 
-# _group_by()_
-.panel1-group_by_1-auto[
-
-```r
-library(questionr)
-
+``` r
 *eph_3t2022
 ```
 ]
@@ -2783,25 +2763,25 @@ library(questionr)
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2811,9 +2791,7 @@ count: false
 # _group_by()_
 .panel1-group_by_1-auto[
 
-```r
-library(questionr)
-
+``` r
 eph_3t2022 %&gt;%
 * group_by(CH04)
 ```
@@ -2824,25 +2802,25 @@ eph_3t2022 %&gt;%
 ```
 ## # A tibble: 49,232 × 177
 ## # Groups:   CH04 [2]
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2852,29 +2830,24 @@ count: false
 # _group_by()_
 .panel1-group_by_1-auto[
 
-```r
-library(questionr)
-
+``` r
 eph_3t2022 %&gt;%
   group_by(CH04) %&gt;%
 * summarise(cant_pob_tot = sum(PONDERA),
 *           cant_ocupados = sum(PONDERA[ESTADO == 1]),
 *           min_ingr_oc_princ = min(P21),
-*           max_ingr_oc_princ = max(P21),
-*           ingr_oc_princ_media = wtd.mean(x = P21,  # Paquete questionr
-*                                          weights = PONDERA))
+*           max_ingr_oc_princ = max(P21))
 ```
 ]
  
 .panel2-group_by_1-auto[
 
 ```
-## # A tibble: 2 × 6
-##    CH04 cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ ingr_oc…¹
-##   &lt;int&gt;        &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;     &lt;dbl&gt;
-## 1     1     14208071       7280364                -9           3500000    31996.
-## 2     2     14995739       5641737                -9           1500000    18670.
-## # … with abbreviated variable name ¹​ingr_oc_princ_media
+## # A tibble: 2 × 5
+##    CH04 cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##   &lt;int&gt;        &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     1     14208071       7280364                -9           3500000
+## 2     2     14995739       5641737                -9           1500000
 ```
 ]
 
@@ -2942,7 +2915,7 @@ count: false
 # _group_by()_
 .panel1-group_by_2-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -2951,25 +2924,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -2979,9 +2952,9 @@ count: false
 # _group_by()_
 .panel1-group_by_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
-* select(AGLOMERADO, CH04, CH06, ESTADO, P21, PONDERA)
+* select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21)
 ```
 ]
  
@@ -2989,19 +2962,19 @@ eph_3t2022 %&gt;%
 
 ```
 ## # A tibble: 49,232 × 6
-##    AGLOMERADO  CH04  CH06 ESTADO   P21 PONDERA
-##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;   &lt;int&gt;
-##  1         10     1    61      1 20000     537
-##  2         13     1    68      3     0     543
-##  3         13     2    66      3     0     543
-##  4         32     1    65      3     0     894
-##  5         32     2    64      3     0     894
-##  6         29     2    44      3     0     345
-##  7         29     1    19      1     0     345
-##  8         29     1    12      3     0     345
-##  9         29     1     7      4     0     345
-## 10         29     2    17      1     0     345
-## # … with 49,222 more rows
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA   P21
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt;
+##  1         10     1    61      1     537 20000
+##  2         13     1    68      3     543     0
+##  3         13     2    66      3     543     0
+##  4         32     1    65      3     894     0
+##  5         32     2    64      3     894     0
+##  6         29     2    44      3     345     0
+##  7         29     1    19      1     345     0
+##  8         29     1    12      3     345     0
+##  9         29     1     7      4     345     0
+## 10         29     2    17      1     345     0
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -3011,9 +2984,9 @@ count: false
 # _group_by()_
 .panel1-group_by_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
-  select(AGLOMERADO, CH04, CH06, ESTADO, P21, PONDERA) %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
 * mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
 *                               CH06 %in% c(19:29) ~ "19 a 29",
 *                               CH06 %in% c(30:39) ~ "30 a 39",
@@ -3029,19 +3002,19 @@ eph_3t2022 %&gt;%
 
 ```
 ## # A tibble: 49,232 × 8
-##    AGLOMERADO  CH04  CH06 ESTADO   P21 PONDERA edad_rango sexo 
-##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
-##  1         10     1    61      1 20000     537 60 o más   Varón
-##  2         13     1    68      3     0     543 60 o más   Varón
-##  3         13     2    66      3     0     543 60 o más   Mujer
-##  4         32     1    65      3     0     894 60 o más   Varón
-##  5         32     2    64      3     0     894 60 o más   Mujer
-##  6         29     2    44      3     0     345 40 a 49    Mujer
-##  7         29     1    19      1     0     345 19 a 29    Varón
-##  8         29     1    12      3     0     345 0 a 18     Varón
-##  9         29     1     7      4     0     345 0 a 18     Varón
-## 10         29     2    17      1     0     345 0 a 18     Mujer
-## # … with 49,222 more rows
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA   P21 edad_rango sexo 
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
+##  1         10     1    61      1     537 20000 60 o más   Varón
+##  2         13     1    68      3     543     0 60 o más   Varón
+##  3         13     2    66      3     543     0 60 o más   Mujer
+##  4         32     1    65      3     894     0 60 o más   Varón
+##  5         32     2    64      3     894     0 60 o más   Mujer
+##  6         29     2    44      3     345     0 40 a 49    Mujer
+##  7         29     1    19      1     345     0 19 a 29    Varón
+##  8         29     1    12      3     345     0 0 a 18     Varón
+##  9         29     1     7      4     345     0 0 a 18     Varón
+## 10         29     2    17      1     345     0 0 a 18     Mujer
+## # ℹ 49,222 more rows
 ```
 ]
 
@@ -3051,9 +3024,9 @@ count: false
 # _group_by()_
 .panel1-group_by_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
-  select(AGLOMERADO, CH04, CH06, ESTADO, P21, PONDERA) %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
   mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
                                 CH06 %in% c(19:29) ~ "19 a 29",
                                 CH06 %in% c(30:39) ~ "30 a 39",
@@ -3070,19 +3043,19 @@ eph_3t2022 %&gt;%
 
 ```
 ## # A tibble: 7,344 × 8
-##    AGLOMERADO  CH04  CH06 ESTADO    P21 PONDERA edad_rango sexo 
-##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
-##  1         32     1    65      3      0     894 60 o más   Varón
-##  2         32     2    64      3      0     894 60 o más   Mujer
-##  3         33     1    59      1  44000    1792 50 a 59    Varón
-##  4         33     2    62      3      0    1792 60 o más   Mujer
-##  5         33     2    81      3      0    5562 60 o más   Mujer
-##  6         33     1    56      1  73000    5562 50 a 59    Varón
-##  7         33     1    73      3      0    2433 60 o más   Varón
-##  8         33     2    69      3      0    2433 60 o más   Mujer
-##  9         32     1    31      1 110000    2030 30 a 39    Varón
-## 10         33     2    60      1     -9     971 60 o más   Mujer
-## # … with 7,334 more rows
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA    P21 edad_rango sexo 
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
+##  1         32     1    65      3     894      0 60 o más   Varón
+##  2         32     2    64      3     894      0 60 o más   Mujer
+##  3         33     1    59      1    1792  44000 50 a 59    Varón
+##  4         33     2    62      3    1792      0 60 o más   Mujer
+##  5         33     2    81      3    5562      0 60 o más   Mujer
+##  6         33     1    56      1    5562  73000 50 a 59    Varón
+##  7         33     1    73      3    2433      0 60 o más   Varón
+##  8         33     2    69      3    2433      0 60 o más   Mujer
+##  9         32     1    31      1    2030 110000 30 a 39    Varón
+## 10         33     2    60      1     971     -9 60 o más   Mujer
+## # ℹ 7,334 more rows
 ```
 ]
 
@@ -3092,9 +3065,9 @@ count: false
 # _group_by()_
 .panel1-group_by_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
-  select(AGLOMERADO, CH04, CH06, ESTADO, P21, PONDERA) %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
   mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
                                 CH06 %in% c(19:29) ~ "19 a 29",
                                 CH06 %in% c(30:39) ~ "30 a 39",
@@ -3113,19 +3086,19 @@ eph_3t2022 %&gt;%
 ```
 ## # A tibble: 7,344 × 8
 ## # Groups:   sexo, edad_rango [14]
-##    AGLOMERADO  CH04  CH06 ESTADO    P21 PONDERA edad_rango sexo 
-##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
-##  1         32     1    65      3      0     894 60 o más   Varón
-##  2         32     2    64      3      0     894 60 o más   Mujer
-##  3         33     1    59      1  44000    1792 50 a 59    Varón
-##  4         33     2    62      3      0    1792 60 o más   Mujer
-##  5         33     2    81      3      0    5562 60 o más   Mujer
-##  6         33     1    56      1  73000    5562 50 a 59    Varón
-##  7         33     1    73      3      0    2433 60 o más   Varón
-##  8         33     2    69      3      0    2433 60 o más   Mujer
-##  9         32     1    31      1 110000    2030 30 a 39    Varón
-## 10         33     2    60      1     -9     971 60 o más   Mujer
-## # … with 7,334 more rows
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA    P21 edad_rango sexo 
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
+##  1         32     1    65      3     894      0 60 o más   Varón
+##  2         32     2    64      3     894      0 60 o más   Mujer
+##  3         33     1    59      1    1792  44000 50 a 59    Varón
+##  4         33     2    62      3    1792      0 60 o más   Mujer
+##  5         33     2    81      3    5562      0 60 o más   Mujer
+##  6         33     1    56      1    5562  73000 50 a 59    Varón
+##  7         33     1    73      3    2433      0 60 o más   Varón
+##  8         33     2    69      3    2433      0 60 o más   Mujer
+##  9         32     1    31      1    2030 110000 30 a 39    Varón
+## 10         33     2    60      1     971     -9 60 o más   Mujer
+## # ℹ 7,334 more rows
 ```
 ]
 
@@ -3135,9 +3108,9 @@ count: false
 # _group_by()_
 .panel1-group_by_2-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
-  select(AGLOMERADO, CH04, CH06, ESTADO, P21, PONDERA) %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
   mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
                                 CH06 %in% c(19:29) ~ "19 a 29",
                                 CH06 %in% c(30:39) ~ "30 a 39",
@@ -3151,34 +3124,32 @@ eph_3t2022 %&gt;%
 * summarise(cant_pob_tot = sum(PONDERA),
 *           cant_ocupados = sum(PONDERA[ESTADO == 1]),
 *           min_ingr_oc_princ = min(P21),
-*           max_ingr_oc_princ = max(P21),
-*           ingr_oc_princ_media = wtd.mean(x = P21,  # Paquete questionr
-*                                          weights = PONDERA))
+*           max_ingr_oc_princ = max(P21))
 ```
 ]
  
 .panel2-group_by_2-auto[
 
 ```
-## # A tibble: 14 × 7
+## # A tibble: 14 × 6
 ## # Groups:   sexo [2]
-##    sexo  edad_rango cant_pob_tot cant_ocupados min_ingr_oc_princ max_i…¹ ingr_…²
-##    &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;         &lt;int&gt;             &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;
-##  1 Mujer 0 a 18          2199026         62947                -9   80000    207.
-##  2 Mujer 19 a 29         1207326        634824                -9  300000  16304.
-##  3 Mujer 30 a 39         1113780        749404                -9  300000  35366.
-##  4 Mujer 40 a 49         1146237        868013                -9  360000  41878.
-##  5 Mujer 50 a 59          829964        529859                -9  400000  38470.
-##  6 Mujer 60 o más        1473664        223951                -9 1500000   7487.
-##  7 Mujer &lt;NA&gt;              80859             0                 0       0      0 
-##  8 Varón 0 a 18          2364240         68968                -9   85000    418.
-##  9 Varón 19 a 29         1219944        825244                -9  425000  31799.
-## 10 Varón 30 a 39         1020295        924281                -9  500000  61464.
-## 11 Varón 40 a 49         1048107        982190                -9  620000  63259.
-## 12 Varón 50 a 59          828807        709093                -9 1000000  52973.
-## 13 Varón 60 o más        1121752        439521                -9  600000  22599.
-## 14 Varón &lt;NA&gt;              80780             0                 0       0      0 
-## # … with abbreviated variable names ¹​max_ingr_oc_princ, ²​ingr_oc_princ_media
+##    sexo  edad_rango cant_pob_tot cant_ocupados min_ingr_oc_princ
+##    &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;         &lt;int&gt;             &lt;int&gt;
+##  1 Mujer 0 a 18          2199026         62947                -9
+##  2 Mujer 19 a 29         1207326        634824                -9
+##  3 Mujer 30 a 39         1113780        749404                -9
+##  4 Mujer 40 a 49         1146237        868013                -9
+##  5 Mujer 50 a 59          829964        529859                -9
+##  6 Mujer 60 o más        1473664        223951                -9
+##  7 Mujer &lt;NA&gt;              80859             0                 0
+##  8 Varón 0 a 18          2364240         68968                -9
+##  9 Varón 19 a 29         1219944        825244                -9
+## 10 Varón 30 a 39         1020295        924281                -9
+## 11 Varón 40 a 49         1048107        982190                -9
+## 12 Varón 50 a 59          828807        709093                -9
+## 13 Varón 60 o más        1121752        439521                -9
+## 14 Varón &lt;NA&gt;              80780             0                 0
+## # ℹ 1 more variable: max_ingr_oc_princ &lt;int&gt;
 ```
 ]
 
@@ -3265,7 +3236,7 @@ count: false
 # _pivot_longer()_
 .panel1-pivot_longer_1-auto[
 
-```r
+``` r
 *eph_3t2022
 ```
 ]
@@ -3274,25 +3245,25 @@ count: false
 
 ```
 ## # A tibble: 49,232 × 177
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -3302,7 +3273,7 @@ count: false
 # _pivot_longer()_
 .panel1-pivot_longer_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
 * group_by(CH04)
 ```
@@ -3313,25 +3284,25 @@ eph_3t2022 %&gt;%
 ```
 ## # A tibble: 49,232 × 177
 ## # Groups:   CH04 [2]
-##    CODUSU      ANO4 TRIME…¹ NRO_H…² COMPO…³   H15 REGION MAS_500 AGLOM…⁴ PONDERA
-##    &lt;chr&gt;      &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;
-##  1 TQRMNORVQ…  2022       3       1       1     1     42 S            10     537
-##  2 TQRMNOQSW…  2022       3       1       1     1     43 S            13     543
-##  3 TQRMNOQSW…  2022       3       1       2     1     43 S            13     543
-##  4 TQRMNOTSQ…  2022       3       1       1     1      1 S            32     894
-##  5 TQRMNOTSQ…  2022       3       1       2     1      1 S            32     894
-##  6 TQRMNOSWV…  2022       3       1       1     1     40 S            29     345
-##  7 TQRMNOSWV…  2022       3       1       2     1     40 S            29     345
-##  8 TQRMNOSWV…  2022       3       1       3     1     40 S            29     345
-##  9 TQRMNOSWV…  2022       3       1       4     0     40 S            29     345
-## 10 TQRMNOSWV…  2022       3       1       5     1     40 S            29     345
-## # … with 49,222 more rows, 167 more variables: CH03 &lt;int&gt;, CH04 &lt;int&gt;,
-## #   CH05 &lt;chr&gt;, CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;,
-## #   CH11 &lt;int&gt;, CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;,
-## #   CH16 &lt;int&gt;, CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
 ## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
-## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;,
-## #   PP02E &lt;int&gt;, PP02H &lt;int&gt;, PP02I &lt;int&gt;, PP03C &lt;int&gt;, PP03D &lt;int&gt;, …
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
 ```
 ]
 
@@ -3341,27 +3312,24 @@ count: false
 # _pivot_longer()_
 .panel1-pivot_longer_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   group_by(CH04) %&gt;%
 * summarise(cant_pob_tot = sum(PONDERA),
 *           cant_ocupados = sum(PONDERA[ESTADO == 1]),
 *           min_ingr_oc_princ = min(P21),
-*           max_ingr_oc_princ = max(P21),
-*           ingr_oc_princ_media = wtd.mean(x = P21,  # Paquete questionr
-*                                          weights = PONDERA))
+*           max_ingr_oc_princ = max(P21))
 ```
 ]
  
 .panel2-pivot_longer_1-auto[
 
 ```
-## # A tibble: 2 × 6
-##    CH04 cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ ingr_oc…¹
-##   &lt;int&gt;        &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;     &lt;dbl&gt;
-## 1     1     14208071       7280364                -9           3500000    31996.
-## 2     2     14995739       5641737                -9           1500000    18670.
-## # … with abbreviated variable name ¹​ingr_oc_princ_media
+## # A tibble: 2 × 5
+##    CH04 cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##   &lt;int&gt;        &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     1     14208071       7280364                -9           3500000
+## 2     2     14995739       5641737                -9           1500000
 ```
 ]
 
@@ -3371,16 +3339,14 @@ count: false
 # _pivot_longer()_
 .panel1-pivot_longer_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   group_by(CH04) %&gt;%
   summarise(cant_pob_tot = sum(PONDERA),
             cant_ocupados = sum(PONDERA[ESTADO == 1]),
             min_ingr_oc_princ = min(P21),
-            max_ingr_oc_princ = max(P21),
-            ingr_oc_princ_media = wtd.mean(x = P21,  # Paquete questionr
-                                           weights = PONDERA)) %&gt;%
-* select(CH04, cant_ocupados, ingr_oc_princ_media)
+            max_ingr_oc_princ = max(P21)) %&gt;%
+* select(CH04, cant_ocupados, cant_pob_tot)
 ```
 ]
  
@@ -3388,10 +3354,10 @@ eph_3t2022 %&gt;%
 
 ```
 ## # A tibble: 2 × 3
-##    CH04 cant_ocupados ingr_oc_princ_media
-##   &lt;int&gt;         &lt;int&gt;               &lt;dbl&gt;
-## 1     1       7280364              31996.
-## 2     2       5641737              18670.
+##    CH04 cant_ocupados cant_pob_tot
+##   &lt;int&gt;         &lt;int&gt;        &lt;int&gt;
+## 1     1       7280364     14208071
+## 2     2       5641737     14995739
 ```
 ]
 
@@ -3401,17 +3367,15 @@ count: false
 # _pivot_longer()_
 .panel1-pivot_longer_1-auto[
 
-```r
+``` r
 eph_3t2022 %&gt;%
   group_by(CH04) %&gt;%
   summarise(cant_pob_tot = sum(PONDERA),
             cant_ocupados = sum(PONDERA[ESTADO == 1]),
             min_ingr_oc_princ = min(P21),
-            max_ingr_oc_princ = max(P21),
-            ingr_oc_princ_media = wtd.mean(x = P21,  # Paquete questionr
-                                           weights = PONDERA)) %&gt;%
-  select(CH04, cant_ocupados, ingr_oc_princ_media) %&gt;%
-* pivot_longer(cols = c(cant_ocupados, ingr_oc_princ_media),  #&lt;&lt;
+            max_ingr_oc_princ = max(P21)) %&gt;%
+  select(CH04, cant_ocupados, cant_pob_tot) %&gt;%
+* pivot_longer(cols = c(cant_ocupados, cant_pob_tot),  #&lt;&lt;
 *              names_to = "variable",
 *              values_to = "valor")
 ```
@@ -3421,12 +3385,12 @@ eph_3t2022 %&gt;%
 
 ```
 ## # A tibble: 4 × 3
-##    CH04 variable               valor
-##   &lt;int&gt; &lt;chr&gt;                  &lt;dbl&gt;
-## 1     1 cant_ocupados       7280364 
-## 2     1 ingr_oc_princ_media   31996.
-## 3     2 cant_ocupados       5641737 
-## 4     2 ingr_oc_princ_media   18670.
+##    CH04 variable         valor
+##   &lt;int&gt; &lt;chr&gt;            &lt;int&gt;
+## 1     1 cant_ocupados  7280364
+## 2     1 cant_pob_tot  14208071
+## 3     2 cant_ocupados  5641737
+## 4     2 cant_pob_tot  14995739
 ```
 ]
 
@@ -3479,7 +3443,7 @@ count: false
 # _pivot_wider()_
 .panel1-pivot_wider_2-auto[
 
-```r
+``` r
 *base_largo
 ```
 ]
@@ -3488,12 +3452,12 @@ count: false
 
 ```
 ## # A tibble: 4 × 3
-##    CH04 variable               valor
-##   &lt;int&gt; &lt;chr&gt;                  &lt;dbl&gt;
-## 1     1 cant_ocupados       7280364 
-## 2     1 ingr_oc_princ_media   31996.
-## 3     2 cant_ocupados       5641737 
-## 4     2 ingr_oc_princ_media   18670.
+##    CH04 variable         valor
+##   &lt;int&gt; &lt;chr&gt;            &lt;int&gt;
+## 1     1 cant_ocupados  7280364
+## 2     1 cant_pob_tot  14208071
+## 3     2 cant_ocupados  5641737
+## 4     2 cant_pob_tot  14995739
 ```
 ]
 
@@ -3503,7 +3467,7 @@ count: false
 # _pivot_wider()_
 .panel1-pivot_wider_2-auto[
 
-```r
+``` r
 base_largo %&gt;%
 * pivot_wider(names_from = "variable",
 *             values_from = "valor")
@@ -3514,10 +3478,10 @@ base_largo %&gt;%
 
 ```
 ## # A tibble: 2 × 3
-##    CH04 cant_ocupados ingr_oc_princ_media
-##   &lt;int&gt;         &lt;dbl&gt;               &lt;dbl&gt;
-## 1     1       7280364              31996.
-## 2     2       5641737              18670.
+##    CH04 cant_ocupados cant_pob_tot
+##   &lt;int&gt;         &lt;int&gt;        &lt;int&gt;
+## 1     1       7280364     14208071
+## 2     2       5641737     14995739
 ```
 ]
 
@@ -3527,7 +3491,7 @@ count: false
 # _pivot_wider()_
 .panel1-pivot_wider_2-auto[
 
-```r
+``` r
 base_largo %&gt;%
   pivot_wider(names_from = "variable",
               values_from = "valor") %&gt;%
@@ -3539,10 +3503,10 @@ base_largo %&gt;%
 
 ```
 ## # A tibble: 2 × 3
-##    CH04 cant_ocupados ingr_oc_princ_media
-##   &lt;int&gt;         &lt;dbl&gt;               &lt;dbl&gt;
-## 1     1       7280364              31996.
-## 2     2       5641737              18670.
+##    CH04 cant_ocupados cant_pob_tot
+##   &lt;int&gt;         &lt;int&gt;        &lt;int&gt;
+## 1     1       7280364     14208071
+## 2     2       5641737     14995739
 ```
 ]
 
@@ -3578,11 +3542,11 @@ base_largo %&gt;%
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"ratio": "16:9",
-"highlightStyle": "github",
-"highlightLines": true,
-"highlightSpans": true,
-"countIncrementalSlides": false
+  "ratio": "16:9",
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "highlightSpans": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
