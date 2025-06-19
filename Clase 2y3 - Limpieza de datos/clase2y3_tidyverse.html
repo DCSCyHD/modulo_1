@@ -1,0 +1,3678 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Procesando datos con el paquete tidyverse</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-Copiar código\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra_fit-screen-0.2.6/fit-screen.js"></script>
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Procesando datos con el paquete tidyverse
+]
+.subtitle[
+## Diplomatura en Ciencias Sociales Computacionales y Humanidades Digitales
+]
+
+---
+
+
+
+&lt;style type="text/css"&gt;
+
+.remark-slide-content {
+    font-size: 25px;
+    padding: 1em 1em 1em 1em;
+}
+
+&lt;style type="text/css"&gt;
+
+.remark-code{
+  line-height: 1.5; font-size: 80%
+}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+class: inverse, center, middle
+
+
+# Paquetes
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+ 
+
+---
+
+# Paquetes  
+
+## ¿Qué son?
+
+--
+
+✔️ Los paquetes son, principalmente, funciones que no están en r base, pero también bases de datos y objetos de R en general.
+
+--
+
+## ¿Para qué nos sirven?   
+
+✔️ Ayudan a resolver problemas que con r base no se podía, o que era muy difícil hacerlo.
+ 
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R1.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R2.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R3.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R4.PNG)
+background-size: contain
+
+---
+class: middle, center, inverse
+
+background-image: url(img/R5.PNG)
+background-size: contain
+  
+---
+
+#Paquetes    
+
+## INSTALACIÓN
+
+- Podemos descargarlos e instalarlos con el siguiente comando: 
+
+```r
+install.packages("nombre_del_paquete") 
+```
+
+- Sólo es necesario instalar el paquete una vez por computadora.
+
+---
+
+#Paquetes  
+
+## INVOCACIÓN
+
+.pull-left[
+
+- Una vez instalado, cada vez que abramos una nueva sesión de R y querramos utilizar el paquete debemos **cargarlo al ambiente de trabajo** mediante la función:    
+
+```r
+library(nombre_del_paquete)
+```
+]
+
+.pull-right[
+
+&lt;img src="img/invocacion.gif" width="500px" /&gt;
+]
+
+
+---
+
+class: inverse, middle, center
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+# [Tidyverse](https://www.tidyverse.org/)
+
+
+---
+# Tidyverse
+
+.pull-left[
+#### `Tidyverse` es una colección de paquetes de R, pensados para trabajar en "ciencia de datos". 
+ 
+]
+
+.pull-right[
+
+
+&lt;img src="img/tidyverse.png" width="781" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: inverse, middle, center
+
+
+# ¿Por qué tidyverse?
+
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+
+ 
+---
+# __¿Por qué tidyverse?__
+
+
+- ### Orientado a ser leído y escrito por y para seres humanos
+
+
+--
+
+
+- ### Funciones no pensadas para una tarea específica sino para un proceso de trabajo
+
+.pull-left[
+&lt;img src="img/circuito_del_dato.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="img/circuito_del_dato_tidy.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+
+- ### Su comunidad, basada en los principios del código abierto y trabajo colaborativo 
+
+
+
+
+---
+# __Instalación y uso__
+
+* Sólo una vez (por computadora):
+```r
+install.packages("tidyverse")
+```
+
+--
+
+* En cada inicio de sesión de R o Rstudio:
+
+```r
+library(tidyverse)
+```
+ 
+--
+
+.pull-left[
+
+_No es necesario esto:_
+
+```r
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("ggplot2")
+```
+]
+
+.pull-right[
+
+_Ni esto:_
+
+```r
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+]
+
+
+---
+# Hoja de ruta
+
+### Presentación de los paquetes `dplyr` y `tidyr` 
+
+
+.pull-left[
+
+## ✔️ lectura / escritura
+
+_{readr}_:
+
+☑️ `read_csv()` ☑️ `read_table()`
+
+_{haven}_:
+
+☑️ `read_sav()` ☑️ `read_dat()`
+
+☑️ `read_sas()` 
+
+## ✔️ magrittr
+
+☑️ `%&gt;%`
+
+
+## ✔️ tidyr
+    
+☑️ `pivot_longer()` ☑️ `pivot_wider()` 
+
+]
+
+
+.pull-right[
+
+## ✔️ dplyr
+
+☑️️ `select()`   ☑️️ `filter()`
+
+☑️️ `mutate()`   ☑️️ `rename()`
+
+☑️️ `arrange()`  ☑️️ `summarise()`
+
+☑️️ `group_by()`
+
+]
+
+
+
+---
+class: middle, center, inverse
+
+
+# Lectura / escritura de archivos
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+ 
+---
+# Lectura / escritura de archivos
+
+## Hay varios paquetes que ayudan a la lectura de archivos, los principales son:
+
+
+.pull-left[
+
+### Paquete `{readr}`
+
+- `read_csv()`   --&gt; *.csv*
+
+- `read_table()` --&gt; *.txt*
+
+- `read_rds()`   --&gt; *.rds*
+]
+
+.pull-right[
+
+### Paquete `{haven}`
+
+- `read_sav()` --&gt; SPSS
+
+- `read_dta()` --&gt; STATA
+
+- `read_sas()` --&gt; SAS
+
+]
+
+ 
+
+---
+# Base de trabajo
+
+- **Base de trabajo: ** Encuesta Permanente de Hogares
+
+- [Acceso a bases desde INDEC](https://www.indec.gob.ar/indec/web/Institucional-Indec-BasesDeDatos)
+
+- [Paquete `{eph}`](https://holatam.github.io/eph/)
+
+
+--
+
+Con la siguiente sentencia puedo importarla a R:
+
+```r
+eph_3t2022 &lt;- read.delim("bases/EPH_usu_3er_Trim_2022_txt/usu_individual_T322.txt.txt", 
+                             header = TRUE, 
+                             sep = ";", 
+                             dec = ",")
+```
+
+---
+class: middle, center, inverse
+  
+  EL PIPE
+
+&lt;img src="img/pipes.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+_&lt;p style="color:grey;" align:"center"&gt;Una forma de escribir&lt;/p&gt;_
+
+---
+# magrittr
+
+.pull-left[
+
+### **Sin EL PIPE:**
+
+
+``` r
+### Calculo la media
+round(prop.table(table(`eph_3t2022$ESTADO`)), digits = 2)
+```
+
+]
+
+--
+
+.pull-right[
+
+### **Con EL PIPE**
+
+
+
+``` r
+### Cargo la librería
+library(tidyverse)
+
+### Calculo la media
+`eph_3t2022$ESTADO` %&gt;% 
+  table() %&gt;% 
+  prop.table() %&gt;% 
+  round(digits = 2)
+```
+
+]
+
+
+---
+class: middle, center, inverse
+  
+
+&lt;img src="img/logo dplyr.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+# dplyr
+
+## Funciones del paquete dplyr:
+
+&lt;br&gt;
+
+| __Función__   | __Acción__ |
+| :---          | ---:   |
+| `select()`    | *selecciona o descarta variables*|
+| `filter()`    | *selecciona filas*|
+| `mutate()`    | *crea / edita variables*|
+| `rename()`    | *renombra variables*|
+| `group_by()`  | *segmenta en funcion de una variable*|
+| `summarize()` | *genera una tabla de resúmen*|
+
+---
+
+
+class: inverse, middle, center
+
+# __select()__
+ 
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+_&lt;p style="color:grey;" align:"center"&gt;Elije o descarta columnas de una base de datos&lt;/p&gt;_
+ 
+
+---
+# select()
+
+
+### La función tiene el siguiente esquema:
+
+```r
+base_de_datos %&gt;% 
+  select(variable_1, variable_2, variable_n)
+```
+
+
+
+---
+# select()
+
+### Supongamos que quiero trabajar con las variables para medir la **condicion de actividad** por **sexo** y **edad**
+
+
+---
+# select() - por nombre de variable
+
+
+### selecciono las columnas que deseo de la base de datos:
+
+```r
+b_eph_seleccion &lt;- `eph_3t2022` %&gt;% 
+  select(ESTADO, CH04, CH06)
+```
+
+
+
+--
+
+### Chequeo la operación:
+
+
+``` r
+colnames(b_eph_seleccion)
+```
+
+```
+## [1] "ESTADO" "CH04"   "CH06"
+```
+ 
+
+---
+# select() - por posición de la columna
+
+
+### Supongamos que quiero las columnas __"CODUSU"__, __"TRIMESTRE"__ y __"PONDERA"__ 
+
+--
+
+1) Chequeo la posición de las columnas que deseo:
+
+
+``` r
+colnames(eph_3t2022)
+```
+
+```
+##   [1] "CODUSU"     "ANO4"       "TRIMESTRE"  "NRO_HOGAR"  "COMPONENTE"
+##   [6] "H15"        "REGION"     "MAS_500"    "AGLOMERADO" "PONDERA"   
+##  [11] "CH03"       "CH04"       "CH05"       "CH06"       "CH07"      
+##  [16] "CH08"       "CH09"       "CH10"       "CH11"       "CH12"      
+##  [21] "CH13"       "CH14"       "CH15"       "CH15_COD"   "CH16"      
+##  [26] "CH16_COD"   "NIVEL_ED"   "ESTADO"     "CAT_OCUP"   "CAT_INAC"  
+##  [31] "IMPUTA"     "PP02C1"     "PP02C2"     "PP02C3"     "PP02C4"    
+##  [36] "PP02C5"     "PP02C6"     "PP02C7"     "PP02C8"     "PP02E"     
+##  [41] "PP02H"      "PP02I"      "PP03C"      "PP03D"      "PP3E_TOT"  
+##  [46] "PP3F_TOT"   "PP03G"      "PP03H"      "PP03I"      "PP03J"     
+##  [51] "INTENSI"    "PP04A"      "PP04B_COD"  "PP04B1"     "PP04B2"    
+##  [56] "PP04B3_MES" "PP04B3_ANO" "PP04B3_DIA" "PP04C"      "PP04C99"   
+##  [61] "PP04D_COD"  "PP04G"      "PP05B2_MES" "PP05B2_ANO" "PP05B2_DIA"
+##  [66] "PP05C_1"    "PP05C_2"    "PP05C_3"    "PP05E"      "PP05F"     
+##  [71] "PP05H"      "PP06A"      "PP06C"      "PP06D"      "PP06E"     
+##  [76] "PP06H"      "PP07A"      "PP07C"      "PP07D"      "PP07E"     
+##  [81] "PP07F1"     "PP07F2"     "PP07F3"     "PP07F4"     "PP07F5"    
+##  [86] "PP07G1"     "PP07G2"     "PP07G3"     "PP07G4"     "PP07G_59"  
+##  [91] "PP07H"      "PP07I"      "PP07J"      "PP07K"      "PP08D1"    
+##  [96] "PP08D4"     "PP08F1"     "PP08F2"     "PP08J1"     "PP08J2"    
+## [101] "PP08J3"     "PP09A"      "PP09A_ESP"  "PP09B"      "PP09C"     
+## [106] "PP09C_ESP"  "PP10A"      "PP10C"      "PP10D"      "PP10E"     
+## [111] "PP11A"      "PP11B_COD"  "PP11B1"     "PP11B2_MES" "PP11B2_ANO"
+## [116] "PP11B2_DIA" "PP11C"      "PP11C99"    "PP11D_COD"  "PP11G_ANO" 
+## [121] "PP11G_MES"  "PP11G_DIA"  "PP11L"      "PP11L1"     "PP11M"     
+## [126] "PP11N"      "PP11O"      "PP11P"      "PP11Q"      "PP11R"     
+## [131] "PP11S"      "PP11T"      "P21"        "DECOCUR"    "IDECOCUR"  
+## [136] "RDECOCUR"   "GDECOCUR"   "PDECOCUR"   "ADECOCUR"   "PONDIIO"   
+## [141] "TOT_P12"    "P47T"       "DECINDR"    "IDECINDR"   "RDECINDR"  
+## [146] "GDECINDR"   "PDECINDR"   "ADECINDR"   "PONDII"     "V2_M"      
+## [151] "V3_M"       "V4_M"       "V5_M"       "V8_M"       "V9_M"      
+## [156] "V10_M"      "V11_M"      "V12_M"      "V18_M"      "V19_AM"    
+## [161] "V21_M"      "T_VI"       "ITF"        "DECIFR"     "IDECIFR"   
+## [166] "RDECIFR"    "GDECIFR"    "PDECIFR"    "ADECIFR"    "IPCF"      
+## [171] "DECCFR"     "IDECCFR"    "RDECCFR"    "GDECCFR"    "PDECCFR"   
+## [176] "ADECCFR"    "PONDIH"
+```
+
+
+
+---
+# select() - por posición de la columna
+
+2) Aplico la función `select()` en base a la posición de las columnas:
+
+
+```r
+b_eph_seleccion2 &lt;- eph_3t2022 %&gt;% 
+  select(1, 3, 10)
+```
+
+
+
+--
+
+### chequeo seleccion:
+
+
+``` r
+colnames(b_eph_seleccion2)
+```
+
+```
+## [1] "CODUSU"    "TRIMESTRE" "PONDERA"
+```
+
+
+---
+
+
+
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_1-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-select_1-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(8:10)
+```
+]
+ 
+.panel2-select_1-auto[
+
+```
+## # A tibble: 49,232 × 3
+##    MAS_500 AGLOMERADO PONDERA
+##    &lt;chr&gt;        &lt;int&gt;   &lt;int&gt;
+##  1 S               10     537
+##  2 S               13     543
+##  3 S               13     543
+##  4 S               32     894
+##  5 S               32     894
+##  6 S               29     345
+##  7 S               29     345
+##  8 S               29     345
+##  9 S               29     345
+## 10 S               29     345
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(8:10) %&gt;%
+* print()
+```
+]
+ 
+.panel2-select_1-auto[
+
+```
+## # A tibble: 49,232 × 3
+##    MAS_500 AGLOMERADO PONDERA
+##    &lt;chr&gt;        &lt;int&gt;   &lt;int&gt;
+##  1 S               10     537
+##  2 S               13     543
+##  3 S               13     543
+##  4 S               32     894
+##  5 S               32     894
+##  6 S               29     345
+##  7 S               29     345
+##  8 S               29     345
+##  9 S               29     345
+## 10 S               29     345
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-select_1-auto {
+  color: black;
+  width: 35.9333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-select_1-auto {
+  color: black;
+  width: 62.0666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-select_1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+
+
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_2-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-select_2-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(ANO4:COMPONENTE)
+```
+]
+ 
+.panel2-select_2-auto[
+
+```
+## # A tibble: 49,232 × 4
+##     ANO4 TRIMESTRE NRO_HOGAR COMPONENTE
+##    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt;
+##  1  2022         3         1          1
+##  2  2022         3         1          1
+##  3  2022         3         1          2
+##  4  2022         3         1          1
+##  5  2022         3         1          2
+##  6  2022         3         1          1
+##  7  2022         3         1          2
+##  8  2022         3         1          3
+##  9  2022         3         1          4
+## 10  2022         3         1          5
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(ANO4:COMPONENTE) %&gt;%
+* print()
+```
+]
+ 
+.panel2-select_2-auto[
+
+```
+## # A tibble: 49,232 × 4
+##     ANO4 TRIMESTRE NRO_HOGAR COMPONENTE
+##    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt;
+##  1  2022         3         1          1
+##  2  2022         3         1          1
+##  3  2022         3         1          2
+##  4  2022         3         1          1
+##  5  2022         3         1          2
+##  6  2022         3         1          1
+##  7  2022         3         1          2
+##  8  2022         3         1          3
+##  9  2022         3         1          4
+## 10  2022         3         1          5
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-select_2-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-select_2-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-select_2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_3-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-select_3-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_3-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(starts_with("POND"))
+```
+]
+ 
+.panel2-select_3-auto[
+
+```
+## # A tibble: 49,232 × 4
+##    PONDERA PONDIIO PONDII PONDIH
+##      &lt;int&gt;   &lt;int&gt;  &lt;int&gt;  &lt;int&gt;
+##  1     537     580    565    474
+##  2     543     543    561    611
+##  3     543     543    567    611
+##  4     894     894      0      0
+##  5     894     894      0      0
+##  6     345     345    363    321
+##  7     345     345    394    321
+##  8     345     345    345    321
+##  9     345     345    345    321
+## 10     345     345    345    321
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_3-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(starts_with("POND")) %&gt;%
+* print()
+```
+]
+ 
+.panel2-select_3-auto[
+
+```
+## # A tibble: 49,232 × 4
+##    PONDERA PONDIIO PONDII PONDIH
+##      &lt;int&gt;   &lt;int&gt;  &lt;int&gt;  &lt;int&gt;
+##  1     537     580    565    474
+##  2     543     543    561    611
+##  3     543     543    567    611
+##  4     894     894      0      0
+##  5     894     894      0      0
+##  6     345     345    363    321
+##  7     345     345    394    321
+##  8     345     345    345    321
+##  9     345     345    345    321
+## 10     345     345    345    321
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-select_3-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-select_3-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-select_3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_4-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-select_4-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_4-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(ends_with("_M"))
+```
+]
+ 
+.panel2-select_4-auto[
+
+```
+## # A tibble: 49,232 × 11
+##      V2_M  V3_M  V4_M  V5_M  V8_M  V9_M V10_M V11_M V12_M V18_M V21_M
+##     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  26000     0     0     0     0     0     0     0     0     0     0
+##  2  44400     0     0     0     0     0     0     0     0     0     0
+##  3 276000     0     0     0     0     0     0     0     0     0     0
+##  4     -9     0     0     0     0     0     0     0     0     0     0
+##  5     -9     0     0     0     0     0     0     0     0     0     0
+##  6      0     0     0  5000     0     0     0     0     0     0     0
+##  7      0     0     0     0     0     0     0     0     0     0     0
+##  8      0     0     0     0     0     0     0     0     0     0     0
+##  9  31800     0     0     0     0     0     0     0     0     0     0
+## 10      0     0     0     0     0     0     0     0     0     0     0
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_4-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(ends_with("_M")) %&gt;%
+* print()
+```
+]
+ 
+.panel2-select_4-auto[
+
+```
+## # A tibble: 49,232 × 11
+##      V2_M  V3_M  V4_M  V5_M  V8_M  V9_M V10_M V11_M V12_M V18_M V21_M
+##     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  26000     0     0     0     0     0     0     0     0     0     0
+##  2  44400     0     0     0     0     0     0     0     0     0     0
+##  3 276000     0     0     0     0     0     0     0     0     0     0
+##  4     -9     0     0     0     0     0     0     0     0     0     0
+##  5     -9     0     0     0     0     0     0     0     0     0     0
+##  6      0     0     0  5000     0     0     0     0     0     0     0
+##  7      0     0     0     0     0     0     0     0     0     0     0
+##  8      0     0     0     0     0     0     0     0     0     0     0
+##  9  31800     0     0     0     0     0     0     0     0     0     0
+## 10      0     0     0     0     0     0     0     0     0     0     0
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-select_4-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-select_4-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-select_4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+class: inverse, middle, center
+
+## Una más!
+
+---
+
+
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_5-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-select_5-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_5-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(contains("02"))
+```
+]
+ 
+.panel2-select_5-auto[
+
+```
+## # A tibble: 49,232 × 11
+##    PP02C1 PP02C2 PP02C3 PP02C4 PP02C5 PP02C6 PP02C7 PP02C8 PP02E PP02H PP02I
+##     &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1      0      0      0      0      0      0      0      0     0     0     0
+##  2      0      0      0      0      0      0      0      0     0     2     2
+##  3      0      0      0      0      0      0      0      0     0     2     2
+##  4      0      0      0      0      0      0      0      0     0     2     2
+##  5      0      0      0      0      0      0      0      0     0     2     2
+##  6      0      0      0      0      0      0      0      0     0     2     2
+##  7      0      0      0      0      0      0      0      0     0     0     0
+##  8      0      0      0      0      0      0      0      0     0     2     2
+##  9      0      0      0      0      0      0      0      0     0     0     0
+## 10      0      0      0      0      0      0      0      0     0     0     0
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# Otra forma de selecionar
+.panel1-select_5-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(contains("02")) %&gt;%
+* print()
+```
+]
+ 
+.panel2-select_5-auto[
+
+```
+## # A tibble: 49,232 × 11
+##    PP02C1 PP02C2 PP02C3 PP02C4 PP02C5 PP02C6 PP02C7 PP02C8 PP02E PP02H PP02I
+##     &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1      0      0      0      0      0      0      0      0     0     0     0
+##  2      0      0      0      0      0      0      0      0     0     2     2
+##  3      0      0      0      0      0      0      0      0     0     2     2
+##  4      0      0      0      0      0      0      0      0     0     2     2
+##  5      0      0      0      0      0      0      0      0     0     2     2
+##  6      0      0      0      0      0      0      0      0     0     2     2
+##  7      0      0      0      0      0      0      0      0     0     0     0
+##  8      0      0      0      0      0      0      0      0     0     2     2
+##  9      0      0      0      0      0      0      0      0     0     0     0
+## 10      0      0      0      0      0      0      0      0     0     0     0
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-select_5-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-select_5-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-select_5-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+---
+class: inverse, middle, center
+
+
+# _PRÁCTICA_
+
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+ 
+
+---
+class: inverse, middle
+
+## Práctica
+
+1) Crear un objeto en donde importamos la base de datos de la EPH (recordar tener en cuenta la extensión del archivo)
+
+2) Crear otro objeto en donde selecciono 3 columnas de interés según sus nombres
+
+3) Crear otro objeto en donde selecciono 3 columnas de interés según su posición
+
+4) Escribir el siguiente código en el esquema "paso a paso (con pipes)"
+
+
+``` r
+base_ejercicio &lt;- select(eph_3t2022, ESTADO, CH04, CAT_OCUP)
+```
+
+
+---
+class: inverse, middle, center
+
+# filter()
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+_&lt;p style="color:grey;" align:"center"&gt;Define los casos (filas) en base a una condición&lt;/p&gt;_
+ 
+
+---
+# filter()
+
+
+### La función tiene el siguiente esquema:
+
+```r
+base_de_datos %&gt;% 
+  filter(variable_x &gt;= categoria)
+```
+
+--
+
+
+### **Caso:** Supongamos que deseo quedarme sólo con la población de 14 o más años de edad
+
+
+---
+
+
+count: false
+ 
+# filter()
+.panel1-filter-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-filter-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# filter()
+.panel1-filter-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* filter(CH06 &gt;= 14)
+```
+]
+ 
+.panel2-filter-auto[
+
+```
+## # A tibble: 39,988 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          5     1     40 S               29
+##  9 TQRMNOR…  2022         3         1          1     1     44 N               91
+## 10 TQRMNOR…  2022         3         1          2     1     44 N               91
+## # ℹ 39,978 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# filter()
+.panel1-filter-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  filter(CH06 &gt;= 14) %&gt;%
+* print()
+```
+]
+ 
+.panel2-filter-auto[
+
+```
+## # A tibble: 39,988 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          5     1     40 S               29
+##  9 TQRMNOR…  2022         3         1          1     1     44 N               91
+## 10 TQRMNOR…  2022         3         1          2     1     44 N               91
+## # ℹ 39,978 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+&lt;style&gt;
+.panel1-filter-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+---
+# filter() - chequeo
+
+- Chequeamos la operacion
+
+
+``` r
+b_eph_filtro1 &lt;- eph_3t2022 %&gt;% 
+  filter(CH06 &gt;= 14)
+```
+
+
+``` r
+summary(b_eph_filtro1$CH06)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   14.00   26.00   41.00   42.69   57.00  103.00
+```
+
+
+
+---
+# filter()
+
+#### Operadores para filtrar:
+
+&lt;br&gt;
+
+.pull-left[
+
+|Condición |Acción              |
+| :---     | :---               |
+|          |                    |
+| `==`     | *igual*            |
+| `%in%`   | *incluye*          |
+| `!=`     | *distinto*         |
+| `&gt;`      | *mayor que*        |
+| `&lt;`      | *menor que*        |
+| `&gt;=`     | *mayor o igual que*|
+| `&lt;=`     | *menor o igual que*|
+
+]
+
+.pull-right[
+
+| Operador | Descripción |
+| :---     | :---               |
+|          |                    |
+| `&amp;`      | *y* - Cuando se cumplen ambas condiciones   |
+| &amp;#124;   | *o* - Cuando se cumple una u otra condición   |
+
+
+]
+
+---
+# filter()
+
+### **Caso:** Necesito delimitar el universo a la población que reside en la _Ciudad Autónoma de buenos Aires_ __o__ en los _Partidos del Buenos aires_.
+
+--
+
+
+- Chequeo categorías de la variable:
+
+
+``` r
+unique(eph_3t2022$AGLOMERADO)
+```
+
+```
+##  [1] 10 13 32 29 91  7 18 12 22 33 23 20 15  6 36 38  4 19 17  5 14  9 34 93 31
+## [26] 25  8  2  3 26 27 30
+```
+
+--
+
+- Reviso en el diseño de registro los códigos correspondientes.
+
+---
+
+count: false
+ 
+# filter
+.panel1-filter_0-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-filter_0-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# filter
+.panel1-filter_0-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA)
+```
+]
+ 
+.panel2-filter_0-auto[
+
+```
+## # A tibble: 49,232 × 5
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+##  1         10     1    61      1     537
+##  2         13     1    68      3     543
+##  3         13     2    66      3     543
+##  4         32     1    65      3     894
+##  5         32     2    64      3     894
+##  6         29     2    44      3     345
+##  7         29     1    19      1     345
+##  8         29     1    12      3     345
+##  9         29     1     7      4     345
+## 10         29     2    17      1     345
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# filter
+.panel1-filter_0-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
+* filter(AGLOMERADO == 32 | AGLOMERADO == 33)
+```
+]
+ 
+.panel2-filter_0-auto[
+
+```
+## # A tibble: 7,344 × 5
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+##  1         32     1    65      3     894
+##  2         32     2    64      3     894
+##  3         33     1    59      1    1792
+##  4         33     2    62      3    1792
+##  5         33     2    81      3    5562
+##  6         33     1    56      1    5562
+##  7         33     1    73      3    2433
+##  8         33     2    69      3    2433
+##  9         32     1    31      1    2030
+## 10         33     2    60      1     971
+## # ℹ 7,334 more rows
+```
+]
+
+---
+count: false
+ 
+# filter
+.panel1-filter_0-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
+  filter(AGLOMERADO == 32 | AGLOMERADO == 33) %&gt;%
+* print()
+```
+]
+ 
+.panel2-filter_0-auto[
+
+```
+## # A tibble: 7,344 × 5
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+##  1         32     1    65      3     894
+##  2         32     2    64      3     894
+##  3         33     1    59      1    1792
+##  4         33     2    62      3    1792
+##  5         33     2    81      3    5562
+##  6         33     1    56      1    5562
+##  7         33     1    73      3    2433
+##  8         33     2    69      3    2433
+##  9         32     1    31      1    2030
+## 10         33     2    60      1     971
+## # ℹ 7,334 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter_0-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter_0-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter_0-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+count: false
+ 
+# filter
+.panel1-filter_2-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-filter_2-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# filter
+.panel1-filter_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA)
+```
+]
+ 
+.panel2-filter_2-auto[
+
+```
+## # A tibble: 49,232 × 5
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+##  1         10     1    61      1     537
+##  2         13     1    68      3     543
+##  3         13     2    66      3     543
+##  4         32     1    65      3     894
+##  5         32     2    64      3     894
+##  6         29     2    44      3     345
+##  7         29     1    19      1     345
+##  8         29     1    12      3     345
+##  9         29     1     7      4     345
+## 10         29     2    17      1     345
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# filter
+.panel1-filter_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
+* filter(AGLOMERADO %in% c(32,33))
+```
+]
+ 
+.panel2-filter_2-auto[
+
+```
+## # A tibble: 7,344 × 5
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+##  1         32     1    65      3     894
+##  2         32     2    64      3     894
+##  3         33     1    59      1    1792
+##  4         33     2    62      3    1792
+##  5         33     2    81      3    5562
+##  6         33     1    56      1    5562
+##  7         33     1    73      3    2433
+##  8         33     2    69      3    2433
+##  9         32     1    31      1    2030
+## 10         33     2    60      1     971
+## # ℹ 7,334 more rows
+```
+]
+
+---
+count: false
+ 
+# filter
+.panel1-filter_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA) %&gt;%
+  filter(AGLOMERADO %in% c(32,33)) %&gt;%
+* print()
+```
+]
+ 
+.panel2-filter_2-auto[
+
+```
+## # A tibble: 7,344 × 5
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+##  1         32     1    65      3     894
+##  2         32     2    64      3     894
+##  3         33     1    59      1    1792
+##  4         33     2    62      3    1792
+##  5         33     2    81      3    5562
+##  6         33     1    56      1    5562
+##  7         33     1    73      3    2433
+##  8         33     2    69      3    2433
+##  9         32     1    31      1    2030
+## 10         33     2    60      1     971
+## # ℹ 7,334 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter_2-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter_2-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter_2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+class: inverse, middle, center
+
+# _PRÁCTICA GRUPAL_
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+
+---
+class: inverse, middle
+
+# Práctica Grupal
+
+- A partir de la base de la EPH, crear un objeto nuevo que **contenga** las variables __AGLOMERADO__ y __CH06__ y **filtar** por aquella población que tenga _18 o más años de edad_ y que resida en los aglomerados de _Neuquén_ o _Río Negro_
+
+- Chequear que las operaciones hayan sido un éxito (_pista: funciones como **unique()**, **table()** o **colnames()** pueden ser de ayuda)_
+
+
+
+---
+class: inverse, middle, center
+
+# _mutate()_
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+_&lt;p style="color:grey;" align:"center"&gt;Creoa / edita variables (columnas)&lt;/p&gt;_
+
+---
+# mutate()
+
+### La función tiene el siguiente esquema:
+
+```r
+base_de_datos %&gt;% 
+   mutate(var_nueva = var_1 + var_2)
+```
+
+
+### **Caso:** Supongamos que quiero crear la variable `direccion`, uniendo la información de la `calle` y el  `numero`:
+
+&lt;br&gt;&lt;br&gt;
+
+
+---
+# mutate()
+
+&lt;br&gt;&lt;br&gt;
+
+### **Indicador:** Sumatoria de ingresos por la ocupación principal y secundaria(s)
+
+&lt;br&gt;&lt;br&gt;
+
+
+---
+
+count: false
+ 
+# mutate()
+.panel1-mutate_1-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-mutate_1-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# mutate()
+.panel1-mutate_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(P21, TOT_P12)
+```
+]
+ 
+.panel2-mutate_1-auto[
+
+```
+## # A tibble: 49,232 × 2
+##      P21 TOT_P12
+##    &lt;int&gt;   &lt;int&gt;
+##  1 20000       0
+##  2     0       0
+##  3     0       0
+##  4     0       0
+##  5     0       0
+##  6     0       0
+##  7     0   15000
+##  8     0       0
+##  9     0       0
+## 10     0       0
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# mutate()
+.panel1-mutate_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(P21, TOT_P12) %&gt;%
+* mutate(ingreso_ocup_tot = P21 + TOT_P12)
+```
+]
+ 
+.panel2-mutate_1-auto[
+
+```
+## # A tibble: 49,232 × 3
+##      P21 TOT_P12 ingreso_ocup_tot
+##    &lt;int&gt;   &lt;int&gt;            &lt;int&gt;
+##  1 20000       0            20000
+##  2     0       0                0
+##  3     0       0                0
+##  4     0       0                0
+##  5     0       0                0
+##  6     0       0                0
+##  7     0   15000            15000
+##  8     0       0                0
+##  9     0       0                0
+## 10     0       0                0
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-mutate_1-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-mutate_1-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-mutate_1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+# mutate() - case_when()
+
+### Función complementaria: `case_when()`, mayormente utilizada para recodificación de variables
+
+&lt;img src="img/mutate_case.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+
+
+count: false
+ 
+# Recodificando con mutate() y case_when()
+.panel1-mutate_2-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-mutate_2-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Recodificando con mutate() y case_when()
+.panel1-mutate_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(CH04, CH06)
+```
+]
+ 
+.panel2-mutate_2-auto[
+
+```
+## # A tibble: 49,232 × 2
+##     CH04  CH06
+##    &lt;int&gt; &lt;int&gt;
+##  1     1    61
+##  2     1    68
+##  3     2    66
+##  4     1    65
+##  5     2    64
+##  6     2    44
+##  7     1    19
+##  8     1    12
+##  9     1     7
+## 10     2    17
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# Recodificando con mutate() y case_when()
+.panel1-mutate_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(CH04, CH06) %&gt;%
+* mutate(sexo = case_when(CH04 == 1 ~ "Varón",
+*                         CH04 == 2 ~ "Mujer"))
+```
+]
+ 
+.panel2-mutate_2-auto[
+
+```
+## # A tibble: 49,232 × 3
+##     CH04  CH06 sexo 
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+##  1     1    61 Varón
+##  2     1    68 Varón
+##  3     2    66 Mujer
+##  4     1    65 Varón
+##  5     2    64 Mujer
+##  6     2    44 Mujer
+##  7     1    19 Varón
+##  8     1    12 Varón
+##  9     1     7 Varón
+## 10     2    17 Mujer
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-mutate_2-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-mutate_2-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-mutate_2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+
+
+
+
+count: false
+ 
+# Recodificando con mutate() y case_when()
+.panel1-mutate_3-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-mutate_3-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Recodificando con mutate() y case_when()
+.panel1-mutate_3-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(CH06)
+```
+]
+ 
+.panel2-mutate_3-auto[
+
+```
+## # A tibble: 49,232 × 1
+##     CH06
+##    &lt;int&gt;
+##  1    61
+##  2    68
+##  3    66
+##  4    65
+##  5    64
+##  6    44
+##  7    19
+##  8    12
+##  9     7
+## 10    17
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# Recodificando con mutate() y case_when()
+.panel1-mutate_3-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(CH06) %&gt;%
+* mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
+*                               CH06 %in% c(19:29) ~ "19 a 29",
+*                               CH06 %in% c(30:39) ~ "30 a 39",
+*                               CH06 %in% c(40:49) ~ "40 a 49",
+*                               CH06 %in% c(50:59) ~ "50 a 59",
+*                               CH06 &gt;= 60 ~ "60 o más"))
+```
+]
+ 
+.panel2-mutate_3-auto[
+
+```
+## # A tibble: 49,232 × 2
+##     CH06 edad_rango
+##    &lt;int&gt; &lt;chr&gt;     
+##  1    61 60 o más  
+##  2    68 60 o más  
+##  3    66 60 o más  
+##  4    65 60 o más  
+##  5    64 60 o más  
+##  6    44 40 a 49   
+##  7    19 19 a 29   
+##  8    12 0 a 18    
+##  9     7 0 a 18    
+## 10    17 0 a 18    
+## # ℹ 49,222 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-mutate_3-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-mutate_3-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-mutate_3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+class: inverse, middle, center
+
+# _PRÁCTICA GRUPAL_
+
+***
+
+---
+class: inverse
+
+
+# Práctica Grupal
+
+
+1) Crear una variable nueva con las etiquetas correspondientes a los valores de **CAT_OCUP**:
+
+```r
+1 --&gt; Patrón
+2 --&gt; Cuenta propia
+3 --&gt; Obrero o empleado
+4 --&gt; Trabajador familiar sin remuneración
+9 --&gt; Ns./Nr.
+```
+
+1) Recodificar la variable de ingresos P21 en 5 rangos.
+
+
+
+---
+class: inverse, middle, center
+
+# _summarise()_
+
+&lt;html&gt;
+  &lt;div style='float:left'&gt;&lt;/div&gt;
+  &lt;hr color='#EB811B' size=1px width=1125px&gt;
+&lt;/html&gt;
+
+_&lt;p style="color:grey;" align:"center"&gt;Resume la información en una nueva tabla&lt;/p&gt;_
+
+---
+# summarise()
+
+&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
+
+#### **Caso:**
+
+
+- **Indicador1:** Quiero conocer cuántas personas ocupadas hay
+
+- **Indicador2:** Quiero conocer el mínimo y máximo valor del ingreso de la ocupación principal
+
+
+
+---
+
+
+
+
+count: false
+ 
+# _summarise()_
+.panel1-summarise_1-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-summarise_1-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# _summarise()_
+.panel1-summarise_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(ESTADO, P21, PONDERA)
+```
+]
+ 
+.panel2-summarise_1-auto[
+
+```
+## # A tibble: 49,232 × 3
+##    ESTADO   P21 PONDERA
+##     &lt;int&gt; &lt;int&gt;   &lt;int&gt;
+##  1      1 20000     537
+##  2      3     0     543
+##  3      3     0     543
+##  4      3     0     894
+##  5      3     0     894
+##  6      3     0     345
+##  7      1     0     345
+##  8      3     0     345
+##  9      4     0     345
+## 10      1     0     345
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# _summarise()_
+.panel1-summarise_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(ESTADO, P21, PONDERA) %&gt;%
+* summarise(cant_pob_tot = sum(PONDERA),
+*           cant_ocupados = sum(PONDERA[ESTADO == 1]),
+*           min_ingr_oc_princ = min(P21),
+*           max_ingr_oc_princ = max(P21))
+```
+]
+ 
+.panel2-summarise_1-auto[
+
+```
+## # A tibble: 1 × 4
+##   cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##          &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     29203810      12922101                -9           3500000
+```
+]
+
+&lt;style&gt;
+.panel1-summarise_1-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-summarise_1-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-summarise_1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+
+
+
+
+count: false
+ 
+# _summarise()_
+.panel1-summarise_2-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-summarise_2-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# _summarise()_
+.panel1-summarise_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(ESTADO, P21, PONDERA)
+```
+]
+ 
+.panel2-summarise_2-auto[
+
+```
+## # A tibble: 49,232 × 3
+##    ESTADO   P21 PONDERA
+##     &lt;int&gt; &lt;int&gt;   &lt;int&gt;
+##  1      1 20000     537
+##  2      3     0     543
+##  3      3     0     543
+##  4      3     0     894
+##  5      3     0     894
+##  6      3     0     345
+##  7      1     0     345
+##  8      3     0     345
+##  9      4     0     345
+## 10      1     0     345
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# _summarise()_
+.panel1-summarise_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(ESTADO, P21, PONDERA) %&gt;%
+* summarise(cant_pob_tot = sum(PONDERA),
+*           cant_ocupados = sum(PONDERA[ESTADO == 1]),
+*           min_ingr_oc_princ = min(P21),
+*           max_ingr_oc_princ = max(P21))
+```
+]
+ 
+.panel2-summarise_2-auto[
+
+```
+## # A tibble: 1 × 4
+##   cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##          &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     29203810      12922101                -9           3500000
+```
+]
+
+&lt;style&gt;
+.panel1-summarise_2-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-summarise_2-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-summarise_2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+class: inverse, middle, center
+
+# _group_by()_
+
+***
+
+_&lt;p style="color:grey;" align:"center"&gt;Aplica una operación sobre la población de forma segmentada&lt;/p&gt;_
+
+
+
+---
+# group_by()
+
+&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
+
+```r
+base_de_datos %&gt;% 
+        group_by(variable_de_corte) #&lt;&lt;
+```
+
+---
+
+
+
+
+count: false
+ 
+# _group_by()_
+.panel1-group_by_1-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-group_by_1-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# _group_by()_
+.panel1-group_by_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* group_by(CH04)
+```
+]
+ 
+.panel2-group_by_1-auto[
+
+```
+## # A tibble: 49,232 × 177
+## # Groups:   CH04 [2]
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# _group_by()_
+.panel1-group_by_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  group_by(CH04) %&gt;%
+* summarise(cant_pob_tot = sum(PONDERA),
+*           cant_ocupados = sum(PONDERA[ESTADO == 1]),
+*           min_ingr_oc_princ = min(P21),
+*           max_ingr_oc_princ = max(P21))
+```
+]
+ 
+.panel2-group_by_1-auto[
+
+```
+## # A tibble: 2 × 5
+##    CH04 cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##   &lt;int&gt;        &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     1     14208071       7280364                -9           3500000
+## 2     2     14995739       5641737                -9           1500000
+```
+]
+
+&lt;style&gt;
+.panel1-group_by_1-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-group_by_1-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-group_by_1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+# Paso a Paso
+
+
+&lt;img src="https://media.tenor.com/images/6c8cf7404cd3fdc8f518221899116825/tenor.gif" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+# **Caso**
+
+### - **Indicador 1:** *Principales tasas del mercado de trabajo para el aglomerado de CABA y Partidos del GBA*
+
+### - **Indicador 2:** *Indicador 1 según el __sexo__ y __edad__ de las personas.*
+
+--
+
+Según el [Diseño de registro](https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_registro_t318.pdf), las variables de trabajo son:
+
+- **Aglomerado de residencia** = `AGLOMERADO`
+
+- **Condición de actividad** = `ESTADO`
+
+- **Sexo** = `CH04`
+
+- **Edad** = `CH06`
+
+- **Factor de ponderación** = `PONDERA`
+
+---
+
+
+count: false
+ 
+# _group_by()_
+.panel1-group_by_2-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-group_by_2-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# _group_by()_
+.panel1-group_by_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21)
+```
+]
+ 
+.panel2-group_by_2-auto[
+
+```
+## # A tibble: 49,232 × 6
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA   P21
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt;
+##  1         10     1    61      1     537 20000
+##  2         13     1    68      3     543     0
+##  3         13     2    66      3     543     0
+##  4         32     1    65      3     894     0
+##  5         32     2    64      3     894     0
+##  6         29     2    44      3     345     0
+##  7         29     1    19      1     345     0
+##  8         29     1    12      3     345     0
+##  9         29     1     7      4     345     0
+## 10         29     2    17      1     345     0
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# _group_by()_
+.panel1-group_by_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
+* mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
+*                               CH06 %in% c(19:29) ~ "19 a 29",
+*                               CH06 %in% c(30:39) ~ "30 a 39",
+*                               CH06 %in% c(40:49) ~ "40 a 49",
+*                               CH06 %in% c(50:59) ~ "50 a 59",
+*                               CH06 &gt;= 60 ~ "60 o más"),
+*        sexo = case_when(CH04 == 1 ~ "Varón",
+*                         CH04 == 2 ~ "Mujer"))
+```
+]
+ 
+.panel2-group_by_2-auto[
+
+```
+## # A tibble: 49,232 × 8
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA   P21 edad_rango sexo 
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
+##  1         10     1    61      1     537 20000 60 o más   Varón
+##  2         13     1    68      3     543     0 60 o más   Varón
+##  3         13     2    66      3     543     0 60 o más   Mujer
+##  4         32     1    65      3     894     0 60 o más   Varón
+##  5         32     2    64      3     894     0 60 o más   Mujer
+##  6         29     2    44      3     345     0 40 a 49    Mujer
+##  7         29     1    19      1     345     0 19 a 29    Varón
+##  8         29     1    12      3     345     0 0 a 18     Varón
+##  9         29     1     7      4     345     0 0 a 18     Varón
+## 10         29     2    17      1     345     0 0 a 18     Mujer
+## # ℹ 49,222 more rows
+```
+]
+
+---
+count: false
+ 
+# _group_by()_
+.panel1-group_by_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
+  mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
+                                CH06 %in% c(19:29) ~ "19 a 29",
+                                CH06 %in% c(30:39) ~ "30 a 39",
+                                CH06 %in% c(40:49) ~ "40 a 49",
+                                CH06 %in% c(50:59) ~ "50 a 59",
+                                CH06 &gt;= 60 ~ "60 o más"),
+         sexo = case_when(CH04 == 1 ~ "Varón",
+                          CH04 == 2 ~ "Mujer")) %&gt;%
+* filter(AGLOMERADO %in% c(32, 33))
+```
+]
+ 
+.panel2-group_by_2-auto[
+
+```
+## # A tibble: 7,344 × 8
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA    P21 edad_rango sexo 
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
+##  1         32     1    65      3     894      0 60 o más   Varón
+##  2         32     2    64      3     894      0 60 o más   Mujer
+##  3         33     1    59      1    1792  44000 50 a 59    Varón
+##  4         33     2    62      3    1792      0 60 o más   Mujer
+##  5         33     2    81      3    5562      0 60 o más   Mujer
+##  6         33     1    56      1    5562  73000 50 a 59    Varón
+##  7         33     1    73      3    2433      0 60 o más   Varón
+##  8         33     2    69      3    2433      0 60 o más   Mujer
+##  9         32     1    31      1    2030 110000 30 a 39    Varón
+## 10         33     2    60      1     971     -9 60 o más   Mujer
+## # ℹ 7,334 more rows
+```
+]
+
+---
+count: false
+ 
+# _group_by()_
+.panel1-group_by_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
+  mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
+                                CH06 %in% c(19:29) ~ "19 a 29",
+                                CH06 %in% c(30:39) ~ "30 a 39",
+                                CH06 %in% c(40:49) ~ "40 a 49",
+                                CH06 %in% c(50:59) ~ "50 a 59",
+                                CH06 &gt;= 60 ~ "60 o más"),
+         sexo = case_when(CH04 == 1 ~ "Varón",
+                          CH04 == 2 ~ "Mujer")) %&gt;%
+  filter(AGLOMERADO %in% c(32, 33)) %&gt;%
+* group_by(sexo, edad_rango)
+```
+]
+ 
+.panel2-group_by_2-auto[
+
+```
+## # A tibble: 7,344 × 8
+## # Groups:   sexo, edad_rango [14]
+##    AGLOMERADO  CH04  CH06 ESTADO PONDERA    P21 edad_rango sexo 
+##         &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;
+##  1         32     1    65      3     894      0 60 o más   Varón
+##  2         32     2    64      3     894      0 60 o más   Mujer
+##  3         33     1    59      1    1792  44000 50 a 59    Varón
+##  4         33     2    62      3    1792      0 60 o más   Mujer
+##  5         33     2    81      3    5562      0 60 o más   Mujer
+##  6         33     1    56      1    5562  73000 50 a 59    Varón
+##  7         33     1    73      3    2433      0 60 o más   Varón
+##  8         33     2    69      3    2433      0 60 o más   Mujer
+##  9         32     1    31      1    2030 110000 30 a 39    Varón
+## 10         33     2    60      1     971     -9 60 o más   Mujer
+## # ℹ 7,334 more rows
+```
+]
+
+---
+count: false
+ 
+# _group_by()_
+.panel1-group_by_2-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  select(AGLOMERADO, CH04, CH06, ESTADO, PONDERA,P21) %&gt;%
+  mutate(edad_rango = case_when(CH06 %in% c(0:18) ~  "0 a 18",
+                                CH06 %in% c(19:29) ~ "19 a 29",
+                                CH06 %in% c(30:39) ~ "30 a 39",
+                                CH06 %in% c(40:49) ~ "40 a 49",
+                                CH06 %in% c(50:59) ~ "50 a 59",
+                                CH06 &gt;= 60 ~ "60 o más"),
+         sexo = case_when(CH04 == 1 ~ "Varón",
+                          CH04 == 2 ~ "Mujer")) %&gt;%
+  filter(AGLOMERADO %in% c(32, 33)) %&gt;%
+  group_by(sexo, edad_rango) %&gt;%
+* summarise(cant_pob_tot = sum(PONDERA),
+*           cant_ocupados = sum(PONDERA[ESTADO == 1]),
+*           min_ingr_oc_princ = min(P21),
+*           max_ingr_oc_princ = max(P21))
+```
+]
+ 
+.panel2-group_by_2-auto[
+
+```
+## # A tibble: 14 × 6
+## # Groups:   sexo [2]
+##    sexo  edad_rango cant_pob_tot cant_ocupados min_ingr_oc_princ
+##    &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;         &lt;int&gt;             &lt;int&gt;
+##  1 Mujer 0 a 18          2199026         62947                -9
+##  2 Mujer 19 a 29         1207326        634824                -9
+##  3 Mujer 30 a 39         1113780        749404                -9
+##  4 Mujer 40 a 49         1146237        868013                -9
+##  5 Mujer 50 a 59          829964        529859                -9
+##  6 Mujer 60 o más        1473664        223951                -9
+##  7 Mujer &lt;NA&gt;              80859             0                 0
+##  8 Varón 0 a 18          2364240         68968                -9
+##  9 Varón 19 a 29         1219944        825244                -9
+## 10 Varón 30 a 39         1020295        924281                -9
+## 11 Varón 40 a 49         1048107        982190                -9
+## 12 Varón 50 a 59          828807        709093                -9
+## 13 Varón 60 o más        1121752        439521                -9
+## 14 Varón &lt;NA&gt;              80780             0                 0
+## # ℹ 1 more variable: max_ingr_oc_princ &lt;int&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-group_by_2-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-group_by_2-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-group_by_2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+class: middle, center, inverse
+  
+&lt;img src="img/logo tidyr.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+# Funciones del paquete tidyr:
+
+&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
+
+| __Función__      | __Acción__ |
+| :---             | ---:       |
+| `pivot_longer()` | *Transforma en filas varias columnas*|
+| `pivot_wider()`  | *transforma en columnas varias filas*|
+
+
+---
+# estructura de datos
+
+&lt;br&gt;
+
+.pull-left[
+
+&lt;img src="img/dato_ancho.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="img/dato_largo.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+class: inverse, middle, center
+
+# _pivot_longer()_
+
+***
+
+_&lt;p style="color:grey;" align:"center"&gt;Reestructura la base, apilando varias columnas en una. De ancho a largo&lt;/p&gt;_
+
+---
+
+
+
+
+count: false
+ 
+# _pivot_longer()_
+.panel1-pivot_longer_1-auto[
+
+``` r
+*eph_3t2022
+```
+]
+ 
+.panel2-pivot_longer_1-auto[
+
+```
+## # A tibble: 49,232 × 177
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# _pivot_longer()_
+.panel1-pivot_longer_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+* group_by(CH04)
+```
+]
+ 
+.panel2-pivot_longer_1-auto[
+
+```
+## # A tibble: 49,232 × 177
+## # Groups:   CH04 [2]
+##    CODUSU    ANO4 TRIMESTRE NRO_HOGAR COMPONENTE   H15 REGION MAS_500 AGLOMERADO
+##    &lt;chr&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 TQRMNOR…  2022         3         1          1     1     42 S               10
+##  2 TQRMNOQ…  2022         3         1          1     1     43 S               13
+##  3 TQRMNOQ…  2022         3         1          2     1     43 S               13
+##  4 TQRMNOT…  2022         3         1          1     1      1 S               32
+##  5 TQRMNOT…  2022         3         1          2     1      1 S               32
+##  6 TQRMNOS…  2022         3         1          1     1     40 S               29
+##  7 TQRMNOS…  2022         3         1          2     1     40 S               29
+##  8 TQRMNOS…  2022         3         1          3     1     40 S               29
+##  9 TQRMNOS…  2022         3         1          4     0     40 S               29
+## 10 TQRMNOS…  2022         3         1          5     1     40 S               29
+## # ℹ 49,222 more rows
+## # ℹ 168 more variables: PONDERA &lt;int&gt;, CH03 &lt;int&gt;, CH04 &lt;int&gt;, CH05 &lt;chr&gt;,
+## #   CH06 &lt;int&gt;, CH07 &lt;int&gt;, CH08 &lt;int&gt;, CH09 &lt;int&gt;, CH10 &lt;int&gt;, CH11 &lt;int&gt;,
+## #   CH12 &lt;int&gt;, CH13 &lt;int&gt;, CH14 &lt;chr&gt;, CH15 &lt;int&gt;, CH15_COD &lt;int&gt;, CH16 &lt;int&gt;,
+## #   CH16_COD &lt;int&gt;, NIVEL_ED &lt;int&gt;, ESTADO &lt;int&gt;, CAT_OCUP &lt;int&gt;,
+## #   CAT_INAC &lt;int&gt;, IMPUTA &lt;int&gt;, PP02C1 &lt;int&gt;, PP02C2 &lt;int&gt;, PP02C3 &lt;int&gt;,
+## #   PP02C4 &lt;int&gt;, PP02C5 &lt;int&gt;, PP02C6 &lt;int&gt;, PP02C7 &lt;int&gt;, PP02C8 &lt;int&gt;, …
+```
+]
+
+---
+count: false
+ 
+# _pivot_longer()_
+.panel1-pivot_longer_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  group_by(CH04) %&gt;%
+* summarise(cant_pob_tot = sum(PONDERA),
+*           cant_ocupados = sum(PONDERA[ESTADO == 1]),
+*           min_ingr_oc_princ = min(P21),
+*           max_ingr_oc_princ = max(P21))
+```
+]
+ 
+.panel2-pivot_longer_1-auto[
+
+```
+## # A tibble: 2 × 5
+##    CH04 cant_pob_tot cant_ocupados min_ingr_oc_princ max_ingr_oc_princ
+##   &lt;int&gt;        &lt;int&gt;         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;
+## 1     1     14208071       7280364                -9           3500000
+## 2     2     14995739       5641737                -9           1500000
+```
+]
+
+---
+count: false
+ 
+# _pivot_longer()_
+.panel1-pivot_longer_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  group_by(CH04) %&gt;%
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]),
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21)) %&gt;%
+* select(CH04, cant_ocupados, cant_pob_tot)
+```
+]
+ 
+.panel2-pivot_longer_1-auto[
+
+```
+## # A tibble: 2 × 3
+##    CH04 cant_ocupados cant_pob_tot
+##   &lt;int&gt;         &lt;int&gt;        &lt;int&gt;
+## 1     1       7280364     14208071
+## 2     2       5641737     14995739
+```
+]
+
+---
+count: false
+ 
+# _pivot_longer()_
+.panel1-pivot_longer_1-auto[
+
+``` r
+eph_3t2022 %&gt;%
+  group_by(CH04) %&gt;%
+  summarise(cant_pob_tot = sum(PONDERA),
+            cant_ocupados = sum(PONDERA[ESTADO == 1]),
+            min_ingr_oc_princ = min(P21),
+            max_ingr_oc_princ = max(P21)) %&gt;%
+  select(CH04, cant_ocupados, cant_pob_tot) %&gt;%
+* pivot_longer(cols = c(cant_ocupados, cant_pob_tot),  #&lt;&lt;
+*              names_to = "variable",
+*              values_to = "valor")
+```
+]
+ 
+.panel2-pivot_longer_1-auto[
+
+```
+## # A tibble: 4 × 3
+##    CH04 variable         valor
+##   &lt;int&gt; &lt;chr&gt;            &lt;int&gt;
+## 1     1 cant_ocupados  7280364
+## 2     1 cant_pob_tot  14208071
+## 3     2 cant_ocupados  5641737
+## 4     2 cant_pob_tot  14995739
+```
+]
+
+&lt;style&gt;
+.panel1-pivot_longer_1-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pivot_longer_1-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pivot_longer_1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+class: inverse, middle, center
+
+# _pivot_wider()_
+
+***
+
+_&lt;p style="color:grey;" align:"center"&gt;Reestructura la base, encolumnando varias filas de una variable. De largo a ancho&lt;/p&gt;_
+
+---
+
+
+
+
+
+count: false
+ 
+# _pivot_wider()_
+.panel1-pivot_wider_2-auto[
+
+``` r
+*base_largo
+```
+]
+ 
+.panel2-pivot_wider_2-auto[
+
+```
+## # A tibble: 4 × 3
+##    CH04 variable         valor
+##   &lt;int&gt; &lt;chr&gt;            &lt;int&gt;
+## 1     1 cant_ocupados  7280364
+## 2     1 cant_pob_tot  14208071
+## 3     2 cant_ocupados  5641737
+## 4     2 cant_pob_tot  14995739
+```
+]
+
+---
+count: false
+ 
+# _pivot_wider()_
+.panel1-pivot_wider_2-auto[
+
+``` r
+base_largo %&gt;%
+* pivot_wider(names_from = "variable",
+*             values_from = "valor")
+```
+]
+ 
+.panel2-pivot_wider_2-auto[
+
+```
+## # A tibble: 2 × 3
+##    CH04 cant_ocupados cant_pob_tot
+##   &lt;int&gt;         &lt;int&gt;        &lt;int&gt;
+## 1     1       7280364     14208071
+## 2     2       5641737     14995739
+```
+]
+
+---
+count: false
+ 
+# _pivot_wider()_
+.panel1-pivot_wider_2-auto[
+
+``` r
+base_largo %&gt;%
+  pivot_wider(names_from = "variable",
+              values_from = "valor") %&gt;%
+* print()
+```
+]
+ 
+.panel2-pivot_wider_2-auto[
+
+```
+## # A tibble: 2 × 3
+##    CH04 cant_ocupados cant_pob_tot
+##   &lt;int&gt;         &lt;int&gt;        &lt;int&gt;
+## 1     1       7280364     14208071
+## 2     2       5641737     14995739
+```
+]
+
+&lt;style&gt;
+.panel1-pivot_wider_2-auto {
+  color: black;
+  width: 42.4666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pivot_wider_2-auto {
+  color: black;
+  width: 55.5333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pivot_wider_2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "highlightSpans": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
